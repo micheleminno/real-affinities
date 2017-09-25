@@ -1,0 +1,119 @@
+<div id="header_well" class="well">
+  <div class="row">
+
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <a href="http://www.realaffinities.com"><img id="logo"
+				class="img-responsive" src="assets/images/logo.png"></a>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1"></div>
+    <div class="col-lg-5 col-md-5 col-sm-5">
+
+      <div>
+        <h4>Add an interest</h4>
+
+        <div class="spacer"></div>
+
+        <form [formGroup]="newInterestForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+
+            <fieldset class="form-group">
+              <input class="form-control" type="text" [ngStyle]="myInterestNameStyle"
+                      placeholder="interest name" formControlName="interestName" />
+            </fieldset>
+
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg big-search-field"
+                      type="text" [ngStyle]="myInterestQueryStyle" placeholder="interest query"
+                      formControlName="interestQuery" (keyup.enter)="addInterest()" />
+            </fieldset>
+
+          </fieldset>
+        </form>
+
+        <div class="spacer"></div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-1 col-md-1 col-sm-1">
+
+      <div style="margin-top: 104px;">
+        <button class="btn btn-danger" id="btn_add" type="button" (click)="addInterest()">
+          <img src="assets/images/like.png" width="25" class="img-responsive"
+            alt="Responsive image">
+        </button>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-3">
+
+      <div style="display: inline-block;">
+        <button class="btn btn-primary" type="button" (click)="deleteInterests()">Delete all interests</button>
+      </div>
+
+      <div style="display: inline-block;">
+        <button class="btn btn-primary" type="button" (click)="goToProfilesPage()">Manage profiles</button>
+      </div>
+
+      <!-- Loading image
+
+		 <div style="margin-left: 174px; margin-top: 55px" ng-style="loading && {'visibility': 'visible'} || !loading && {'visibility': 'hidden'}">
+        <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+      </div>-->
+
+    </div>
+  </div>
+</div>
+
+<div class="interests" style="margin-bottom: 200px">
+
+  <h3 style="margin-left: 10px">Interests</h3>
+  <div class="row" id="interest{{$index}}" *ngFor="let interest of interestList"
+        style="margin-left: 10px; margin-right: 40px">
+
+    <div class="boxed">
+      <div class="col-lg-3 col-md-3 col-sm-3" style="margin-top: 10px">
+        <h4>{{interest.name}}</h4> Query: {{interest.query}}
+
+        <div class="spacer"></div>
+
+        <span style="margin-right: 5px">Tweets in </span>
+        <select class="btn-danger dropdown-toggle" [(ngModel)]="interest.language">
+          <option *ngFor="let language of languages" [value]="language.id">{{language.label}}</option>
+        </select>
+
+        <div class="spacer"></div>
+
+        <span style="margin-right: 5px">Collect up to</span>
+        <select class="btn-danger dropdown-toggle" [(ngModel)]="interest.tweetAmount">
+          <option *ngFor="let tweetAmount of tweetAmounts" [ngValue]="tweetAmount.value">{{tweetAmount.label}}</option>
+        </select>
+
+        <div class="spacer"></div>
+
+        <button class="btn btn-danger" id="btn_searchInterest" type="button" (click)="collectInterest(interest, interestLanguage, tweetAmount)">
+          <img src="assets/images/search.png" width="25" class="img-responsive"
+            alt="Responsive image">
+        </button>
+
+      </div>
+
+      <div class="col-lg-8 col-md-8 col-sm-8 interest-content-box" style="margin-top: 20px; margin-bottom: 20px">
+
+        <textarea class="interest-content" rows="12" cols="112" (keyup.enter)="editInterest(interest)" [ngModel]="interest.content">
+				</textarea>
+
+        <button class="edit-interest-label">Click on text to edit</button>
+        <button class="save-interest-label">Type 'Enter' to save</button>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1" style="margin-top: 5px; margin-bottom: 20px">
+
+        <button type="button" class="close" aria-label="Close" ng-click="deleteInterest(interest)">
+					<span aria-hidden="true">&times;</span>
+				</button>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+  </div>
+</div>

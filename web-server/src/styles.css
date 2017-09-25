@@ -1,0 +1,126 @@
+/* You can add global styles to this file, and also import other style files */
+
+.search-field {
+  padding: 6px 6px 6px 6px;
+  margin-top: 2px;
+  width: 35%;
+  color: #C0C0C0;
+  font-style: italic;
+}
+
+.big-search-field {
+  padding: 6px 6px 6px 6px;
+  margin-top: 2px;
+  width: 70%;
+  color: #C0C0C0;
+  font-style: italic;
+}
+
+.btn {
+  margin-bottom: 3px;
+  margin-left: 5px;
+}
+
+.fixed-width {
+  width: 200px;
+}
+
+.username {
+  margin: 0 auto;
+  font-family: sans-serif;
+  font: bold;
+  color: black;
+}
+
+.screename {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: sans-serif;
+  color: #66757f;
+}
+
+.big-text {
+  font-size: 13pt;
+}
+
+.little-text {
+  font-size: 10pt;
+}
+
+.boxed {
+  border: 2px solid black;
+  height: 300px;
+  border-radius: 7px;
+  padding-top: 5px;
+  border-color: black;
+}
+
+.boxed-profile {
+  overflow-y: scroll;
+}
+
+.btn-in-target {
+  margin-left: -24px;
+}
+
+.btn-not-in-target {
+  margin-left: -4px;
+}
+
+.spacer {
+  height: 20px;
+}
+
+.little-spacer {
+  height: 10px;
+}
+
+.big-spacer {
+  height: 40px;
+}
+
+.tweet-box {
+  border: 2px solid black;
+  border-radius: 7px;
+  padding: 5px;
+  margin-top: 15px;
+  background-color: white;
+}
+
+.tweet-date {
+  color: #428bca;
+}
+
+.interest-content {
+  border-radius: 7px;
+}
+
+.interest-content:focus {
+  background-color: green;
+  color: white;
+}
+
+.edit-interest-label {
+  border: 2px solid black;
+  border-radius: 7px;
+  background-color: green;
+  cursor: default;
+  color: white;
+}
+
+.save-interest-label {
+  border: 2px solid black;
+  border-radius: 7px;
+  background-color: blue;
+  cursor: default;
+  color: white;
+  visibility: hidden
+}
+
+.interest-content-box textarea.interest-content:focus+button.edit-interest-label {
+  visibility: hidden;
+}
+
+.interest-content-box textarea.interest-content:focus~button.save-interest-label {
+  visibility: visible;
+}
