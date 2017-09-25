@@ -1,0 +1,55 @@
+version: "3.3"
+services:
+  web:
+    image: micheleminno/real-affinities:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - elasticsearch
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+  elasticsearch:
+    image: micheleminno/elasticsearch:latest
+    # build: elasticsearch
+    working_dir: /data
+    command: /elasticsearch/bin/elasticsearch -Epath.conf=/elasticsearch/config
+    volumes:
+      - /Users/micheleminno/Developer/docker/real-affinities/elasticsearch/data:/data
+      - ./elasticsearch/config:/data/config
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - MAX_OPEN_FILES=1048576
+    cap_add:
+      - IPC_LOCK
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:5.5.2
+  #   volumes:
+  #     - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+  #   ports:
+  #     - "5601:5601"
+  mysql:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=real-affinities
+      - MYSQL_USER=production
+      - MYSQL_PASSWORD=production
+    ports:
+      - "3306:3306"
+  migrations:
+    image: micheleminno/db-migrations:latest
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - mysql

@@ -1,0 +1,30 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: micheleminno/elasticsearch:latest
+      - image: mysql:5.5
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: real-affinities-test
+          MYSQL_USER: development
+          MYSQL_PASSWORD: development
+      - image: micheleminno/db-migrations
+        environment:
+          - NODE_ENV: development
+
+    working_directory: ~/
+
+    steps:
+      - checkout
+      - run:
+          name: Build real-affinities and run tests
+          command: docker-compose -f docker-compose.test.yml -p ci up --build
+
+# deployment:
+#   production:
+#     branch: master
+#     commands:
+#       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+#       - ./deploy.sh

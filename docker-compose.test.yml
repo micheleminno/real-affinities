@@ -1,0 +1,31 @@
+version: "3.3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - mysql
+      - elasticsearch
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "30:3000"
+  elasticsearch:
+    image: micheleminno/elasticsearch:latest
+  mysql:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=real-affinities-test
+      - MYSQL_USER=development
+      - MYSQL_PASSWORD=development
+    ports:
+      - "33:3306"
+  migrations:
+    image: micheleminno/db-migrations:latest
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mysql
