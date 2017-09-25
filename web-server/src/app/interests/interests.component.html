@@ -24,7 +24,10 @@
             <fieldset class="form-group">
               <input class="form-control form-control-lg big-search-field"
                       type="text" [ngStyle]="myInterestQueryStyle" placeholder="interest query"
-                      formControlName="interestQuery" (keyup.enter)="addInterest()" />
+                      formControlName="interestQuery" (keyup.enter)="addInterest()"
+                      [ngModel]="insertedInterestQuery"
+        							(click)="insertedInterestQuery = '';
+                              myInterestQueryStyle = {color:'black'}; addInterestActive = true"/>
             </fieldset>
 
           </fieldset>
