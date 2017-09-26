@@ -110,7 +110,9 @@
   </div>
 </div>
 
-<div class="profiles">
+<div class="profiles" style="margin-bottom: 200px">
+
+  <h3 style="margin-left: 10px">Profiles</h3>
 
   <div *ngFor="let n of [] | range:rowsAmount" style="margin-left: 20px; margin-right: 20px">
 
@@ -185,7 +187,7 @@
                           'btn btn-danger': status.active == 0}" (click)="search()">Search more</button>
     </div>
 
-    <div class="spacer"></div>
+    <div class="big-spacer"></div>
 
   </div>
   <div class="col-lg-3 col-md-3 col-sm-3">
