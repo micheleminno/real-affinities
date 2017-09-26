@@ -34,6 +34,7 @@ export class InterestsComponent implements OnInit {
   }
 
   insertedInterestQuery: string;
+  insertedInterestName: string;
 
 
   ngOnInit() {
@@ -41,7 +42,8 @@ export class InterestsComponent implements OnInit {
     var exampleInterest = new Interest('live music', 'i.e. playing live OR concert OR street music');
     this.newInterestForm.patchValue(exampleInterest);
 
-    this.insertedInterestQuery = 'i.e. playing live OR concert OR street music';
+    this.insertedInterestName = 'interest name';
+    this.insertedInterestQuery = 'interest query';
 
     var englishLanguage = new Language('en', 'english');
     var italianLanguage = new Language('it', 'italian');

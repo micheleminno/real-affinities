@@ -15,7 +15,6 @@ services:
       - "3000:3000"
   elasticsearch:
     image: micheleminno/elasticsearch:latest
-    # build: elasticsearch
     working_dir: /data
     command: /elasticsearch/bin/elasticsearch -Epath.conf=/elasticsearch/config
     volumes:

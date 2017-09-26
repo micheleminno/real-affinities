@@ -17,13 +17,16 @@
           <fieldset [disabled]="isSubmitting">
 
             <fieldset class="form-group">
-              <input class="form-control" type="text" [ngStyle]="myInterestNameStyle"
-                      placeholder="interest name" formControlName="interestName" />
+              <input class="form-control form-control-lg big-search-field"
+                      type="text" [ngStyle]="myInterestNameStyle"
+                      placeholder="i.e. playing live" formControlName="interestName"
+                      [ngModel]="insertedInterestName"
+                      (click)="insertedInterestName = ''; myInterestNameStyle = {color:'black'}"/>
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg big-search-field"
-                      type="text" [ngStyle]="myInterestQueryStyle" placeholder="interest query"
+                      type="text" [ngStyle]="myInterestQueryStyle" placeholder="i.e. playing live OR concert OR street music"
                       formControlName="interestQuery" (keyup.enter)="addInterest()"
                       [ngModel]="insertedInterestQuery"
         							(click)="insertedInterestQuery = '';
