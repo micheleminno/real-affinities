@@ -13,7 +13,7 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
-  
+
   elasticsearch:
     image: micheleminno/elasticsearch:latest
     working_dir: /data
@@ -56,3 +56,7 @@ services:
       - NODE_ENV=production
     depends_on:
       - mysql
+
+
+# to run app
+# docker-compose -f docker-compose.yml -p ci up --build

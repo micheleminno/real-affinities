@@ -1,0 +1,32 @@
+{
+  "name": "real-affinities-webserver",
+  "version": "1.0.0",
+  "description": "Express.js server",
+  "main": "server/Server.js",
+  "keywords": [],
+  "author": "Michele Minno",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "async": "^2.5.0",
+    "big-integer": "^1.6.23",
+    "body-parser": "1.9.0",
+    "elasticsearch": "13.3.1",
+    "express": "^4.15.3",
+    "express-validator": "^3.2.1",
+    "knex": "^0.13.0",
+    "mysql": "^2.14.1",
+    "natural": "^0.5.4",
+    "twit": "^2.2.9",
+    "url-exists": "^1.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0",
+    "chai": "^4.1.1"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
