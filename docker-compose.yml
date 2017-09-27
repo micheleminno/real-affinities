@@ -1,10 +1,19 @@
 version: "3.3"
 services:
-  web:
+  angular:
     image: micheleminno/real-affinities:latest
     build:
-      context: .
-      dockerfile: web-server/Dockerfile
+      context: ./angular-client
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+
+  express:
+    image: micheleminno/real-affinities:latest
+    build:
+      context: ./express-server
     depends_on:
       - mysql
       - elasticsearch
