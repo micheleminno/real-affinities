@@ -3,7 +3,7 @@
 .search-field {
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
-  width: 35%;
+  width: 40% !important;
   color: #C0C0C0;
   font-style: italic;
 }
@@ -11,7 +11,7 @@
 .big-search-field {
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
-  width: 70%;
+  width: 90% !important;
   color: #C0C0C0;
   font-style: italic;
 }

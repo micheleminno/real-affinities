@@ -6,7 +6,7 @@
 				class="img-responsive" src="assets/images/logo.png"></a>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-1"></div>
-    <div class="col-lg-5 col-md-5 col-sm-5">
+    <div class="col-lg-4 col-md-4 col-sm-4">
 
       <div>
         <h4>Add an interest</h4>
@@ -17,7 +17,7 @@
           <fieldset [disabled]="isSubmitting">
 
             <fieldset class="form-group">
-              <input class="form-control form-control-lg big-search-field"
+              <input class="form-control form-control-lg search-field"
                       type="text" [ngStyle]="myInterestNameStyle"
                       placeholder="i.e. playing live" formControlName="interestName"
                       [ngModel]="insertedInterestName"
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="col-lg-1 col-md-1 col-sm-1">
+    <div class="col-lg-2 col-md-2 col-sm-2">
 
       <div style="margin-top: 104px;">
         <button class="btn btn-danger" id="btn_add" type="button" (click)="addInterest()">
