@@ -80,6 +80,7 @@ export class InterestsComponent implements OnInit {
 
   addInterest() {
 
+    //TODO: this.interestActive = true
     this.interestsService.add(this.interest);
   }
 
