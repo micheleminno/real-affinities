@@ -3,10 +3,14 @@
 .input-label {
   display: block;
 }
+.dropdown-label {
+  display: inline;
+}
+
 .search-field {
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
-  width: 30% !important;
+  width: 40% !important;
   color: #C0C0C0;
   font-style: italic;
 }
@@ -20,6 +24,9 @@
   font-style: italic;
 }
 
+.empty-dropdown {
+  width: 135px;
+}
 .btn {
   margin-bottom: 3px;
   margin-left: 5px;

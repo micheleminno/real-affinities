@@ -36,7 +36,7 @@
 
         <div style="display: inline-block; margin-left: 30px;" id="getByInterest">
           <label for="selectedInterest" class="input-label">Search by interest</label>
-          <select class="btn-default dropdown-toggle" [ngModel]="selectedInterest" ng-options="interest.name for interest in interests"></select>
+          <select class="btn-default dropdown-toggle empty-dropdown" [ngModel]="selectedInterest" ng-options="interest.name for interest in interests"></select>
 
           <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatchingInterests()">
   						<img src="assets/images/filter.png" width="25" class="img-responsive"
@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+    <div class="row" style="padding: 12px"></div>
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-2"></div>
       <div class="col-lg-4 col-md-4 col-sm-4">
@@ -74,9 +75,9 @@
                             'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
         </div>
       </div>
-      <div class="col-lg-3 col-md-3 col-sm-3">
+      <div class="col-lg-4 col-md-4 col-sm-4">
         <div>
-          <input type="search" [ngModel]="keywords" [hidden]=true>
+          <label for="selectedFilter" class="dropdown-label">Filter by keywords</label>
           <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords" (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
 
           <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
@@ -85,11 +86,11 @@
         </button>
         </div>
       </div>
-      <div class="col-lg-3 col-md-3 col-sm-3">
+      <div class="col-lg-2 col-md-2 col-sm-2">
         <div>
           <div id="sort" style="display: inline-block;">
-            <span style="margin-right: 5px">Sort by</span>
-            <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
+            <label for="selectedSorting" class="dropdown-label">Sort by</label>
+            <select class="btn-danger dropdown-toggle empty-dropdown" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
             </select>
           </div>
         </div>
@@ -157,10 +158,10 @@
   <br />
 
   <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-3"></div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
 
-      <div id="load-more" style="display: inline-block; margin-top: 50px; margin-left: -55px;">
+      <div id="load-more" style="display: inline-block;">
         <span>{{profileList.length}} profiles loaded</span>
       </div>
 
@@ -178,11 +179,12 @@
       <div class="big-spacer"></div>
 
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-3">
+    <div class="col-lg-4 col-md-4 col-sm-4"></div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
 
-      <div id="sort" style="margin-top: 50px; margin-left: 93px;">
-        <span style="margin-right: 5px">Sort by</span>
-        <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
+      <div id="sort">
+        <label for="selectedSorting" class="dropdown-label">Sort by</label>
+        <select class="btn-danger dropdown-toggle empty-dropdown" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
       </select>
       </div>
     </div>
