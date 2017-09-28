@@ -283,6 +283,9 @@ export class ProfilesComponent implements OnInit {
 
   addPotentialAccount() {
 
+
+    this.status.active = ModeLabels.SCREENNAME_SEARCH;    
+
     if (!this.addPotentialAccountActive
       || this.insertedPotentialAccount == '') {
 

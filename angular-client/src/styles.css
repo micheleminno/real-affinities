@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+.input-label {
+  display: block;
+}
 .search-field {
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
-  width: 40% !important;
+  width: 30% !important;
   color: #C0C0C0;
   font-style: italic;
 }
@@ -12,7 +15,7 @@
   display: inline !important;
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
-  width: 70% !important;
+  width: 60% !important;
   color: #C0C0C0;
   font-style: italic;
 }

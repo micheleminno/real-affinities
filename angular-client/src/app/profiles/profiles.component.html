@@ -2,8 +2,8 @@
   <div id="header_well" class="well">
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-2">
-        <a href="http://www.realaffinities.com"><img id="logo"
-					class="img-responsive" src="assets/images/logo.png"></a>
+        <a href="http://www.realaffinities.com">
+          <img id="logo" class="img-responsive" src="assets/images/logo.png"></a>
 
         <!-- Loading image
 
@@ -12,76 +12,39 @@
         </div> -->
 
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="col-lg-7 col-md-7 col-sm-7">
+        <div style="display: inline-block;">
+          <label for="searchKeywords" class="input-label">Search by keywords</label>
+          <input class="big-search-field form-control" id="searchKeywords" [(ngModel)]="searchKeywords" type="text" placeholder="i.e. funk rock" (keyup.enter)="search(searchKeywords)">
 
-        <div>
-
-          <div style="display: inline-block;">
-
-            <input class="big-search-field form-control" id="searchKeywords"
-                   [(ngModel)]="searchKeywords" type="text" placeholder="i.e. funk rock"
-                   (keyup.enter)="search(searchKeywords)">
-
-            <button class="btn btn-danger" id="btn_search" type="submit" (click)="search(searchKeywords)">
+          <button class="btn btn-danger" id="btn_search" type="submit" (click)="search(searchKeywords)">
               <img src="assets/images/search.png" width="25" class="img-responsive"
                 alt="Responsive image">
             </button>
-          </div>
+        </div>
 
-          <div style="display: inline-block; margin-left: 52px; width: 310px;">
-            <img style="display: inline;" src="assets/images/add_account.png" width="25" class="img-responsive" alt="Responsive image">
-            <input [ngModel]="potentialAccount" [hidden]=true>
-            <input class="search-field" [ngStyle]="myAccountStyle" type="text" [ngModel]="insertedPotentialAccount" (click)="insertedPotentialAccount = ''; myAccountStyle = {color:'black'};
-                              addPotentialAccountActive = true" (keyup.enter)="addPotentialAccount()">
+        <div style="display: inline-block;">
+          <label for="potentialAccount" class="input-label" style="margin-left: 30px;">Search by username</label>
+          <img style="display: inline;" src="assets/images/account.png" width="25" class="img-responsive" alt="Responsive image">
+          <input class="big-search-field form-control" type="text" placeholder="i.e. RollingStone" [(ngModel)]="potentialAccount" (keyup.enter)="addPotentialAccount(potentialAccount)">
 
-            <button class="btn btn-danger" id="btn_add_account" type="button" (click)="addPotentialAccount()">
+          <button class="btn btn-danger" id="btn_add_account" type="button" (click)="addPotentialAccount()">
 							<img src="assets/images/like.png" width="25" class="img-responsive"
 								alt="Responsive image">
 						</button>
-          </div>
         </div>
 
-        <div id="getByInterest" style="margin-top: 41px; margin-left: 73px">
-          <span style="margin-right: 5px">Get by interest</span>
+        <div style="display: inline-block; margin-left: 30px;" id="getByInterest">
+          <label for="selectedInterest" class="input-label">Search by interest</label>
           <select class="btn-default dropdown-toggle" [ngModel]="selectedInterest" ng-options="interest.name for interest in interests"></select>
 
           <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatchingInterests()">
-						<img src="assets/images/filter.png" width="25" class="img-responsive"
-							alt="Responsive image">
-					</button>
-        </div>
-
-        <div id="load-more" style="display: inline-block; margin-top: 50px; margin-left: 40px">
-          <span>{{profileList.length}} profiles loaded</span>
-        </div>
-
-        <div style="display: inline-block;">
-          <button [ngClass]="{'btn btn-primary': status.active != 3,
-                              'btn btn-danger': status.active == 3}" type="button" (click)="showInterestingAccounts()">
-              Compute more</button>
-        </div>
-
-        <div style="display: inline-block;">
-          <button type="button" [ngClass]="{'btn btn-primary': status.active != 0,
-                              'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
+  						<img src="assets/images/filter.png" width="25" class="img-responsive"
+  							alt="Responsive image">
+  					</button>
         </div>
       </div>
-
-      <div class="col-lg-1 col-md-1 col-sm-1">
-
-        <div style="margin-top: 171px; margin-left: -69px; margin-right: -189px">
-          <input type="search" [ngModel]="keywords" [hidden]=true>
-          <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords" (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
-
-          <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
-						<img src="assets/images/filter.png" width="25" class="img-responsive"
-							alt="Responsive image">
-					</button>
-        </div>
-      </div>
-
       <div class="col-lg-3 col-md-3 col-sm-3">
-
         <div style="margin-left: 20px; margin-top: 8px">
           <div style="display: inline-block;">
             <button class="btn btn-primary" type="button" (click)="deleteTarget()">Delete target</button>
@@ -91,104 +54,136 @@
             <button class="btn btn-primary" type="button" (click)="goToInterestsPage()">Manage interests</button>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2"></div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div id="load-more" style="display: inline-block;">
+          <span>{{profileList.length}} profiles loaded</span>
+        </div>
 
+        <div style="display: inline-block;">
+          <button [ngClass]="{'btn btn-primary': status.active != 3,
+                            'btn btn-danger': status.active == 3}" type="button" (click)="showInterestingAccounts()">
+            Compute more</button>
+        </div>
+
+        <div style="display: inline-block;">
+          <button type="button" [ngClass]="{'btn btn-primary': status.active != 0,
+                            'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
         <div>
-          <div id="sort" style="display: inline-block; margin-top: 138px; margin-left: 105px">
-            <span style="margin-right: 5px">Sort by</span> <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates"></select>
+          <input type="search" [ngModel]="keywords" [hidden]=true>
+          <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords" (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
+
+          <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
+          <img src="assets/images/filter.png" width="25" class="img-responsive"
+            alt="Responsive image">
+        </button>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <div>
+          <div id="sort" style="display: inline-block;">
+            <span style="margin-right: 5px">Sort by</span>
+            <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="profiles" style="margin-bottom: 200px">
+
+    <h3 style="margin-left: 10px">Profiles</h3>
+
+    <div *ngFor="let n of [] | range:rowsAmount" style="margin-left: 20px; margin-right: 20px">
+
+      <div id="profile{{$index}}" *ngFor="let profile of profileList | filter:keywords | orderBy:sortingPredicate" [hidden]="!canShowProfile($index, $parent.$index)" class="col-lg-3 col-md-3 col-sm-3 boxed boxed-profile" [ngStyle]='style(profile)'>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <input id="in_target_button" [ngClass]="{'btn btn-primary btn-not-in-target': !profile.inTarget, 'btn btn-danger btn-in-target': profile.inTarget}" type="submit" value="{{ profile.inTarget ? 'Remove from target' : 'Add to target'}}" (click)="updateTarget(profile)">
+          <a href="https://twitter.com/{{profile.screen_name}}">
+          <img class="img-responsive" src="{{profileImages[profile.id]}}"
+          height="150" width="150"></a>
+          <div align="left">
+            <a class="username little-text" href="https://twitter.com/{{profile.screen_name}}"> {{
+            profile.name }}</a>
+          </div>
+          <div align="left">
+            <a class="screename little-text" href="https://twitter.com/{{profile.screen_name}}"> @{{
+            profile.screen_name }}</a>
+          </div>
+
+          <div class="little-spacer"></div>
+
+          <div>Tweets: {{ profile.statuses_count }}</div>
+          <div>Followers: {{ profile.followers_count }}</div>
+          <div>Following: {{ profile.friends_count }}</div>
+
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+          <span class="label label-danger" style="margin-right: 5px" *ngFor="let interest of profile.interests"> {{ interest }} </span>
+
+          <div class="big-spacer"></div>
+
+          <div>{{ profile.description }}</div>
+          <div class="spacer"></div>
+          <div>
+            {{ profile.location }} <a [hidden]="profile.url == null" id="website" href="{{ profile.url }}"> (website) </a>
           </div>
 
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="profiles" style="margin-bottom: 200px">
-
-  <h3 style="margin-left: 10px">Profiles</h3>
-
-  <div *ngFor="let n of [] | range:rowsAmount" style="margin-left: 20px; margin-right: 20px">
-
-    <div id="profile{{$index}}" *ngFor="let profile of profileList | filter:keywords | orderBy:sortingPredicate" [hidden]="!canShowProfile($index, $parent.$index)" class="col-lg-3 col-md-3 col-sm-3 boxed boxed-profile" [ngStyle]='style(profile)'>
-
-      <div class="col-lg-6 col-md-6 col-sm-6">
-        <input id="in_target_button" [ngClass]="{'btn btn-primary btn-not-in-target': !profile.inTarget, 'btn btn-danger btn-in-target': profile.inTarget}" type="submit" value="{{ profile.inTarget ? 'Remove from target' : 'Add to target'}}" (click)="updateTarget(profile)">
-        <a href="https://twitter.com/{{profile.screen_name}}">
-          <img class="img-responsive" src="{{profileImages[profile.id]}}"
-          height="150" width="150"></a>
-        <div align="left">
-          <a class="username little-text" href="https://twitter.com/{{profile.screen_name}}"> {{
-            profile.name }}</a>
-        </div>
-        <div align="left">
-          <a class="screename little-text" href="https://twitter.com/{{profile.screen_name}}"> @{{
-            profile.screen_name }}</a>
-        </div>
-
-        <div class="little-spacer"></div>
-
-        <div>Tweets: {{ profile.statuses_count }}</div>
-        <div>Followers: {{ profile.followers_count }}</div>
-        <div>Following: {{ profile.friends_count }}</div>
-
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-6">
-
-        <span class="label label-danger" style="margin-right: 5px" *ngFor="let interest of profile.interests"> {{ interest }} </span>
-
-        <div class="big-spacer"></div>
-
-        <div>{{ profile.description }}</div>
         <div class="spacer"></div>
-        <div>
-          {{ profile.location }} <a [hidden]="profile.url == null" id="website" href="{{ profile.url }}"> (website) </a>
-        </div>
 
-      </div>
+        <div id="tweets" class="col-lg-12 col-md-12 col-sm-12">
 
-      <div class="spacer"></div>
-
-      <div id="tweets" class="col-lg-12 col-md-12 col-sm-12">
-
-        <div *ngFor="let tweet of profile.tweets" class="tweet-box">
-          <small class="tweet-date">{{tweet.created_at}}</small><br />
-          <div style="margin-top: 5px">{{tweet.text}}</div>
+          <div *ngFor="let tweet of profile.tweets" class="tweet-box">
+            <small class="tweet-date">{{tweet.created_at}}</small><br />
+            <div style="margin-top: 5px">{{tweet.text}}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<br />
+  <br />
 
-<div class="row">
-  <div class="col-lg-3 col-md-3 col-sm-3"></div>
-  <div class="col-lg-6 col-md-6 col-sm-6">
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3"></div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
 
-    <div id="load-more" style="display: inline-block; margin-top: 50px; margin-left: -55px;">
-      <span>{{profileList.length}} profiles loaded</span>
-    </div>
+      <div id="load-more" style="display: inline-block; margin-top: 50px; margin-left: -55px;">
+        <span>{{profileList.length}} profiles loaded</span>
+      </div>
 
-    <div style="display: inline-block;">
-      <button [ngClass]="{'btn btn-primary': status.active != 3,
+      <div style="display: inline-block;">
+        <button [ngClass]="{'btn btn-primary': status.active != 3,
                           'btn btn-danger': status.active == 3}" type="button" (click)="showInterestingAccounts()">Compute
         more</button>
-    </div>
+      </div>
 
-    <div style="display: inline-block;">
-      <button class="btn btn-primary" type="button" [ngClass]="{'btn btn-primary': status.active != 0,
+      <div style="display: inline-block;">
+        <button class="btn btn-primary" type="button" [ngClass]="{'btn btn-primary': status.active != 0,
                           'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
+      </div>
+
+      <div class="big-spacer"></div>
+
     </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
 
-    <div class="big-spacer"></div>
-
-  </div>
-  <div class="col-lg-3 col-md-3 col-sm-3">
-
-    <div id="sort" style="margin-top: 50px; margin-left: 93px;">
-      <span style="margin-right: 5px">Sort by</span>
-      <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
+      <div id="sort" style="margin-top: 50px; margin-left: 93px;">
+        <span style="margin-right: 5px">Sort by</span>
+        <select class="btn-danger dropdown-toggle" [ngModel]="sortingPredicate" ng-options="sort.field as sort.label for sort in sortingPredicates">
       </select>
+      </div>
     </div>
   </div>
-</div>
