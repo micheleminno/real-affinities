@@ -1,5 +1,7 @@
 version: "3.3"
+
 services:
+
   angular:
     image: micheleminno/angular-client:latest
     build:
@@ -24,15 +26,14 @@ services:
       - "3000:3000"
 
   elasticsearch:
-    image: micheleminno/elasticsearch:latest
-    working_dir: /data
-    command: /elasticsearch/bin/elasticsearch -Epath.conf=/elasticsearch/config
+    build: elasticsearch/
     volumes:
-      - /Users/micheleminno/Developer/docker/real-affinities/elasticsearch/data:/data
-      - ./elasticsearch/config:/data/config
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+     - ek
     environment:
       - MAX_OPEN_FILES=1048576
     cap_add:
@@ -42,12 +43,16 @@ services:
         soft: -1
         hard: -1
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:5.5.2
-  #   volumes:
-  #     - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
-  #   ports:
-  #     - "5601:5601"
+  kibana:
+    build: kibana/
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config
+    ports:
+      - "5601:5601"
+    networks:
+      - ek
+    depends_on:
+      - elasticsearch
 
   mysql:
     image: mysql:5.5
@@ -66,6 +71,7 @@ services:
     depends_on:
       - mysql
 
+networks:
 
-# to run app
-# docker-compose -f docker-compose.yml -p ci up --build
+  ek:
+    driver: bridge
