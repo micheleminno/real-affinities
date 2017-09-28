@@ -1,9 +1,17 @@
 version: "3.3"
 services:
-  web:
+  angular-client:
     build:
-      context: .
-      dockerfile: Dockerfile.test
+      context: ./angular-client
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "42:4200"
+
+  express:
+    build:
+      context: ./express-server
     depends_on:
       - mysql
       - elasticsearch
@@ -12,8 +20,26 @@ services:
       - /app/node_modules
     ports:
       - "30:3000"
+
   elasticsearch:
     image: micheleminno/elasticsearch:latest
+    working_dir: /data
+    command: /elasticsearch/bin/elasticsearch -Epath.conf=/elasticsearch/config
+    volumes:
+      - /Users/micheleminno/Developer/docker/real-affinities/elasticsearch/data:/data
+      - ./elasticsearch/config:/data/config
+    ports:
+      - "92:9200"
+      - "93:9300"
+    environment:
+      - MAX_OPEN_FILES=1048576
+    cap_add:
+      - IPC_LOCK
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
   mysql:
     image: mysql:5.5
     environment:
@@ -23,6 +49,7 @@ services:
       - MYSQL_PASSWORD=development
     ports:
       - "33:3306"
+
   migrations:
     image: micheleminno/db-migrations:latest
     environment:

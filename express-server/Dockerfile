@@ -26,4 +26,4 @@ COPY . /usr/src/app
 EXPOSE 3000
 
 #Step 10
-CMD ["npm", "start"]
+CMD ["./node_modules/.bin/nodemon", "./server/server.js"]

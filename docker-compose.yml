@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   angular:
-    image: micheleminno/real-affinities:latest
+    image: micheleminno/angular-client:latest
     build:
       context: ./angular-client
     volumes:
@@ -11,7 +11,7 @@ services:
       - "4200:4200"
 
   express:
-    image: micheleminno/real-affinities:latest
+    image: micheleminno/express-server:latest
     build:
       context: ./express-server
     depends_on:
