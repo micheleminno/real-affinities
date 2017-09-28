@@ -9,6 +9,7 @@
 }
 
 .big-search-field {
+  display: inline !important;
   padding: 6px 6px 6px 6px;
   margin-top: 2px;
   width: 70% !important;

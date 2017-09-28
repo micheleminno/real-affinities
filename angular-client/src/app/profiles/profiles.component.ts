@@ -27,19 +27,22 @@ export class ProfilesComponent implements OnInit {
   rowsAmount: number;
   loading: boolean;
   addPotentialAccountActive: boolean;
+
   insertedPotentialAccount: string;
   potentialAccount: string;
-  insertedSearchKeywords: string;
+
+  searchKeywords: string;
+
   insertedFilterKeywords: string;
+  filterKeywords: string;
 
   ngOnInit() {
 
     this.insertedPotentialAccount = 'i.e. pitchfork'
-    this.insertedSearchKeywords = 'i.e. funk rock';
     this.insertedFilterKeywords = 'i.e. music*'
   }
 
-  search(searchKeywords) {
+  search(searchKeywords: string) {
 
     //this.isSubmitting = true;
 

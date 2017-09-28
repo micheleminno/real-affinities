@@ -18,13 +18,11 @@
 
           <div style="display: inline-block;">
 
-            <input type="search" [ngModel]="userKeywords" [hidden]=true>
-            <input class="big-search-field" [ngStyle]="myUserSearchStyle" type="text"
-                    [ngModel]="insertedSearchKeywords"
-                    (click)="insertedSearchKeywords = ''; myUserSearchStyle = {color:'black'};
-                              searchActive = true" (keyup.enter)="search()">
+            <input class="big-search-field form-control" id="searchKeywords"
+                   [(ngModel)]="searchKeywords" type="text" placeholder="i.e. funk rock"
+                   (keyup.enter)="search(searchKeywords)">
 
-            <button class="btn btn-danger" id="btn_search" type="button" (click)="search()">
+            <button class="btn btn-danger" id="btn_search" type="submit" (click)="search(searchKeywords)">
               <img src="assets/images/search.png" width="25" class="img-responsive"
                 alt="Responsive image">
             </button>
@@ -33,11 +31,8 @@
           <div style="display: inline-block; margin-left: 52px; width: 310px;">
             <img style="display: inline;" src="assets/images/add_account.png" width="25" class="img-responsive" alt="Responsive image">
             <input [ngModel]="potentialAccount" [hidden]=true>
-            <input class="search-field" [ngStyle]="myAccountStyle" type="text"
-                    [ngModel]="insertedPotentialAccount"
-                    (click)="insertedPotentialAccount = ''; myAccountStyle = {color:'black'};
-                              addPotentialAccountActive = true"
-                   (keyup.enter)="addPotentialAccount()">
+            <input class="search-field" [ngStyle]="myAccountStyle" type="text" [ngModel]="insertedPotentialAccount" (click)="insertedPotentialAccount = ''; myAccountStyle = {color:'black'};
+                              addPotentialAccountActive = true" (keyup.enter)="addPotentialAccount()">
 
             <button class="btn btn-danger" id="btn_add_account" type="button" (click)="addPotentialAccount()">
 							<img src="assets/images/like.png" width="25" class="img-responsive"
@@ -68,7 +63,7 @@
 
         <div style="display: inline-block;">
           <button type="button" [ngClass]="{'btn btn-primary': status.active != 0,
-                              'btn btn-danger': status.active == 0}" (click)="search()">Search more</button>
+                              'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
         </div>
       </div>
 
@@ -76,9 +71,7 @@
 
         <div style="margin-top: 171px; margin-left: -69px; margin-right: -189px">
           <input type="search" [ngModel]="keywords" [hidden]=true>
-          <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords"
-                  (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}"
-                  (keyup.enter)="filter()">
+          <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords" (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
 
           <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
 						<img src="assets/images/filter.png" width="25" class="img-responsive"
@@ -184,7 +177,7 @@
 
     <div style="display: inline-block;">
       <button class="btn btn-primary" type="button" [ngClass]="{'btn btn-primary': status.active != 0,
-                          'btn btn-danger': status.active == 0}" (click)="search()">Search more</button>
+                          'btn btn-danger': status.active == 0}" (click)="search(searchKeywords)">Search more</button>
     </div>
 
     <div class="big-spacer"></div>
