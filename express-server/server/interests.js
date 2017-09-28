@@ -36,7 +36,7 @@ function refreshIndexes(res, msg) {
 exports.add = function(req, res) {
 
   var name = req.query.name;
-  var nameWithoutInnerSpaces = interestName.replace(/ /g, "-");
+  var nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
   var query = req.query.query;
 
@@ -133,7 +133,7 @@ exports.update = function(req, res) {
     }
   };
 
-  this.client.update(params, function(error, data) {
+  client.update(params, function(error, data) {
     handleClientResponse(error, data, "interest " + name + " updated", "error updating interest " + name, res);
   });
 };
@@ -160,7 +160,7 @@ exports.list = function(req, res) {
     }
   };
 
-  this.client.search(query, function(error, data) {
+  client.search(query, function(error, data) {
 
     var interests = [];
     for (var hitIndex in data.hits.hits) {
@@ -200,7 +200,7 @@ exports.getMatchingProfiles = function(req, res) {
     }
   };
 
-  this.client.search(query, function(error, data) {
+  client.search(query, function(error, data) {
 
     var profiles = [];
     for (var hitIndex in data.hits.hits) {

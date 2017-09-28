@@ -2,7 +2,7 @@
 const request = require('supertest');
 var express = require('express');
 
-var app = require('../server/Server.js');
+var app = require('../server/server.js');
 
 describe("Server", function() {
 

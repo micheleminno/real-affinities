@@ -5,7 +5,7 @@ require('express');
 var OK = 200;
 var NOK = 404;
 
-var app = require('../server/Server.js');
+var app = require('../server/server.js');
 
 describe("Target", function() {
 
