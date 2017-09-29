@@ -14,16 +14,13 @@ COPY package.json /usr/src/app
 RUN apk add --no-cache make gcc g++ python
 
 #Step 6
-RUN npm install -gq mocha
-
-#Step 7
 RUN npm install -q
 
-#Step 8
+#Step 7
 COPY . /usr/src/app
 
-#Step 9
+#Step 8
 EXPOSE 3000
 
-#Step 10
+#Step 9
 CMD ["./node_modules/.bin/nodemon", "./server/server.js"]
