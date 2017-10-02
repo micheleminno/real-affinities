@@ -1,4 +1,7 @@
 
+path:
+  data: /usr/share/elasticsearch/data
+
 cluster.name: "docker-cluster"
 
 network.host: 0.0.0.0

@@ -26,4 +26,4 @@ COPY . /usr/src/app
 EXPOSE 3000
 
 #Step 10
-CMD mocha "./test/**/*.js" --timeout 20000
+CMD mocha "./test/**/*.js" --timeout 40000

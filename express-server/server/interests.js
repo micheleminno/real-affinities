@@ -1,4 +1,5 @@
-var client = require('elasticsearch');
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({host: 'localhost:9200', log: 'trace'});
 
 var OK = 200;
 var NOK = 404;
@@ -163,6 +164,7 @@ exports.list = function(req, res) {
   client.search(query, function(error, data) {
 
     var interests = [];
+
     for (var hitIndex in data.hits.hits) {
 
       var interest = data.hits.hits[hitIndex]["_source"];

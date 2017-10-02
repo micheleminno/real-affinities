@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  
+
   express:
     build:
       context: ./express-server
@@ -19,8 +19,8 @@ services:
       volumes:
         - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       ports:
-        - "9200:9200"
-        - "9300:9300"
+        - "92:9200"
+        - "93:9300"
       environment:
         - MAX_OPEN_FILES=1048576
       cap_add:

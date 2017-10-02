@@ -1,4 +1,3 @@
-require('express');
 const request = require('supertest');
 
 const OK = 200;
@@ -10,7 +9,7 @@ describe("Interests", function() {
 
 		it("should return the list of interests", function(done) {
 
-			 request(app)
+			  request(app)
                           .get('/interests')
                           .set('Accept', /json/)
                           .expect('Content-Type', /json/)
@@ -24,7 +23,7 @@ describe("Interests", function() {
 
 		it("add an interest", function(done) {
 
-			 request(app)
+				request(app)
                           .get('/interests/add')
                           .query({name: 'int', query: 'all'})
                           .set('Accept', /json/)
@@ -35,7 +34,7 @@ describe("Interests", function() {
 
 		it("remove an interest", function(done) {
 
-			 request(app)
+			request(app)
 													.get('/interests/remove')
 													.query({name: 'int'})
 													.set('Accept', /json/)
