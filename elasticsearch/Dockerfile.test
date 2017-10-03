@@ -1,0 +1,20 @@
+#Step 1
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+
+#Step 2
+RUN mkdir /usr/share/elasticsearch/utils/
+
+#Step 3
+COPY docker-entrypoint.sh /usr/share/elasticsearch/utils/
+
+#Step 4
+#RUN chmod 777 /usr/share/elasticsearch/utils/docker-entrypoint.sh
+
+#Step 5
+WORKDIR /usr/share/elasticsearch/utils/
+
+#Step 6
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/e1f115e4ca285c3c24e847c4dd4be955e0ed51c2/wait-for-it.sh /usr/share/elasticsearch/utils/wait-for-it.sh
+
+#Step 5
+RUN sudo /usr/share/elasticsearch/utils/docker-entrypoint.sh elasticsearch -p /tmp/epid & /usr/share/elasticsearch/utils/wait-for-it.sh -t 0 0.0.0.0:92 -- curl -XPUT 'http://127.0.0.1:92/real-affinities' -d @index.json; kill $(cat /tmp/epid) && wait $(cat /tmp/epid); exit 0;
