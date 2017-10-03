@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 
 #Step 5
-RUN apk add --no-cache make gcc g++ python
+RUN apk add --no-cache make gcc g++ python bash
 
 #Step 6
 RUN npm install -gq mocha
@@ -26,4 +26,10 @@ COPY . /usr/src/app
 EXPOSE 3000
 
 #Step 10
-CMD mocha "./test/**/*.js" --timeout 40000
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/e1f115e4ca285c3c24e847c4dd4be955e0ed51c2/wait-for-it.sh /usr/src/app/wait-for-it.sh
+
+#Step 11
+RUN chmod 777 /usr/src/app/wait-for-it.sh
+
+#Step 12
+CMD /usr/src/app/wait-for-it.sh -t 30 0.0.0.0:92 -- mocha "./test/**/*.js" --timeout 40000
