@@ -1,5 +1,5 @@
 #Step 1
-FROM docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.6.2
 
 #Step 2
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/e1f115e4ca285c3c24e847c4dd4be955e0ed51c2/wait-for-it.sh /utils/wait-for-it.sh

@@ -1,17 +1,15 @@
 
-path:
-  data: /usr/share/elasticsearch/data
-
 cluster.name: "docker-cluster"
+network.host: "localhost"
+http.port: 9200
 
-network.host: 0.0.0.0
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
 
 discovery.zen.minimum_master_nodes: 1
 discovery.type: single-node
 
-
 ## Disable X-Pack
-
 xpack.security.enabled: false
 xpack.monitoring.enabled: false
 xpack.ml.enabled: false

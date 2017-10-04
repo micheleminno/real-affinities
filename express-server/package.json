@@ -20,6 +20,7 @@
     "url-exists": "^1.0.3"
   },
   "devDependencies": {
+    "eslint": "^3.1.0",
     "nodemon": "^1.11.0",
     "mocha": "^3.4.2",
     "supertest": "^3.0.0",

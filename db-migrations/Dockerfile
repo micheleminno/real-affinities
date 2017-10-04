@@ -1,20 +1,20 @@
+# Step 1
 FROM node:8.1.4-alpine
 
+# Step 2
 WORKDIR /app
 
-# add package.json and run npm install before adding the rest of the files
-# this way, you only run npm install when package.json changes
+# Step 3
 ADD package.json /app
+
+# Step 4
 RUN npm install
 
-# add the rest of the files
+# Step 5
 ADD . /app
 
-# change ownership recursively of all files
+# Step 6
 RUN chown root:root . -R
 
+# Step 7
 CMD ["./node_modules/.bin/knex", "migrate:latest"]
-
-
-# execute migrations
-# docker run --net realaffinities_default --rm micheleminno/db-migrations

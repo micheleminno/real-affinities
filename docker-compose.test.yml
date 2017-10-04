@@ -12,15 +12,22 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - "30:3000"
+      - "3000:3000"
+    networks:
+      - nosql
+      - sql
 
   elasticsearch:
-      build: elasticsearch/
+      build:
+        context: ./elasticsearch
+        dockerfile: Dockerfile.test
       volumes:
         - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       ports:
-        - "92:9200"
-        - "93:9300"
+        - "9200:9200"
+        - "9300:9300"
+      networks:
+        - nosql
       environment:
         - MAX_OPEN_FILES=1048576
       cap_add:
@@ -30,6 +37,17 @@ services:
           soft: -1
           hard: -1
 
+  kibana:
+      build: kibana/
+      volumes:
+        - ./kibana/config/:/usr/share/kibana/config
+      ports:
+        - "5601:5601"
+      networks:
+        - nosql
+      depends_on:
+        - elasticsearch
+
   mysql:
     image: mysql:5.5
     environment:
@@ -38,7 +56,9 @@ services:
       - MYSQL_USER=development
       - MYSQL_PASSWORD=development
     ports:
-      - "33:3306"
+      - "3306:3306"
+    networks:
+      - sql
 
   migrations:
     image: micheleminno/db-migrations:latest
@@ -46,3 +66,12 @@ services:
       - NODE_ENV=development
     depends_on:
       - mysql
+    networks:
+      - sql
+
+networks:
+
+  nosql:
+    driver: bridge
+  sql:
+    driver: bridge

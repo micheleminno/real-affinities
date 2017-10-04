@@ -1,5 +1,5 @@
 var elasticsearch = require('elasticsearch');
-var client = new elasticsearch.Client({host: 'localhost:9200', log: 'trace'});
+var client = new elasticsearch.Client();
 
 var OK = 200;
 var NOK = 404;
