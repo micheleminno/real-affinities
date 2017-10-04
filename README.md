@@ -1,4 +1,4 @@
-# real-affinities
+# Real affinities
 Dockerized EEAN web application (Elasticsearch, Express.js, Angular2, Node.js). It allows you to search for useful Twitter profiles (by interest or network proximity).
 
 Browse among Twitter users in order to find users similar to your target.
