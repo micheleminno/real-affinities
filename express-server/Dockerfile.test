@@ -27,4 +27,4 @@ EXPOSE 3000
 
 #Step 10
 #CMD wait-for-it.sh -t 30 localhost:9200 -- mocha "./test/**/*.js" --timeout 40000
-CMD mocha "./test/**/*.js" --timeout 40000
+CMD mocha "./test/test-twitter.js" --timeout 40000
