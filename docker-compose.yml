@@ -24,16 +24,19 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+    networks:
+      - nosql
+      - sql
 
   elasticsearch:
     build: elasticsearch/
-    volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#    volumes:
+#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - "9200:9200"
       - "9300:9300"
     networks:
-     - ek
+     - nosql
     environment:
       - MAX_OPEN_FILES=1048576
     cap_add:
@@ -50,7 +53,7 @@ services:
     ports:
       - "5601:5601"
     networks:
-      - ek
+      - nosql
     depends_on:
       - elasticsearch
 
@@ -63,6 +66,8 @@ services:
       - MYSQL_PASSWORD=production
     ports:
       - "3306:3306"
+    networks:
+      - sql
 
   migrations:
     image: micheleminno/db-migrations:latest
@@ -70,8 +75,12 @@ services:
       - NODE_ENV=production
     depends_on:
       - mysql
+    networks:
+      - sql
 
 networks:
 
-  ek:
+  nosql:
+    driver: bridge
+  sql:
     driver: bridge

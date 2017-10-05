@@ -8,13 +8,13 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 #Step 4
-COPY package.json /usr/src/app
+COPY package.json .
 
 #Step 5
 RUN npm install -q
 
 #Step 6
-COPY . /usr/src/app
+COPY . .
 
 #Step 7
 EXPOSE 4200

@@ -8,7 +8,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 #Step 4
-COPY package.json /usr/src/app
+COPY package.json .
 
 #Step 5
 RUN apk add --no-cache make gcc g++ python
@@ -17,7 +17,7 @@ RUN apk add --no-cache make gcc g++ python
 RUN npm install -q
 
 #Step 7
-COPY . /usr/src/app
+COPY . .
 
 #Step 8
 EXPOSE 3000

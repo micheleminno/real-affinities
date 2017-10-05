@@ -1,27 +1,32 @@
+#Step 1
 FROM node:8.1.4-alpine
 
+#Step 2
 EXPOSE 3000
+
+#Step 3
 ENV NODE_ENV development
+
+#Step 4
 RUN mkdir /app
+
+#Step 5
 WORKDIR /app
 
+#Step 6
+ADD package.json .
 
-# add package.json and run npm install before adding the rest of the files
-# this way, you only run npm install when package.json changes
-ADD /web-server/package.json /app/package.json
-
-# add the rest of the files
-ADD web-server /app
-
+#Step 7
 RUN apk add --no-cache make gcc g++ python
 
+#Step 8
 RUN npm install -gq mocha
+
+#Step 9
 RUN npm install -q
 
-# add the rest of the files
-ADD . /app
+#Step 10
+ADD . .
 
-CMD mocha "web-server/test/**/*.js" --timeout 20000
-
-# to run test on cli
-# docker-compose -f docker-compose.test.yml -p ci up --build
+#Step 11
+CMD mocha "test/**/*.js" --timeout 20000
