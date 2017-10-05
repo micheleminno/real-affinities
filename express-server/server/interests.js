@@ -1,8 +1,8 @@
-var elasticsearch = require('elasticsearch');
-var client = new elasticsearch.Client();
+const elasticsearch = require('elasticsearch');
+const client = new elasticsearch.Client();
 
-var OK = 200;
-var NOK = 404;
+const OK = 200;
+const NOK = 404;
 
 function handleClientResponse(error, data, okMsg, nokMsg, res) {
 
@@ -36,12 +36,12 @@ function refreshIndexes(res, msg) {
 
 exports.add = function(req, res) {
 
-  var name = req.query.name;
-  var nameWithoutInnerSpaces = name.replace(/ /g, "-");
+  const name = req.query.name;
+  const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
-  var query = req.query.query;
+  const query = req.query.query;
 
-  var docToIndex = {
+  const docToIndex = {
 
     index: 'real-affinities',
     type: 'profile',
@@ -60,10 +60,10 @@ exports.add = function(req, res) {
 
 exports.remove = function(req, res) {
 
-  var name = req.query.name;
-  var nameWithoutInnerSpaces = name.replace(/ /g, "-");
+  const name = req.query.name;
+  const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
-  var query = {
+  const query = {
     index: 'real-affinities',
     body: {
       query: {
@@ -91,7 +91,7 @@ exports.remove = function(req, res) {
 
 exports.removeAll = function(req, res) {
 
-  var query = {
+  const query = {
     index: 'real-affinities',
     body: {
       query: {
@@ -116,12 +116,12 @@ exports.removeAll = function(req, res) {
 
 exports.update = function(req, res) {
 
-  var text = req.query.text;
+  const text = req.query.text;
 
-  var name = req.query.name;
-  var nameWithoutInnerSpaces = name.replace(/ /g, "-");
+  const name = req.query.name;
+  const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
-  var params = {
+  const params = {
 
     index: 'real-affinities',
     type: 'profile',
@@ -141,9 +141,9 @@ exports.update = function(req, res) {
 
 exports.list = function(req, res) {
 
-  var withContent = req.query.withContent;
+  const withContent = req.query.withContent;
 
-  var query = {
+  const query = {
     index: 'real-affinities',
     body: {
       query: {
@@ -163,11 +163,11 @@ exports.list = function(req, res) {
 
   client.search(query, function(error, data) {
 
-    var interests = [];
+    let interests = [];
 
-    for (var hitIndex in data.hits.hits) {
+    for (let hitIndex in data.hits.hits) {
 
-      var interest = data.hits.hits[hitIndex]["_source"];
+      const interest = data.hits.hits[hitIndex]["_source"];
       if (withContent && interest.content || !withContent) {
         interests.push(interest);
       }
@@ -179,11 +179,11 @@ exports.list = function(req, res) {
 
 exports.getMatchingProfiles = function(req, res) {
 
-  var interest = req.query.interestName;
+  const interest = req.query.interestName;
 
-  var nameWithoutInnerSpaces = interest.replace(/ /g, "-");
+  const nameWithoutInnerSpaces = interest.replace(/ /g, "-");
 
-  var query = {
+  const query = {
     index: 'real-affinities',
     body: {
       query: {
@@ -204,10 +204,11 @@ exports.getMatchingProfiles = function(req, res) {
 
   client.search(query, function(error, data) {
 
-    var profiles = [];
-    for (var hitIndex in data.hits.hits) {
+    let profiles = [];
 
-      var user = data.hits.hits[hitIndex]["_source"];
+    for (let hitIndex in data.hits.hits) {
+
+      const user = data.hits.hits[hitIndex]["_source"];
       user.id = data.hits.hits[hitIndex]["_id"];
       if (!user.is_interest) {
         profiles.push(user);

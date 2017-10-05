@@ -1,6 +1,6 @@
 
-var OK = 200;
-var NOK = 404;
+const OK = 200;
+const NOK = 404;
 
 
 exports.index = function(req, res) {

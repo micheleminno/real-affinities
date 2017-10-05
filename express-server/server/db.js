@@ -1,5 +1,5 @@
-var config = require('./../config');
+const config = require('./../config');
 
-var db = require('knex')(config);
+const db = require('knex')(config);
 
 module.exports = db;

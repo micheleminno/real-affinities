@@ -1,10 +1,10 @@
-var urlExists = require('url-exists');
+const urlExists = require('url-exists');
 
-var OK = 200;
+const OK = 200;
 
 exports.checkUrl = function(req, res) {
 
-	var url = req.query.url;
+	const url = req.query.url;
 
 	urlExists(url, function(err, exists) {
 

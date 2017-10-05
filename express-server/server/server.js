@@ -1,31 +1,40 @@
-var express = require('express');
+const express = require('express');
 
-var target = require('./target');
-var profiles = require('./profiles');
-var affinities = require('./affinities');
-var interests = require('./interests');
-var twitter = require('./twitter');
-var utilities = require('./utilities');
+const target = require('./target');
+const profiles = require('./profiles');
+const affinities = require('./affinities');
+const interests = require('./interests');
+const twitter = require('./twitter');
+const utilities = require('./utilities');
 
-var app = express();
+const app = express();
+
 module.exports = app;
 
-var allowCrossDomain = function(req, res, next) {
+const crossDomain = function(req, res, next) {
 
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods',
-			'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-	res.setHeader('Access-Control-Allow-Headers',
-			'X-Requested-With,content-type');
-	res.setHeader('Access-Control-Allow-Credentials', true);
+  const origin = req.get('origin');
 
-	next();
+  // TODO Add origin validation
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
+
+  // intercept OPTIONS method
+  if (req.method === 'OPTIONS') {
+
+		res.sendStatus(204);
+  } else {
+
+		next();
+  }
 };
 
-app.use(allowCrossDomain);
+app.use(crossDomain);
 
 app.get('/', function(req, res) {
-	res.send('Welcome');
+  res.send('Welcome');
 });
 
 app.get('/target', target.list);
@@ -53,9 +62,7 @@ app.get('/twitter/users', twitter.users);
 
 app.get('/utilities/url-exists', utilities.checkUrl);
 
-var server = {};
+const server = app.listen(3000, function() {
 
-server = app.listen(3000, function() {
-
-	console.log("Listening to port %s", server.address().port);
+  console.log("Listening to port %s", server.address().port);
 });

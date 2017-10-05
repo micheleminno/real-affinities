@@ -1,8 +1,8 @@
-var affinities = require('./affinities');
-var db = require('./db');
+const affinities = require('./affinities');
+const db = require('./db');
 
-var OK = 200;
-var NOK = 404;
+const OK = 200;
+const NOK = 404;
 
 exports.list = function(req, res) {
 
@@ -10,8 +10,8 @@ exports.list = function(req, res) {
 		.from('target')
 		.then(function(rows) {
 
-			var ids = [];
-			for ( var rowIndex in rows) {
+			let ids = [];
+			for ( let rowIndex in rows) {
 
 				ids.push(rows[rowIndex]["id"]);
 			}
@@ -25,12 +25,12 @@ exports.list = function(req, res) {
 
 exports.add = function(req, res) {
 
-		var userId = req.query.id;
+		const userId = req.query.id;
 
     affinities.add(userId, function(data) {
 
-            var resultStatus = OK;
-            var resultJson = "";
+            let resultStatus = OK;
+            let resultJson = "";
 
             if(data.userId === null) {
 
@@ -41,7 +41,7 @@ exports.add = function(req, res) {
 
             	console.log("Affinities added for user " + userId);
 
-            	var query = "INSERT IGNORE INTO target VALUES (" + userId + ", "
+            	const query = "INSERT IGNORE INTO target VALUES (" + userId + ", "
         					+ data["followers"]["page"] + ", "
         					+ data["friends"]["page"] + ", "
         					+ data["followers"]["cursor"] + ", "
@@ -71,9 +71,9 @@ exports.add = function(req, res) {
 
 exports.remove = function(req, res) {
 
-		var userId = req.query.id;
-    var resultStatus = OK;
-    var resultJson = "";
+		const userId = req.query.id;
+    let resultStatus = OK;
+    let resultJson = "";
 
 		affinities.remove(userId, function(data) {
 

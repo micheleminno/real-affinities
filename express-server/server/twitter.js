@@ -1,40 +1,40 @@
-var utilities = require('./utilities');
+const utilities = require('./utilities');
 
-var Twit = require('twit');
-var fs = require("fs");
-var bigInt = require("big-integer");
+const Twit = require('twit');
+const fs = require("fs");
+const bigInt = require("big-integer");
 
-var natural = require('natural');
-var TfIdf = natural.TfIdf,
+const natural = require('natural');
+const TfIdf = natural.TfIdf,
   tfidf;
 
-var OK = 200;
-var ERROR = 400;
-var TOO_MANY_REQUESTS = 429;
+const OK = 200;
+const ERROR = 400;
+const TOO_MANY_REQUESTS = 429;
 
-var NUMBERS_REGEXP = /\b(\d+)\b/g;
+const NUMBERS_REGEXP = /\b(\d+)\b/g;
 
-var HASHTAGS = 'hashtags';
-var TEXT = 'text';
-var USER_MENTIONS = 'user_mentions';
-var USER = 'user';
-var SCREEN_NAME = 'screen_name';
-var URLS = 'urls';
-var URL = 'url';
-var EXPANDED_URL = 'expanded_url';
-var RETWEETS = 'retweets';
-var RETWEET_COUNT = 'retweet_count';
-var RETWEETED_STATUS = 'retweeted_status';
+const HASHTAGS = 'hashtags';
+const TEXT = 'text';
+const USER_MENTIONS = 'user_mentions';
+const USER = 'user';
+const SCREEN_NAME = 'screen_name';
+const URLS = 'urls';
+const URL = 'url';
+const EXPANDED_URL = 'expanded_url';
+const RETWEETS = 'retweets';
+const RETWEET_COUNT = 'retweet_count';
+const RETWEETED_STATUS = 'retweeted_status';
 
-var UNIGRAMS = 'unigrams';
+const UNIGRAMS = 'unigrams';
 
-var HASHTAGS_AMOUNT = 20;
-var MENTIONS_AMOUNT = 10;
-var URLS_AMOUNT = 3;
-var RETWEETS_AMOUNT = 3;
-var UNIGRAMS_AMOUNT = 100;
+const HASHTAGS_AMOUNT = 20;
+const MENTIONS_AMOUNT = 10;
+const URLS_AMOUNT = 3;
+const RETWEETS_AMOUNT = 3;
+const UNIGRAMS_AMOUNT = 100;
 
-var userAccounts = JSON.parse(fs.readFileSync("./twitter-accounts.json", "utf8"));
+const userAccounts = JSON.parse(fs.readFileSync("./twitter-accounts.json", "utf8"));
 
 function getTwitter(userIndex) {
 
@@ -44,8 +44,8 @@ function getTwitter(userIndex) {
 
 function getSortedKeys(obj) {
 
-  var keys = [];
-  for (var key in obj) {
+  let keys = [];
+  for (let key in obj) {
 
     keys.push(key);
   }
@@ -57,21 +57,21 @@ function getSortedKeys(obj) {
 function sendResponse(resultBox, response) {
 
   console.log("\n\n*******" + HASHTAGS + "*******\n");
-  var hashtagsText = getText(resultBox[HASHTAGS], HASHTAGS_AMOUNT);
+  const hashtagsText = getText(resultBox[HASHTAGS], HASHTAGS_AMOUNT);
 
   console.log("\n\n*******" + USER_MENTIONS + "*******\n");
-  var mentionsText = getText(resultBox[USER_MENTIONS], MENTIONS_AMOUNT);
+  const mentionsText = getText(resultBox[USER_MENTIONS], MENTIONS_AMOUNT);
 
   console.log("\n\n*******" + RETWEETS + "*******\n");
-  var retweetsText = getText(resultBox[RETWEETS], RETWEETS_AMOUNT);
+  const retweetsText = getText(resultBox[RETWEETS], RETWEETS_AMOUNT);
 
   console.log("\n\n*******" + URLS + "*******\n");
-  var urlsText = getText(resultBox[URLS], URLS_AMOUNT);
+  const urlsText = getText(resultBox[URLS], URLS_AMOUNT);
 
   console.log("\n\n*******" + UNIGRAMS + "*******\n");
-  var unigramsText = getText(resultBox[UNIGRAMS], UNIGRAMS_AMOUNT);
+  const unigramsText = getText(resultBox[UNIGRAMS], UNIGRAMS_AMOUNT);
 
-  var text = hashtagsText + " " + mentionsText + " " + retweetsText + " " + urlsText + " " + unigramsText;
+  const text = hashtagsText + " " + mentionsText + " " + retweetsText + " " + urlsText + " " + unigramsText;
 
   console.log("\nResult: " + text);
 
@@ -80,9 +80,11 @@ function sendResponse(resultBox, response) {
 
 function getText(occurrences, amount) {
 
-  var sortedItems = getSortedKeys(occurrences);
-  var text = '';
-  for (sortedItemIndex in sortedItems) {
+  const sortedItems = getSortedKeys(occurrences);
+
+  let text = '';
+
+  for (let sortedItemIndex in sortedItems) {
 
     if (sortedItemIndex < amount) {
 
@@ -101,8 +103,9 @@ function getText(occurrences, amount) {
 
 function isStopword(word, lang) {
 
-  var stopwords = JSON.parse(fs.readFileSync("./stopwords.json", "utf8"));
-  if (stopwords[lang]) {
+  const stopwords = JSON.parse(fs.readFileSync("./stopwords.json", "utf8"));
+
+	if (stopwords[lang]) {
     return stopwords[lang].indexOf(word) > -1;
   }
 
@@ -125,8 +128,8 @@ function updateEntities(tweet, resultBox) {
     }
   }
 
-  var resultText = tweet.text;
-  var entitiesIndices = {};
+  const resultText = tweet.text;
+  let entitiesIndices = {};
 
   // Hashtags
 
@@ -141,8 +144,8 @@ function updateEntities(tweet, resultBox) {
       resultBox[HASHTAGS][hashtag[TEXT]] = 1;
     }
 
-    var startIndex = hashtag['indices'][0];
-    var endIndex = hashtag['indices'][1];
+    const startIndex = hashtag['indices'][0];
+    const endIndex = hashtag['indices'][1];
     entitiesIndices[startIndex] = endIndex;
   });
 
@@ -159,8 +162,8 @@ function updateEntities(tweet, resultBox) {
       resultBox[USER_MENTIONS][userMention[SCREEN_NAME]] = 1;
     }
 
-    var startIndex = userMention['indices'][0];
-    var endIndex = userMention['indices'][1];
+    const startIndex = userMention['indices'][0];
+    const endIndex = userMention['indices'][1];
     entitiesIndices[startIndex] = endIndex;
   });
 
@@ -177,17 +180,17 @@ function updateEntities(tweet, resultBox) {
       resultBox[URLS][url[EXPANDED_URL]] = 1;
     }
 
-    var startIndex = url['indices'][0];
-    var endIndex = url['indices'][1];
+    const startIndex = url['indices'][0];
+    const endIndex = url['indices'][1];
     entitiesIndices[startIndex] = endIndex;
   });
 
-  var offset = 0;
+  let offset = 0;
 
-  for (var startIndex in entitiesIndices) {
+  for (let startIndex in entitiesIndices) {
 
-    var endIndex = entitiesIndices[startIndex];
-    var newIndices = [
+    const endIndex = entitiesIndices[startIndex];
+    const newIndices = [
       startIndex - offset,
       endIndex - offset
     ];
@@ -218,7 +221,7 @@ function updateUnigrams(tfidf, language, docIndex, resultBox) {
 function updateResults(tfidf, language, docIndex, tweet, resultBox) {
 
   // remove entities and update them
-  var text = updateEntities(tweet, resultBox);
+  let text = updateEntities(tweet, resultBox);
 
   // remove numbers
   text = text.replace(NUMBERS_REGEXP, '');
@@ -231,10 +234,10 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 
   console.log(docIndex + " tweets found");
 
-  var twitter = getTwitter(credentialIndex);
+  const twitter = getTwitter(credentialIndex);
   twitter.get(method, options, function(err, data, twitterResponse) {
 
-    var credentialsUser = userAccounts[credentialIndex]["screenName"];
+    const credentialsUser = userAccounts[credentialIndex]["screenName"];
     if (err) {
 
       if (err.code == 88) {
@@ -256,7 +259,7 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
       }
     } else {
 
-      var tweets = data.statuses;
+      const tweets = data.statuses;
 
       if (tweets.length == 0) {
 
@@ -264,17 +267,17 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 
       } else {
 
-        var minId = bigInt(tweets[0].id_str);
+        const minId = bigInt(tweets[0].id_str);
 
-        var firstTweetDate = tweets[0].created_at.substring(4, 19);
+        const firstTweetDate = tweets[0].created_at.substring(4, 19);
 
         console.log("\nReached tweets written on date: " + firstTweetDate);
 
-        for (tweetIndex in tweets) {
+        for (let tweetIndex in tweets) {
 
-          var stringId = tweets[tweetIndex].id_str;
+          const stringId = tweets[tweetIndex].id_str;
 
-          var id = bigInt(stringId);
+          const id = bigInt(stringId);
           if (id.compareTo(minId) < 0) {
             minId = id;
           }
@@ -284,11 +287,11 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
           updateResults(tfidf, options.lang, currentDocIndex, tweets[tweetIndex], resultBox);
         }
 
-        var amount = tweets.length;
+        const amount = tweets.length;
 
         newDocIndex = docIndex + amount;
 
-        var nextMaxId = minId.prev();
+        const nextMaxId = minId.prev();
         options.max_id = nextMaxId.toString();
 
         if (newDocIndex < tweetAmount) {
@@ -305,21 +308,21 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 
 exports.searchTweets = function(req, res) {
 
-  var q = req.query.q;
-  var lang = req.query.lang;
-  var tweetAmount = req.query.amount;
+  const q = req.query.q;
+  const lang = req.query.lang;
+  const tweetAmount = req.query.amount;
 
   console.log("Searching up to " + tweetAmount + " tweets");
 
-  var method = 'search/tweets';
-  var options = {
+  const method = 'search/tweets';
+  const options = {
     q: q,
     count: 100,
     lang: lang
   };
 
   tfidf = new TfIdf();
-  var emptyResultBox = {
+  const emptyResultBox = {
 
     hashtags: {},
     retweets: {},
@@ -335,13 +338,13 @@ exports.searchTweets = function(req, res) {
 
 function call(method, options, credentialIndex, response) {
 
-  console.log("call " + method + " with parameters: " + JSON.stringify(options)
-							+ " with credentials index =  " + credentialIndex);
+  console.log("call " + method + " with parameters " + JSON.stringify(options)
+							+ " and with credentials index =  " + credentialIndex);
 
-  var twitter = getTwitter(credentialIndex);
+  const twitter = getTwitter(credentialIndex);
   twitter.get(method, options, function(err, data, twitterResponse) {
 
-    var credentialsUser = userAccounts[credentialIndex]["screenName"];
+    const credentialsUser = userAccounts[credentialIndex]["screenName"];
     if (err) {
 
       if (err.code == 88) {
@@ -373,12 +376,12 @@ function call(method, options, credentialIndex, response) {
 
 exports.searchUsers = function(req, res) {
 
-  var q = req.query.q;
-  var count = req.query.count;
-	var page = req.query.page;
+  const q = req.query.q;
+  const count = req.query.count;
+	const page = req.query.page;
 
-  var method = 'users/search';
-  var options = {
+  const method = 'users/search';
+  const options = {
     q: q,
     count: count,
     page: page
@@ -389,10 +392,10 @@ exports.searchUsers = function(req, res) {
 
 exports.userTweets = function(req, res) {
 
-  var user = req.query.user;
+  const user = req.query.user;
 
-  var method = 'statuses/user_timeline';
-  var options = {
+  const method = 'statuses/user_timeline';
+  const options = {
     screen_name: user,
     count: 100
   };
@@ -402,10 +405,10 @@ exports.userTweets = function(req, res) {
 
 exports.users = function(req, res) {
 
-  var ids = req.query.ids;
+  const ids = req.query.ids;
 
-  var method = 'users/lookup';
-  var options = {
+  const method = 'users/lookup';
+  const options = {
     user_id: ids
   };
 

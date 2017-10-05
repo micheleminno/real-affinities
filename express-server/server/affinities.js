@@ -1,27 +1,27 @@
-var Twit = require('twit');
-var fs = require('fs');
-var async = require('async');
+const Twit = require('twit');
+const fs = require('fs');
+const async = require('async');
 
-var db = require('./db');
+const db = require('./db');
 
-var OK = 200;
-var NOK = 404;
+const OK = 200;
+const NOK = 404;
 
-var userAccounts = JSON.parse(fs.readFileSync("./twitter-accounts.json", "utf8"));
+const userAccounts = JSON.parse(fs.readFileSync("./twitter-accounts.json", "utf8"));
 
 exports.interesting = function(req, res) {
 
-	var offset = req.query.offset;
-	var amount = req.query.amount;
+	const offset = req.query.offset;
+	const amount = req.query.amount;
 
 	db.raw('SELECT id from affinity '
 				+ 'ORDER BY followed_by DESC, follows DESC LIMIT ' + offset
 				+ ', ' + amount).then(function(response) {
 
-				var ids = [];
-				var rows = response[0];
+				let ids = [];
+				const rows = response[0];
 
-				for ( var rowIndex in rows) {
+				for ( let rowIndex in rows) {
 
 					ids.push(rows[rowIndex]["id"]);
 				}
