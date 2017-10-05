@@ -8,9 +8,6 @@ services:
     depends_on:
       - mysql
       - elasticsearch
-    volumes:
-      - .:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     networks:

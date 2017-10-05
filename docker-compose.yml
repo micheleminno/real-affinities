@@ -4,24 +4,16 @@ services:
 
   angular:
     image: micheleminno/angular-client:latest
-    build:
-      context: ./angular-client
-    volumes:
-      - .:/app
-      - /app/node_modules
+    build: ./angular-client
     ports:
       - "4200:4200"
 
   express:
     image: micheleminno/express-server:latest
-    build:
-      context: ./express-server
+    build: ./express-server
     depends_on:
       - mysql
       - elasticsearch
-    volumes:
-      - .:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     networks:
@@ -30,8 +22,6 @@ services:
 
   elasticsearch:
     build: elasticsearch/
-#    volumes:
-#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - "9200:9200"
       - "9300:9300"
