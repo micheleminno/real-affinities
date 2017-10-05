@@ -5,8 +5,8 @@ const fs = require("fs");
 const bigInt = require("big-integer");
 
 const natural = require('natural');
-const TfIdf = natural.TfIdf,
-  tfidf;
+const TfIdf = natural.TfIdf;
+let tfidf;
 
 const OK = 200;
 const ERROR = 400;
