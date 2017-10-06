@@ -5,8 +5,6 @@ services:
   angular:
     image: micheleminno/angular-client:latest
     build: ./angular-client
-    depends_on:
-      - express
     ports:
       - "4200:4200"
 
