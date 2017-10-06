@@ -38,9 +38,70 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.insertedPotentialAccount = 'i.e. pitchfork'
-    this.insertedFilterKeywords = 'i.e. music*'
+    this.insertedPotentialAccount = 'i.e. pitchfork';
+    this.insertedFilterKeywords = 'i.e. music*';
+    this.showTarget();
   }
+
+  showTarget() {
+
+    this.loading = true;
+    this.status.active = ModeLabels.TARGET_SEARCH;
+
+    this.targetService
+      .getTarget()
+      .subscribe(
+      targetUserIds => {
+
+        if (targetUserIds.length == 0) {
+
+          this.profileList = [];
+          this.loading = false;
+
+        } else {
+
+          this.profilesService
+            .loadProfiles(targetUserIds)
+            .subscribe(
+            targetUsers => {
+
+              for (var targetIndex in targetUsers) {
+
+                targetUsers[targetIndex]["inTarget"] = true;
+              }
+
+              this.twitterService
+                .getProfilesWithLatestTweets(targetUsers)
+                .subscribe(
+                users => {
+
+                  this.profilesService
+                    .updateProfileList(users);
+
+                  this.loading = false;
+
+                  var requests = 0;
+
+                  users.forEach((user, index) => {
+                  
+                      requests++;
+                      this.profilesService
+                        .index(user)
+                        .subscribe(
+                        users => {
+
+                          requests--;
+                          if (requests == 0) {
+
+                            this.assignInterests(users);
+                          }
+                        });
+                    });
+                });
+            });
+        }
+      });
+  };
 
   search(searchKeywords: string) {
 
@@ -283,8 +344,7 @@ export class ProfilesComponent implements OnInit {
 
   addPotentialAccount() {
 
-
-    this.status.active = ModeLabels.SCREENNAME_SEARCH;    
+    this.status.active = ModeLabels.SCREENNAME_SEARCH;
 
     if (!this.addPotentialAccountActive
       || this.insertedPotentialAccount == '') {
@@ -348,10 +408,11 @@ export class ProfilesComponent implements OnInit {
 
 const enum ModeLabels {
 
-  KEYWORDS_SEARCH, // 0
-  SCREENNAME_SEARCH, // 1
-  INTERESTS_SEARCH,  // 2
-  ALGORITHM_SEARCH // 3
+  TARGET_SEARCH, // 0
+  KEYWORDS_SEARCH, // 1
+  SCREENNAME_SEARCH, // 2
+  INTERESTS_SEARCH,  // 3
+  ALGORITHM_SEARCH // 4
 }
 
 export class Mode {
@@ -372,6 +433,7 @@ export class Status {
 
     active?: ModeLabels,
 
+    targetSearchResult?: Mode,
     keywordsSearchResult?: Mode,
     screennameSearchResult?: Mode,
     interestSearchResult?: Mode,
@@ -379,6 +441,7 @@ export class Status {
   ) {
 
     this.active = active || undefined;
+    this.targetSearchResult = targetSearchResult || new Mode();
     this.keywordsSearchResult = keywordsSearchResult || new Mode();
     this.screennameSearchResult = screennameSearchResult || new Mode();
     this.interestSearchResult = interestSearchResult || new Mode();
@@ -386,6 +449,7 @@ export class Status {
   }
 
   active: ModeLabels;
+  targetSearchResult: Mode;
   keywordsSearchResult: Mode;
   screennameSearchResult: Mode;
   interestSearchResult: Mode;

@@ -2,29 +2,33 @@
 FROM node:8.1.4-alpine
 
 #Step 2
-RUN mkdir -p /usr/src/app
+ENV NODE_ENV development
 
 #Step 3
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app
 
 #Step 4
-COPY package.json .
+WORKDIR /usr/src/app
 
 #Step 5
-RUN apk add --no-cache make gcc g++ python bash
+COPY package.json .
 
 #Step 6
-RUN npm install -gq mocha
+RUN apk add --no-cache make gcc g++ python bash
 
 #Step 7
-RUN npm install -q
+RUN npm install -gq mocha
 
 #Step 8
-COPY . .
+RUN npm install -q
 
 #Step 9
-EXPOSE 3000
+COPY . .
 
 #Step 10
+EXPOSE 3000
+
+#Step 11
+CMD ["npm", "test"]
+
 #CMD wait-for-it.sh -t 30 localhost:9200 -- mocha "./test/**/*.js" --timeout 40000
-CMD mocha "./test/test-twitter.js" --timeout 40000

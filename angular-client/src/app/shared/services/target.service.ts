@@ -39,7 +39,7 @@ export class TargetService {
       });
   }
 
-  getTarget(profileId: string) {
+  getTarget() {
 
     return this.apiService.get('/target')
       .map(data => data.targetIds);

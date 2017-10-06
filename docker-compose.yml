@@ -5,6 +5,8 @@ services:
   angular:
     image: micheleminno/angular-client:latest
     build: ./angular-client
+    depends_on:
+      - express
     ports:
       - "4200:4200"
 
@@ -17,8 +19,8 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - nosql
       - sql
+      - nosql
 
   elasticsearch:
     build: elasticsearch/

@@ -1,5 +1,5 @@
 {
-  "name": "real-affinities-webserver",
+  "name": "real-affinities-express",
   "version": "1.0.0",
   "description": "Express.js server",
   "main": "server/Server.js",
@@ -26,7 +26,7 @@
     "chai": "^4.1.1"
   },
   "scripts": {
-    "start": "nodemon server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./server/server.js",
+    "test": "mocha ./test/test-twitter.js --timeout 40000"
   }
 }

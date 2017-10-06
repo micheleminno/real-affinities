@@ -97,6 +97,12 @@ export class ProfilesService {
       .get('/profiles/index?name=' + profile.name);
   }
 
+  loadProfiles(ids: string[]) {
+
+    return this.apiService
+      .get('/profiles/load?ids=' + ids);
+  }
+
   updateProfileImg(profileId: string, normalImageUrl: string) {
 
     var biggerImageUrl = normalImageUrl.substring(0, normalImageUrl.lastIndexOf("normal"));

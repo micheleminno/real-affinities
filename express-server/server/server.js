@@ -43,6 +43,7 @@ app.get('/target/remove', target.remove);
 app.get('/target/delete', target.removeAll);
 app.get('/target/contains', target.contains);
 
+app.get('/profiles/load', profiles.load);
 app.get('/profiles/index', profiles.index);
 app.get('/profiles/matching', profiles.matching);
 

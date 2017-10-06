@@ -8,6 +8,11 @@ exports.index = function(req, res) {
 		// TODO
 };
 
+exports.load = function(req, res) {
+
+		// TODO
+};
+
 this.matching = function(interest) {
 
   interest = interest.replace(" ", "-");
