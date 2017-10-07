@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const target = require('./target');
 const profiles = require('./profiles');
@@ -9,35 +10,15 @@ const utilities = require('./utilities');
 
 const app = express();
 
-module.exports = app;
-
-const crossDomain = function(req, res, next) {
-
-  const origin = req.get('origin');
-
-  // TODO Add origin validation
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
-
-  // intercept OPTIONS method
-  if (req.method === 'OPTIONS') {
-
-		res.sendStatus(204);
-  } else {
-
-		next();
-  }
-};
-
-app.use(crossDomain);
+app.use(cors());
+app.options('*', cors());
 
 app.get('/', function(req, res) {
   res.send('Welcome');
 });
 
-app.get('/target', target.list);
+app.get('/target', cors(), target.list);
+
 app.get('/target/add', target.add);
 app.get('/target/remove', target.remove);
 app.get('/target/delete', target.removeAll);
