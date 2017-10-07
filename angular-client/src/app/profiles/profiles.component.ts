@@ -21,7 +21,6 @@ export class ProfilesComponent implements OnInit {
 
   profileList: Profile[] = [];
   profile: Profile = new Profile('0', []);
-  profileImages: string[] = [];
   interests: Interest[] = [];
   status: Status = new Status();
   rowsAmount: number;
@@ -83,20 +82,20 @@ export class ProfilesComponent implements OnInit {
                   var requests = 0;
 
                   users.forEach((user, index) => {
-                  
-                      requests++;
-                      this.profilesService
-                        .index(user)
-                        .subscribe(
-                        users => {
 
-                          requests--;
-                          if (requests == 0) {
+                    requests++;
+                    this.profilesService
+                      .index(user)
+                      .subscribe(
+                      users => {
 
-                            this.assignInterests(users);
-                          }
-                        });
-                    });
+                        requests--;
+                        if (requests == 0) {
+
+                          this.assignInterests(users);
+                        }
+                      });
+                  });
                 });
             });
         }
@@ -342,22 +341,14 @@ export class ProfilesComponent implements OnInit {
       });
   };
 
-  addPotentialAccount() {
+  addPotentialAccount(potentialAccount) {
 
     this.status.active = ModeLabels.SCREENNAME_SEARCH;
 
-    if (!this.addPotentialAccountActive
-      || this.insertedPotentialAccount == '') {
-
-      return;
-    }
-
-    this.loading = true;
-
-    this.potentialAccount = this.insertedPotentialAccount;
+    // this.loading = true;
 
     this.twitterService
-      .getProfileLatestTweets(this.potentialAccount, '0')
+      .getProfileLatestTweets(potentialAccount, '0')
       .subscribe(
       tweetsInfo => {
 
@@ -366,7 +357,7 @@ export class ProfilesComponent implements OnInit {
           this.loading = false;
 
           alert("No tweets found for user "
-            + this.potentialAccount);
+            + potentialAccount);
 
         } else {
 

@@ -2,52 +2,50 @@ version: "3.3"
 
 services:
 
-  angular:
-    image: micheleminno/angular-client:latest
-    build: ./angular-client
-    ports:
-      - "4200:4200"
+  # angular:
+  #   image: micheleminno/angular-client:latest
+  #   build: ./angular-client
+  #   ports:
+  #     - "4200:4200"
 
   express:
     image: micheleminno/express-server:latest
     build: ./express-server
     depends_on:
       - mysql
-      - elasticsearch
+    #   - elasticsearch
     ports:
       - "3000:3000"
     networks:
       - sql
       - nosql
 
-  elasticsearch:
-    build: elasticsearch/
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-     - nosql
-    environment:
-      - MAX_OPEN_FILES=1048576
-    cap_add:
-      - IPC_LOCK
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    command: echo "Elasticsearch disabled"
-
-  kibana:
-    build: kibana/
-    volumes:
-      - ./kibana/config/:/usr/share/kibana/config
-    ports:
-      - "5601:5601"
-    networks:
-      - nosql
-    depends_on:
-      - elasticsearch
-    command: echo "Kibana disabled"
+  # elasticsearch:
+  #   build: elasticsearch/
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   networks:
+  #    - nosql
+  #   environment:
+  #     - MAX_OPEN_FILES=1048576
+  #   cap_add:
+  #     - IPC_LOCK
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #
+  # kibana:
+  #   build: kibana/
+  #   volumes:
+  #     - ./kibana/config/:/usr/share/kibana/config
+  #   ports:
+  #     - "5601:5601"
+  #   networks:
+  #     - nosql
+  #   depends_on:
+  #     - elasticsearch
 
   mysql:
     image: mysql:5.5

@@ -18,9 +18,9 @@ export class ProfilesService {
     private http: Http
   ) { }
 
-  profileList: Profile[];
+  profileList: Profile[] = [];
   rowsAmount: number;
-  profileImages: string[];
+  profileImages: string[] = [];
 
   update(profile): Observable<Profile> {
 
