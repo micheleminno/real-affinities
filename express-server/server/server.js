@@ -11,14 +11,12 @@ const utilities = require('./utilities');
 const app = express();
 
 app.use(cors());
-app.options('*', cors());
 
 app.get('/', function(req, res) {
   res.send('Welcome');
 });
 
-app.get('/target', cors(), target.list);
-
+app.get('/target', target.list);
 app.get('/target/add', target.add);
 app.get('/target/remove', target.remove);
 app.get('/target/delete', target.removeAll);
