@@ -15,9 +15,7 @@ services:
       - sql
 
   elasticsearch:
-      build:
-        context: ./elasticsearch
-        dockerfile: Dockerfile.test
+      build: ./elasticsearch
       ports:
         - "9200:9200"
         - "9300:9300"
