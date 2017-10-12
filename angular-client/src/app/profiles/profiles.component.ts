@@ -291,6 +291,51 @@ export class ProfilesComponent implements OnInit {
     }
   };
 
+  getProfilesMatching(interest) {
+
+    this.loading = true;
+
+    this.profilesService
+        .getProfilesMatching(
+            interest.name)
+        .subscribe(
+            profiles => {
+
+              if (profiles.length == 0) {
+
+                this.loading = false;
+
+              } else {
+
+                this.twitterService
+                    .getProfilesWithLatestTweets(
+                        profiles).subscribe(
+                        users => {
+
+                          for (let profile of profiles) {
+
+                            profile["origin"] = "interestMatching";
+                            profile["interests"] = [ interest.name ];
+                          }
+
+                          this.profilesService
+                              .updateProfileList(users);
+
+                          this.loading = false;
+
+                          users
+                              .forEach(
+                                  user => {
+
+                                this.profilesService
+                                    .index(user);
+                              });
+                        });
+
+              }
+            });
+  };
+
   showInterestingAccounts() {
 
     this.loading = true;

@@ -39,7 +39,7 @@
           <label for="selectedInterest" class="input-label">Search by interest</label>
           <select class="btn-default dropdown-toggle empty-dropdown" [ngModel]="selectedInterest" ng-options="interest.name for interest in interests"></select>
 
-          <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatchingInterests()">
+          <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatching()">
   						<img src="assets/images/filter.png" width="25" class="img-responsive"
   							alt="Responsive image">
   					</button>
