@@ -19,7 +19,7 @@ export class ProfilesService {
   ) { }
 
   profileList: Profile[] = [];
-  rowsAmount: number;
+  rowsAmount: number = 0;
   profileImages: string[] = [];
 
   update(profile): Observable<Profile> {
