@@ -1,5 +1,6 @@
 #Step 1
-FROM node:8.1.4-alpine
+ARG CODE_VERSION=14.15
+FROM node:${CODE_VERSION}-alpine
 
 #Step 2
 ENV NODE_ENV development

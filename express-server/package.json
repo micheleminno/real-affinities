@@ -21,7 +21,7 @@
     "url-exists": "^1.0.3"
   },
   "devDependencies": {
-    "nodemon": "^nodemon",
+    "nodemon": "^2.0.15",
     "mocha": "^9.2.0",
     "supertest": "^6.2.2",
     "chai": "^4.3.6"
