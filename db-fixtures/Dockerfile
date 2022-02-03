@@ -1,4 +1,4 @@
-FROM node:8.1.4-alpine
+FROM node:fermium-buster
 
 WORKDIR /app
 

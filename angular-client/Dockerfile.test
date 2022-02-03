@@ -1,33 +1,26 @@
-#Step 1
-ARG CODE_VERSION=14.15
-FROM node:${CODE_VERSION}-alpine
 
-#Step 2
+FROM node:fermium-buster
+
+USER root
+
+RUN apt-get update
+
 EXPOSE 3000
 
-#Step 3
 ENV NODE_ENV development
 
-#Step 4
 RUN mkdir /app
 
-#Step 5
 WORKDIR /app
 
-#Step 6
 ADD package.json .
 
-#Step 7
-RUN apk add --no-cache make gcc g++ python
+RUN apt-get install make gcc g++ python
 
-#Step 8
 RUN npm install -gq mocha
 
-#Step 9
 RUN npm install -q
 
-#Step 10
 ADD . .
 
-#Step 11
 CMD mocha "test/**/*.js" --timeout 20000
