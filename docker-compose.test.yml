@@ -11,8 +11,8 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - nosql
-      - sql
+      - nosqlnet
+      - sqlnet
 
   elasticsearch:
       build: ./elasticsearch
@@ -48,23 +48,17 @@ services:
       - MYSQL_DATABASE=real-affinities-test
       - MYSQL_USER=development
       - MYSQL_PASSWORD=development
+    volumes:
+      - ./sql-test-setup:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
     networks:
-      - sql
+      - sqlnet
 
-  migrations:
-    image: micheleminno/db-migrations:latest
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - mysql
-    networks:
-      - sql
 
 networks:
 
-  nosql:
+  nosqlnet:
     driver: bridge
-  sql:
+  sqlnet:
     driver: bridge

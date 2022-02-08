@@ -13,43 +13,42 @@ services:
     build: ./express-server
     depends_on:
       - mysql
-      # - elasticsearch
+      - elasticsearch
     ports:
       - "3000:3000"
     networks:
-      - sql
-      # - nosql
+      - sqlnet
+      - nosqlnet
 
-  # elasticsearch:
-  #   build: elasticsearch/
-  #   ports:
-  #     - "9200:9200"
-  #     - "9300:9300"
-  #   networks:
-  #    - nosql
-  #   environment:
-  #     - MAX_OPEN_FILES=1048576
-  #   cap_add:
-  #     - IPC_LOCK
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #
-  # kibana:
-  #   build: kibana/
-  #   volumes:
-  #     - ./kibana/config/:/usr/share/kibana/config
-  #   ports:
-  #     - "5601:5601"
-  #   networks:
-  #     - nosql
-  #   depends_on:
-  #     - elasticsearch
+  elasticsearch:
+    build: elasticsearch/
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+     - nosqlnet
+    environment:
+      - MAX_OPEN_FILES=1048576
+    cap_add:
+      - IPC_LOCK
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    build: kibana/
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config
+    ports:
+      - "5601:5601"
+    networks:
+      - nosqlnet
+    depends_on:
+      - elasticsearch
 
   mysql:
-    image: mysql:8
-    platform: linux/x86_64
+    image: mysql/mysql-server:latest
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -58,21 +57,14 @@ services:
       - MYSQL_PASSWORD=production
     ports:
       - "3306:3306"
+    volumes:
+      - ./sql-setup:/docker-entrypoint-initdb.d
     networks:
-      - sql
-
-  migrations:
-    image: micheleminno/db-migrations:latest
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      - mysql
-    networks:
-      - sql
+      - sqlnet
 
 networks:
 
-  # nosql:
-  #   driver: bridge
-  sql:
+  nosqlnet:
+    driver: bridge
+  sqlnet:
     driver: bridge
