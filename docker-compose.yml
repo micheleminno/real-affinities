@@ -20,33 +20,6 @@ services:
       - sqlnet
       - nosqlnet
 
-  elasticsearch:
-    build: elasticsearch/
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-     - nosqlnet
-    environment:
-      - MAX_OPEN_FILES=1048576
-    cap_add:
-      - IPC_LOCK
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-
-  kibana:
-    build: kibana/
-    volumes:
-      - ./kibana/config/:/usr/share/kibana/config
-    ports:
-      - "5601:5601"
-    networks:
-      - nosqlnet
-    depends_on:
-      - elasticsearch
-
   mysql:
     image: mysql/mysql-server:latest
     restart: always
@@ -61,6 +34,62 @@ services:
       - ./sql-setup:/docker-entrypoint-initdb.d
     networks:
       - sqlnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PASSWORD=password
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - sqlnet
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx2g
+      - MAX_OPEN_FILES=1048576
+      - http.cors.allow-origin=*
+      - http.cors.enabled=true
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elastic-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - nosqlnet
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.reporting.enabled=false
+      - xpack.grokdebugger.enabled=false
+    ports:
+      - "5601:5601"
+    networks:
+      - nosqlnet
+    depends_on:
+      - elasticsearch
+
 
 networks:
 

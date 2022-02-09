@@ -7,4 +7,4 @@ twitter-accounts.env
 artifacts/
 .settings/
 package-lock.json
-
+.elastic-data/
