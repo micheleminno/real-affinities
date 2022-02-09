@@ -47,23 +47,25 @@ services:
       - sqlnet
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
-    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
     environment:
       - node.name=elasticsearch
       - cluster.name=es-docker-cluster
       - discovery.type=single-node
+      - discovery.zen.minimum_master_nodes=1
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx2g
-      - MAX_OPEN_FILES=1048576
-      - http.cors.allow-origin=*
-      - http.cors.enabled=true
-      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
-      - http.cors.allow-credentials=true
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     volumes:
       - ./elastic-data:/usr/share/elasticsearch/data
     ports:
@@ -73,8 +75,6 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.0
-    ports:
-      - "5601:5601"
     environment:
       - ELASTICSEARCH_URL=http://localhost:9200
       - xpack.security.enabled=false
