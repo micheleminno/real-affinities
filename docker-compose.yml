@@ -11,14 +11,14 @@ services:
   express:
     image: micheleminno/express-server:latest
     build: ./express-server
-    depends_on:
-      - mysql
-      - elasticsearch
     ports:
       - "3000:3000"
     networks:
       - sqlnet
       - nosqlnet
+    depends_on:
+      - mysql
+      - elasticsearch
 
   mysql:
     image: mysql/mysql-server:latest
@@ -45,6 +45,8 @@ services:
       - 8081:80
     networks:
       - sqlnet
+    depends_on:
+      - mysql
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0

@@ -165,11 +165,13 @@ exports.list = function(req, res) {
 
     let interests = [];
 
-    for (let hitIndex in data.hits.hits) {
+    if(data) {
+      for (let hitIndex in data.hits.hits) {
 
-      const interest = data.hits.hits[hitIndex]["_source"];
-      if (withContent && interest.content || !withContent) {
-        interests.push(interest);
+        const interest = data.hits.hits[hitIndex]["_source"];
+        if (withContent && interest.content || !withContent) {
+          interests.push(interest);
+        }
       }
     }
 
