@@ -1,5 +1,5 @@
 const elasticsearch = require('elasticsearch');
-const client = new elasticsearch.Client();
+const client = new elasticsearch.Client( {host: process.env.ELASTICSEARCH_URL} );
 
 const OK = 200;
 const NOK = 404;
@@ -165,7 +165,7 @@ exports.list = function(req, res) {
 
     let interests = [];
 
-    if(data) {
+    if(data && data.hits) {
       for (let hitIndex in data.hits.hits) {
 
         const interest = data.hits.hits[hitIndex]["_source"];

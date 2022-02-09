@@ -11,6 +11,8 @@ services:
   express:
     image: micheleminno/express-server:latest
     build: ./express-server
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "3000:3000"
     networks:

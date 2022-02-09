@@ -13,6 +13,8 @@ const app = express();
 app.use(cors());
 
 app.get('/', function(req, res) {
+  
+  console.log("Server is working!");
   res.send('Welcome');
 });
 
