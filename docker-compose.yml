@@ -60,6 +60,10 @@ services:
       - xpack.monitoring.enabled=false
       - xpack.ml.enabled=false
       - xpack.watcher.enabled=false
+      - "http.cors.allow-origin=http://localhost"
+      - "http.cors.enabled=true"
+      - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+      - "http.cors.allow-credentials=true"
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
     ulimits:
       memlock:

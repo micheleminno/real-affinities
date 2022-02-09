@@ -1,5 +1,5 @@
 const elasticsearch = require('elasticsearch');
-const client = new elasticsearch.Client({ node: 'http://localhost:9200' });
+const client = new elasticsearch.Client();
 
 const OK = 200;
 const NOK = 404;
