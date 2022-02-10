@@ -8,3 +8,4 @@ artifacts/
 .settings/
 package-lock.json
 elastic-data/**
+elastic-test-data/**
