@@ -5,7 +5,7 @@ const NOK = 404;
 
 exports.index = function(req, res) {
 
-  const profile = req.body;
+  const profile = JSON.parse(req.body);
 
   var deferred = $q.defer();
 
