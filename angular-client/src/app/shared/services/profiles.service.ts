@@ -64,6 +64,9 @@ export class ProfilesService {
 
                 this.profileList[profilesIndex]["interests"]
                   .push(newInterests[interestIndex]);
+
+                console.log("Interest " + newInterests[interestIndex]["name"] + " added to profile " +
+                                this.profileList[profilesIndex]["screen_name"]);
               }
             }
           }
@@ -81,6 +84,7 @@ export class ProfilesService {
         this.updateProfileImg(profileId, actualImageUrl);
 
         profilesToAdd.push(profiles[newProfilesIndex]);
+        console.log("New profile " + profiles[newProfilesIndex]["screen_name"])
       }
     }
 
@@ -93,11 +97,15 @@ export class ProfilesService {
 
   index(profile: Profile) {
 
+    console.log("Indexing profile with name " + profile.name);
+
     return this.apiService
       .get('/profiles/index?name=' + profile.name);
   }
 
   loadProfiles(ids: string[]) {
+
+    console.log("Loading " + ids.length + " profiles from ids");
 
     return this.apiService
       .get('/profiles/load?ids=' + ids);
@@ -127,15 +135,16 @@ export class ProfilesService {
                 resultUrl = biggerImageUrl
                   + ".png";
               }
-              console.log("Img url: " + resultUrl);
 
               this.profileImages[profileId] = resultUrl;
+
+              console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
             });
         } else {
 
-          console.log("Img url: " + resultUrl);
-
           this.profileImages[profileId] = resultUrl;
+
+          console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
         }
       });
   };
@@ -147,6 +156,8 @@ export class ProfilesService {
 	}
 
   getProfilesMatching(interest: Interest): Observable<Profile[]> {
+
+    console.log("Getting profiles matching with interest " + interest.name);
 
     return this.apiService
       .get('/profiles/matching?name=' + interest.name + '&query=' + interest.query);

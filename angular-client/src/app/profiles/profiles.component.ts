@@ -52,6 +52,8 @@ export class ProfilesComponent implements OnInit {
       .subscribe(
       targetUserIds => {
 
+        console.log("Retrieved " + targetUserIds.length + " target profile ids");
+
         if (targetUserIds.length == 0) {
 
           this.profileList = [];
@@ -64,6 +66,8 @@ export class ProfilesComponent implements OnInit {
             .subscribe(
             targetUsers => {
 
+              console.log("Loaded " + targetUsers.length + " profiles");
+
               for (var targetIndex in targetUsers) {
 
                 targetUsers[targetIndex]["inTarget"] = true;
@@ -73,6 +77,8 @@ export class ProfilesComponent implements OnInit {
                 .getProfilesWithLatestTweets(targetUsers)
                 .subscribe(
                 users => {
+
+                  console.log("Loaded latests tweets of " + users.length + " profiles");
 
                   this.profilesService
                     .updateProfileList(users);
@@ -92,6 +98,7 @@ export class ProfilesComponent implements OnInit {
                         requests--;
                         if (requests == 0) {
 
+                          console.log("All profiles indexed");
                           this.assignInterests(users);
                         }
                       });
@@ -105,6 +112,7 @@ export class ProfilesComponent implements OnInit {
   search(searchKeywords: string) {
 
     //this.isSubmitting = true;
+    console.log("Search profiles by keywords '" + searchKeywords + "'");
 
     this.status.active = ModeLabels.KEYWORDS_SEARCH;
 
@@ -119,6 +127,8 @@ export class ProfilesComponent implements OnInit {
         //this.isSubmitting = false;
         //this.onToggle.emit(false);
 
+        console.log("Found " + profiles.length + " profiles");
+
         this.status.keywordsSearchResult.items = actualItems
           + profiles.length;
 
@@ -132,6 +142,8 @@ export class ProfilesComponent implements OnInit {
             .subscribe(
             inTarget => {
 
+              console.log("Profile " + profiles[profileIndex]["screen_name"] + " is in target");
+
               requests--;
               profiles[profileIndex]["origin"] = "keywordsSearchResult";
               profiles[profileIndex]["inTarget"] = inTarget;
@@ -142,19 +154,23 @@ export class ProfilesComponent implements OnInit {
                   .getProfilesWithLatestTweets(profiles).subscribe(
                   filledProfiles => {
 
+                    console.log("Loaded " + profiles.length + " profiles with latest tweets");
+
                     this.profilesService
                       .updateProfileList(filledProfiles)
                       .subscribe(
-                      data => {
 
-                        //this.isSubmitting = false;
-                        //this.onToggle.emit(true);
-                      },
-                      err => err //this.isSubmitting = false
-                      );
-                  });
+                        data => {
+
+                          console.log("Profile list updated");
+                          //this.isSubmitting = false;
+                          //this.onToggle.emit(true);
+                        },
+                        err => err //this.isSubmitting = false
+                        );
+                    });
+                }
               }
-            }
             )
         }
       },
@@ -284,6 +300,8 @@ export class ProfilesComponent implements OnInit {
 
                     profile.interests
                       .push(interest);
+
+                    console.log("Interest '" + interest.name + "' added to profile '" + profile.screen_name + "'");
                   }
                 });
             });
