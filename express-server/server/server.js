@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 
 app.get('/', function(req, res) {
-  
+
   console.log("Server is working!");
   res.send('Welcome');
 });
@@ -48,3 +48,5 @@ const server = app.listen(3000, function() {
 
   console.log("Listening to port %s", server.address().port);
 });
+
+module.exports = server;

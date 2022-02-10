@@ -14,35 +14,8 @@ services:
       - nosqlnet
       - sqlnet
 
-  elasticsearch:
-      build: ./elasticsearch
-      ports:
-        - "9200:9200"
-        - "9300:9300"
-      networks:
-        - nosql
-      environment:
-        - MAX_OPEN_FILES=1048576
-      cap_add:
-        - IPC_LOCK
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
-
-  kibana:
-      build: kibana/
-      volumes:
-        - ./kibana/config/:/usr/share/kibana/config
-      ports:
-        - "5601:5601"
-      networks:
-        - nosql
-      depends_on:
-        - elasticsearch
-
   mysql:
-    image: mysql:5.7.34
+    image: mysql/mysql-server:latest
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=real-affinities-test
@@ -54,6 +27,54 @@ services:
       - "3306:3306"
     networks:
       - sqlnet
+
+  elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:6.0.0
+      ports:
+        - "9200:9200"
+        - "9300:9300"
+      networks:
+        - nosqlnet
+      environment:
+        - node.name=elasticsearch
+        - cluster.name=es-docker-cluster
+        - discovery.type=single-node
+        - discovery.zen.minimum_master_nodes=1
+        - bootstrap.memory_lock=true
+        - bootstrap.system_call_filter=false
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=false
+        - xpack.ml.enabled=false
+        - xpack.watcher.enabled=false
+        - "http.cors.allow-origin=http://localhost"
+        - "http.cors.enabled=true"
+        - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+        - "http.cors.allow-credentials=true"
+        - "ES_JAVA_OPTS=-Xms1g -Xmx2g"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+        nofile:
+          soft: 65536
+          hard: 65536
+
+  kibana:
+      image: docker.elastic.co/kibana/kibana:6.0.0
+      environment:
+        - ELASTICSEARCH_URL=http://192.168.176.2:9200
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=false
+        - xpack.ml.enabled=false
+        - xpack.graph.enabled=false
+        - xpack.reporting.enabled=false
+        - xpack.grokdebugger.enabled=false
+      ports:
+        - "5601:5601"
+      networks:
+        - nosqlnet
+      depends_on:
+        - elasticsearch
 
 
 networks:

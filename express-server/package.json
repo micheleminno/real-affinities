@@ -28,6 +28,6 @@
   },
   "scripts": {
     "start": "nodemon ./server/server.js",
-    "test": "mocha ./test/test-twitter.js --timeout 40000"
+    "test": "mocha ./test/**/*.js --timeout 40000"
   }
 }
