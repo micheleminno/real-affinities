@@ -25,7 +25,7 @@ app.get('/target/delete', target.removeAll);
 app.get('/target/contains', target.contains);
 
 app.get('/profiles/load', profiles.load);
-app.get('/profiles/index', profiles.index);
+app.post('/profiles/index', profiles.index);
 app.get('/profiles/matching', profiles.matching);
 
 app.get('/affinities/interesting', affinities.interesting);

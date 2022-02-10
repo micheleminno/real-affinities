@@ -100,7 +100,7 @@ export class ProfilesService {
     console.log("Indexing profile with name " + profile.name);
 
     return this.apiService
-      .get('/profiles/index?name=' + profile.name);
+      .post('/profiles/index', profile);
   }
 
   loadProfiles(ids: string[]) {
