@@ -28,4 +28,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "test"]
+#CMD ["npm", "test"]
+
+CMD wait-for-it.sh -t 30 localhost:9200 -- mocha "./test/**/*.js" --timeout 40000

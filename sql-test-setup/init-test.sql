@@ -1,5 +1,5 @@
 
-ALTER USER 'production'@'%' IDENTIFIED WITH mysql_native_password BY 'production';
+ALTER USER 'development'@'%' IDENTIFIED WITH mysql_native_password BY 'development';
 
 FLUSH PRIVILEGES;
 

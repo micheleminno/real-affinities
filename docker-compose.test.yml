@@ -5,6 +5,8 @@ services:
     build:
       context: ./express-server
       dockerfile: Dockerfile.test
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     depends_on:
       - mysql
       - elasticsearch
@@ -35,6 +37,8 @@ services:
         - "9300:9300"
       networks:
         - nosqlnet
+      volumes:
+        - ./elastic-test-data:/usr/share/elasticsearch/data
       environment:
         - node.name=elasticsearch
         - cluster.name=es-docker-cluster
