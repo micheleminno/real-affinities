@@ -28,7 +28,7 @@ describe("Interests", function() {
                           .query({name: 'int', query: 'all'})
                           .set('Accept', /json/)
                           .expect('Content-Type', /json/)
-                          .expect(NOK)
+                          .expect(OK)
 													.end(done);
 		});
 

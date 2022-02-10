@@ -1,5 +1,5 @@
 const elasticsearch = require('elasticsearch');
-const client = new elasticsearch.Client( {host: process.env.ELASTICSEARCH_URL} );
+const client = new elasticsearch.Client( {host: process.env.ELASTICSEARCH_URL, apiVersion: "6.8"} );
 
 const OK = 200;
 const NOK = 404;
