@@ -30,4 +30,6 @@ EXPOSE 3000
 
 #CMD ["npm", "test"]
 
-CMD wait-for-it.sh -t 30 localhost:9200 -- mocha "./test/**/*.js" --timeout 40000
+RUN ["chmod", "+x", "./wait-for-it.sh"]
+
+CMD ./wait-for-it.sh -t 30 localhost:9200 -- mocha "./test/**/*.js" --timeout 40000
