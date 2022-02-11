@@ -14,6 +14,8 @@ exports.interesting = function(req, res) {
 	const offset = req.query.offset;
 	const amount = req.query.amount;
 
+	console.log("Getting " + amount + " interesting profile ids");
+
 	db.raw('SELECT id from affinity '
 				+ 'ORDER BY followed_by DESC, follows DESC LIMIT ' + offset
 				+ ', ' + amount).then(function(response) {

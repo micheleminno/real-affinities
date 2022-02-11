@@ -5,7 +5,10 @@ const NOK = 404;
 
 exports.index = function(req, res) {
 
-  const profile = JSON.parse(req.body);
+  const profileParam = req.body;
+  console.log("Indexing profile: " + profileParam);
+
+  const profile = JSON.parse(profileParam);
 
   var deferred = $q.defer();
 
@@ -17,7 +20,7 @@ exports.index = function(req, res) {
     contentDates.push(profile.tweets[tweetIndex].created_at);
   }
 
-  var indexParams = {
+  const docToIndex = {
 
     index : 'real-affinities',
     type : 'profile',
@@ -38,9 +41,8 @@ exports.index = function(req, res) {
     }
   };
 
-  client.index(indexParams, function(error, data) {
-
-    deferred.resolve(data);
+  client.index(docToIndex, function(error, data) {
+    handleClientResponse(error, data, "profile indexed", "error indexing new profile", res);
   });
 
   return deferred.promise;
@@ -51,6 +53,8 @@ exports.index = function(req, res) {
 exports.load = function(req, res) {
 
     const userIds = req.query.ids;
+
+    console.log("Loading profiles with ids: " + userIds);
 
     var deferred = $q.defer();
 
@@ -76,6 +80,7 @@ exports.load = function(req, res) {
 				profiles.push(user);
 			}
 
+      console.log("Profiles loaded");
 			deferred.resolve(profiles);
 		});
 
@@ -85,6 +90,7 @@ exports.load = function(req, res) {
 this.matching = function(interest) {
 
   interest = interest.replace(" ", "-");
+  console.log("Searching for profiles matching with interest: " + interest);
 
   var deferred = $q.defer();
 
@@ -118,6 +124,8 @@ this.matching = function(interest) {
       }
     }
 
+    console.log("Found " + profiles.length + " matching profiles");
+    
     deferred.resolve(profiles);
   });
 

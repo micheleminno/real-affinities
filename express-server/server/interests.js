@@ -39,6 +39,8 @@ exports.add = function(req, res) {
   const name = req.query.name;
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
+  console.log("Adding new interest: " + nameWithoutInnerSpaces);
+
   const query = req.query.query;
 
   const docToIndex = {
@@ -62,6 +64,8 @@ exports.remove = function(req, res) {
 
   const name = req.query.name;
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
+
+  console.log("Removing interest: " + nameWithoutInnerSpaces);
 
   const query = {
     index: 'real-affinities',
@@ -90,6 +94,8 @@ exports.remove = function(req, res) {
 };
 
 exports.removeAll = function(req, res) {
+
+  console.log("Removing all interests");
 
   const query = {
     index: 'real-affinities',
@@ -121,6 +127,8 @@ exports.update = function(req, res) {
   const name = req.query.name;
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
+  console.log("Updating interest: " + nameWithoutInnerSpaces);
+
   const params = {
 
     index: 'real-affinities',
@@ -142,6 +150,8 @@ exports.update = function(req, res) {
 exports.list = function(req, res) {
 
   const withContent = req.query.withContent;
+
+  console.log("Getting all interests");
 
   const query = {
     index: 'real-affinities',
@@ -185,6 +195,8 @@ exports.getMatchingProfiles = function(req, res) {
 
   const nameWithoutInnerSpaces = interest.replace(/ /g, "-");
 
+  console.log("Getting profiles matching with interest: " + nameWithoutInnerSpaces);
+
   const query = {
     index: 'real-affinities',
     body: {
@@ -216,6 +228,8 @@ exports.getMatchingProfiles = function(req, res) {
         profiles.push(user);
       }
     }
+
+    console.log("Found " + profiles.length + " matching profiles");
 
     return profiles;
   });

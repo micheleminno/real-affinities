@@ -6,6 +6,8 @@ const NOK = 404;
 
 exports.list = function(req, res) {
 
+  console.log("Getting all profile ids in target");
+  
   db.select('id')
 		.from('target')
 		.then(function(rows) {
