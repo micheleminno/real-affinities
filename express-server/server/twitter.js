@@ -397,8 +397,7 @@ exports.userTweets = function(req, res) {
   const method = 'statuses/user_timeline';
   const options = {
     screen_name: user,
-    count: 100,
-    trim_user: true
+    count: 100
   };
 
   call(method, options, 0, res);
