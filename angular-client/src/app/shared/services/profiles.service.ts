@@ -81,7 +81,9 @@ export class ProfilesService {
         var actualImageUrl = profiles[newProfilesIndex]["profile_image_url"];
         var profileId = profiles[newProfilesIndex]["id"];
 
-        this.updateProfileImg(profileId, actualImageUrl);
+        if(actualImageUrl) {
+          this.updateProfileImg(profileId, actualImageUrl);
+        }
 
         profilesToAdd.push(profiles[newProfilesIndex]);
         console.log("New profile " + profiles[newProfilesIndex]["screen_name"])
@@ -97,7 +99,7 @@ export class ProfilesService {
 
   index(profile: Profile) {
 
-    console.log("Indexing profile with name " + profile.name);
+    console.log("Indexing profile " + JSON.stringify(profile));
 
     return this.apiService
       .post('/profiles/index', profile);

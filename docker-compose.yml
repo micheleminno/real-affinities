@@ -7,6 +7,8 @@ services:
     build: ./angular-client
     ports:
       - "4200:4200"
+    volumes:
+      - ./angular-client:/app/angular-client
 
   express:
     image: micheleminno/express-server:latest
@@ -15,6 +17,8 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "3000:3000"
+    volumes:
+      - ./express-server:/app/express-server
     networks:
       - sqlnet
       - nosqlnet
