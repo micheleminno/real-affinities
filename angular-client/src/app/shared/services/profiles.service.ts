@@ -99,18 +99,17 @@ export class ProfilesService {
 
   index(profile: Profile) {
 
-    console.log("Indexing profile " + JSON.stringify(profile));
+    console.log("Indexing a new profile");
+    console.log(profile);
 
-    return this.apiService
-      .post('/profiles/index', profile);
+    return this.apiService.post('/profiles/index', profile);
   }
 
   loadProfiles(ids: string[]) {
 
     console.log("Loading " + ids.length + " profiles from ids");
 
-    return this.apiService
-      .get('/profiles/load?ids=' + ids);
+    return this.apiService.get('/profiles/load?ids=' + ids);
   }
 
   updateProfileImg(profileId: string, normalImageUrl: string) {

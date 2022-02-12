@@ -18,21 +18,31 @@ export class InterestsService {
     private http: HttpClient
   ) { }
 
+  callService(serviceUrl) {
+
+    console.log("Calling service: " + serviceUrl);
+    
+    return this.apiService.get(serviceUrl);
+  }
+
   add(interest: Interest): Observable<boolean> {
 
-    return this.apiService
-      .get('/interest/add?name=' + interest.name + '&query=' + interest.query);
+    const serviceUrl = '/interest/add?name=' + interest.name + '&query=' + interest.query;
+
+    callService(serviceUrl);
   }
 
   remove(interestName: string): Observable<boolean> {
 
-    return this.apiService
-      .get('/interest/remove?name=' + interestName);
+    const serviceUrl = '/interest/remove?name=' + interestName;
+
+    callService(serviceUrl);
   }
 
   update(name: string, text: string): Observable<boolean> {
 
-    return this.apiService
-      .get('/interest/update?name=' + name + '&text=' + text);
+    const serviceUrl = '/interest/update?name=' + name + '&text=' + text;
+
+    callService(serviceUrl);
   }
 }
