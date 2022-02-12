@@ -10,13 +10,16 @@
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4">
       <div class="big-spacer"></div>
-      <div>
-        <label for="interestName" class="input-label">Name</label>
-        <input class="search-field form-control" type="text" placeholder="i.e. live music" id="interestName" [(ngModel)]="interestName" />
-      </div>
-      <div style="margin-top: 20px; margin-bottom: 24px;">
-        <label for="interestQuery" class="input-label">Query</label>
-        <input class="form-control" style="font-style: italic" type="text" placeholder="i.e. playing live OR concert OR street music" id="interestQuery" (keyup.enter)="addInterest()" [(ngModel)]="interestQuery" />
+      <div [formGroup]="newInterestForm" (ngSubmit)="addInterest()">
+        <div>
+          <label for="name" class="input-label">Name</label>
+          <input class="search-field form-control" type="text" placeholder="i.e. live music" id="name" formControlName="name" />
+        </div>
+        <div style="margin-top: 20px; margin-bottom: 24px;">
+          <label for="query" class="input-label">Query</label>
+          <input class="form-control" style="font-style: italic" type="text" placeholder="i.e. playing live OR concert OR street music"
+                  id="query" (keyup.enter)="addInterest()" formControlName="query" />
+        </div>
       </div>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -27,6 +30,7 @@
             </button>
       </div>
     </div>
+
     <div class="col-lg-3 col-md-3 col-sm-3">
 
       <div style="display: inline-block;">

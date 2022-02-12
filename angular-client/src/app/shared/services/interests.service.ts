@@ -18,7 +18,7 @@ export class InterestsService {
     private http: HttpClient
   ) { }
 
-  callService(serviceUrl): Observable<boolean> {
+  callService(serviceUrl: string): Observable<boolean> {
 
     console.log("Calling service: " + serviceUrl);
 
@@ -26,6 +26,8 @@ export class InterestsService {
   }
 
   add(interest: Interest): Observable<boolean> {
+
+    console.log("Interest to add:" + JSON.stringify(interest));
 
     const serviceUrl = '/interest/add?name=' + interest.name + '&query=' + interest.query;
 

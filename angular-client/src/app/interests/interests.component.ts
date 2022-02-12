@@ -26,8 +26,8 @@ export class InterestsComponent implements OnInit {
   ) {
 
     this.newInterestForm = this.fb.group({
-      interestName: '',
-      interestQuery: ''
+      name: '',
+      query: ''
     });
     // Optional: subscribe to changes on the form
     // this.interestsForm.valueChanges.subscribe(values => this.updateInterest(values));
@@ -57,9 +57,12 @@ export class InterestsComponent implements OnInit {
     this.tweetAmounts = [firstAmount, secondAmount, thirdAmount, fourthAmount];
   }
 
-  submitForm() {
+  addInterest() {
+
+    //TODO: this.interestActive = true
 
     this.isSubmitting = true;
+
     this.createNewInterest(this.newInterestForm.value);
 
     this.interestsService
@@ -76,12 +79,6 @@ export class InterestsComponent implements OnInit {
   createNewInterest(values: Object) {
 
     (<any>Object).assign(this.interest, values);
-  }
-
-  addInterest() {
-
-    //TODO: this.interestActive = true
-    this.interestsService.add(this.interest);
   }
 
   collectInterest(query, languageLabel, amount) {
