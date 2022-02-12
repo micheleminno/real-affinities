@@ -259,6 +259,8 @@ exports.getMatchingProfiles = function(req, res) {
 
     console.log("Found " + profiles.length + " matching profiles");
 
-    // TODO
+    res.status(OK).json({
+      profiles : profiles
+    });
   });
 };

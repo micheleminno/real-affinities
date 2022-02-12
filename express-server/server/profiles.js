@@ -8,8 +8,6 @@ exports.index = function(req, res) {
 
   const profile = JSON.parse(profileParam);
 
-  var deferred = $q.defer();
-
   var content = "";
   var contentDates = [];
   for ( var tweetIndex in profile.tweets) {
@@ -42,8 +40,6 @@ exports.index = function(req, res) {
   client.index(docToIndex, function(error, data) {
     handleClientResponse(error, data, "profile indexed", "error indexing new profile", res);
   });
-
-  return deferred.promise;
 };
 
 exports.load = function(req, res) {
@@ -81,7 +77,9 @@ exports.load = function(req, res) {
 			}
 
       console.log(profiles.length + " profiles loaded");
-      //TODO
+      res.status(OK).json({
+        profiles : profiles
+      });
 		});
 };
 
@@ -128,6 +126,8 @@ this.matching = function(interest) {
 
     console.log("Found " + profiles.length + " matching profiles");
 
-    // TODO
+    res.status(OK).json({
+      profiles : profiles
+    });
   });
 };
