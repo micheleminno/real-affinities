@@ -52,8 +52,6 @@ exports.load = function(req, res) {
 
     console.log("Loading profiles with ids: " + userIds);
 
-    var deferred = $q.defer();
-
 		var query = {
 			index : 'real-affinities',
 			body : {
@@ -83,18 +81,14 @@ exports.load = function(req, res) {
 			}
 
       console.log(profiles.length + " profiles loaded");
-			deferred.resolve(profiles);
+      //TODO
 		});
-
-		return deferred.promise;
 };
 
 this.matching = function(interest) {
 
   interest = interest.replace(" ", "-");
   console.log("Searching for profiles matching with interest: " + interest);
-
-  var deferred = $q.defer();
 
   var query = {
     index : 'real-affinities',
@@ -134,8 +128,6 @@ this.matching = function(interest) {
 
     console.log("Found " + profiles.length + " matching profiles");
 
-    deferred.resolve(profiles);
+    // TODO
   });
-
-  return deferred.promise;
 };

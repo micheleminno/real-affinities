@@ -153,8 +153,6 @@ exports.list = function(req, res) {
 
   console.log("Getting all interests");
 
-  var deferred = $q.defer();
-
   const query = {
     index: 'real-affinities',
     body: {
@@ -207,10 +205,10 @@ exports.list = function(req, res) {
     }
 
     console.log("Found " + interests.length + " interests");
-    deferred.resolve(interests);
+    res.status(OK).json({
+      interests : interests
+    });
   });
-
-  return deferred.promise;
 };
 
 exports.getMatchingProfiles = function(req, res) {
@@ -218,8 +216,6 @@ exports.getMatchingProfiles = function(req, res) {
   const interest = req.query.interestName;
 
   const nameWithoutInnerSpaces = interest.replace(/ /g, "-");
-
-  var deferred = $q.defer();
 
   console.log("Getting profiles matching with interest: " + nameWithoutInnerSpaces);
 
@@ -263,8 +259,6 @@ exports.getMatchingProfiles = function(req, res) {
 
     console.log("Found " + profiles.length + " matching profiles");
 
-    deferred.resolve(profiles);
+    // TODO
   });
-
-  return deferred.promise;
 };
