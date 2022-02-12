@@ -29,7 +29,7 @@ export class InterestsService {
 
     console.log("Interest to add:" + JSON.stringify(interest));
 
-    const serviceUrl = '/interest/add?name=' + interest.name + '&query=' + interest.query;
+    const serviceUrl = '/interests/add?name=' + interest.name + '&query=' + interest.query;
 
     return this.callService(serviceUrl);
   }
