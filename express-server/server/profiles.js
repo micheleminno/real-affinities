@@ -1,3 +1,6 @@
+const { Client } = require('@elastic/elasticsearch');
+const client = new Client({ node: process.env.ELASTICSEARCH_URL });
+
 const OK = 200;
 const NOK = 404;
 
@@ -62,19 +65,31 @@ exports.load = function(req, res) {
 
 		client.search(query, function (error, data) {
 
+      data = data.body;
+      var profiles = [];
+
       if(error) {
         console.error(error);
       } else {
-        console.log("Profiles retrieved from ES");
+        console.log(data);
+
+        if ( typeof data.hits !== 'undefined' && data.hits &&
+             typeof data.hits.hits !== 'undefined' && data.hits.hits) {
+
+           const numberOfProfiles = data.hits.hits.length;
+           console.log(numberOfProfiles + " profiles retrieved from ES");
+
+           for (let hitIndex in data.hits.hits) {
+
+             const profile = data.hits.hits[hitIndex]["_source"];
+
+             profiles.push(profile);
+           }
+        } else {
+
+            console.log("Data hits missing");
+        }
       }
-
-			var profiles = [];
-			for ( var hitIndex in data.hits.hits) {
-
-				var user = data.hits.hits[hitIndex]["_source"];
-				user.id = data.hits.hits[hitIndex]["_id"];
-				profiles.push(user);
-			}
 
       console.log(profiles.length + " profiles loaded");
       res.status(OK).json({
@@ -108,24 +123,33 @@ this.matching = function(interest) {
 
   client.search(query, function(error, data) {
 
+    data = data.body;
+    var profiles = [];
+
     if(error) {
       console.error(error);
     } else {
-      console.log("Matching interests retrieved from ES");
-    }
+      console.log(data);
 
-    var profiles = [];
-    for ( var hitIndex in data.hits.hits) {
+      if ( typeof data.hits !== 'undefined' && data.hits &&
+           typeof data.hits.hits !== 'undefined' && data.hits.hits) {
 
-      var user = data.hits.hits[hitIndex]["_source"];
-      user.id = data.hits.hits[hitIndex]["_id"];
-      if (!user.is_interest) {
-        profiles.push(user);
+         const numberOfProfiles = data.hits.hits.length;
+         console.log(numberOfProfiles + " profiles retrieved from ES");
+
+         for (let hitIndex in data.hits.hits) {
+
+           const profile = data.hits.hits[hitIndex]["_source"];
+
+           profiles.push(profile);
+         }
+      } else {
+
+          console.log("Data hits missing");
       }
     }
 
-    console.log("Found " + profiles.length + " matching profiles");
-
+    console.log(profiles.length + " profiles loaded");
     res.status(OK).json({
       profiles : profiles
     });

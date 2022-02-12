@@ -1,5 +1,5 @@
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: process.env.ELASTICSEARCH_URL })
+const { Client } = require('@elastic/elasticsearch');
+const client = new Client({ node: process.env.ELASTICSEARCH_URL });
 
 const OK = 200;
 const NOK = 404;
@@ -187,17 +187,17 @@ exports.list = function(req, res) {
         if ( typeof data.hits !== 'undefined' && data.hits &&
              typeof data.hits.hits !== 'undefined' && data.hits.hits) {
 
-               const numberOfInterests = data.hits.hits.length;
-               console.log(numberOfInterests + " interests retrieved from ES");
+           const numberOfInterests = data.hits.hits.length;
+           console.log(numberOfInterests + " interests retrieved from ES");
 
-               for (let hitIndex in data.hits.hits) {
+           for (let hitIndex in data.hits.hits) {
 
-                 const interest = data.hits.hits[hitIndex]["_source"];
-                 if (withContent && interest.content || !withContent) {
+             const interest = data.hits.hits[hitIndex]["_source"];
+             if (withContent && interest.content || !withContent) {
 
-                   interests.push(interest);
-                 }
-               }
+               interests.push(interest);
+             }
+           }
         } else {
 
             console.log("Data hits missing");
@@ -240,21 +240,33 @@ exports.getMatchingProfiles = function(req, res) {
 
   client.search(query, function(error, data) {
 
-    if(error) {
-      console.error(error);
-    } else {
-      console.log("Matching profiles retrieved from ES");
-    }
-
+    data = data.body;
     let profiles = [];
 
-    for (let hitIndex in data.hits.hits) {
+    if(error) {
 
-      const user = data.hits.hits[hitIndex]["_source"];
-      user.id = data.hits.hits[hitIndex]["_id"];
-      if (!user.is_interest) {
-        profiles.push(user);
-      }
+      console.error(error);
+
+    } else {
+
+        console.log(data);
+
+        if ( typeof data.hits !== 'undefined' && data.hits &&
+             typeof data.hits.hits !== 'undefined' && data.hits.hits) {
+
+           const numberOfProfiles = data.hits.hits.length;
+           console.log(numberOfProfiles + " profiles retrieved from ES");
+
+           for (let hitIndex in data.hits.hits) {
+
+             const profile = data.hits.hits[hitIndex]["_source"];
+
+             profiles.push(profile);
+           }
+        } else {
+
+            console.log("Data hits missing");
+        }
     }
 
     console.log("Found " + profiles.length + " matching profiles");
