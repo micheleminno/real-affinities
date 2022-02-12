@@ -12,7 +12,7 @@ function handleClientResponse(error, data, okMsg, nokMsg, res) {
     res.status(NOK).json({nokMsg: error})
   } else {
 
-    console.log(JSON.stringify(data));
+    console.log(data);
 
     refreshIndexes(res, okMsg);
   }
