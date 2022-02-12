@@ -18,10 +18,10 @@ export class InterestsService {
     private http: HttpClient
   ) { }
 
-  callService(serviceUrl) {
+  callService(serviceUrl): Observable<boolean> {
 
     console.log("Calling service: " + serviceUrl);
-    
+
     return this.apiService.get(serviceUrl);
   }
 
@@ -29,20 +29,20 @@ export class InterestsService {
 
     const serviceUrl = '/interest/add?name=' + interest.name + '&query=' + interest.query;
 
-    callService(serviceUrl);
+    return this.callService(serviceUrl);
   }
 
   remove(interestName: string): Observable<boolean> {
 
     const serviceUrl = '/interest/remove?name=' + interestName;
 
-    callService(serviceUrl);
+    return this.callService(serviceUrl);
   }
 
   update(name: string, text: string): Observable<boolean> {
 
     const serviceUrl = '/interest/update?name=' + name + '&text=' + text;
 
-    callService(serviceUrl);
+    return this.callService(serviceUrl);
   }
 }
