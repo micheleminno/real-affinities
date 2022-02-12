@@ -1,7 +1,5 @@
-
 const OK = 200;
 const NOK = 404;
-
 
 exports.index = function(req, res) {
 
@@ -48,8 +46,6 @@ exports.index = function(req, res) {
   return deferred.promise;
 };
 
-
-
 exports.load = function(req, res) {
 
     const userIds = req.query.ids;
@@ -72,6 +68,12 @@ exports.load = function(req, res) {
 
 		client.search(query, function (error, data) {
 
+      if(error) {
+        console.error(error);
+      } else {
+        console.log("Profiles retrieved from ES");
+      }
+
 			var profiles = [];
 			for ( var hitIndex in data.hits.hits) {
 
@@ -80,7 +82,7 @@ exports.load = function(req, res) {
 				profiles.push(user);
 			}
 
-      console.log("Profiles loaded");
+      console.log(profiles.length + " profiles loaded");
 			deferred.resolve(profiles);
 		});
 
@@ -114,6 +116,12 @@ this.matching = function(interest) {
 
   client.search(query, function(error, data) {
 
+    if(error) {
+      console.error(error);
+    } else {
+      console.log("Matching interests retrieved from ES");
+    }
+
     var profiles = [];
     for ( var hitIndex in data.hits.hits) {
 
@@ -125,7 +133,7 @@ this.matching = function(interest) {
     }
 
     console.log("Found " + profiles.length + " matching profiles");
-    
+
     deferred.resolve(profiles);
   });
 

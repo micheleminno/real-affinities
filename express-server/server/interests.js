@@ -1,5 +1,5 @@
-const elasticsearch = require('elasticsearch');
-const client = new elasticsearch.Client( {host: process.env.ELASTICSEARCH_URL, apiVersion: "6.8"} );
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: process.env.ELASTICSEARCH_URL })
 
 const OK = 200;
 const NOK = 404;
@@ -153,6 +153,8 @@ exports.list = function(req, res) {
 
   console.log("Getting all interests");
 
+  var deferred = $q.defer();
+
   const query = {
     index: 'real-affinities',
     body: {
@@ -173,19 +175,39 @@ exports.list = function(req, res) {
 
   client.search(query, function(error, data) {
 
+    data = data.body;
     let interests = [];
 
-    if(data && data.hits) {
-      for (let hitIndex in data.hits.hits) {
+    if(error) {
 
-        const interest = data.hits.hits[hitIndex]["_source"];
-        if (withContent && interest.content || !withContent) {
-          interests.push(interest);
+      console.error(error);
+
+    } else {
+
+        console.log(data);
+
+        if ( typeof data.hits !== 'undefined' && data.hits &&
+             typeof data.hits.hits !== 'undefined' && data.hits.hits) {
+
+               const numberOfInterests = data.hits.hits.length;
+               console.log(numberOfInterests + " interests retrieved from ES");
+
+               for (let hitIndex in data.hits.hits) {
+
+                 const interest = data.hits.hits[hitIndex]["_source"];
+                 if (withContent && interest.content || !withContent) {
+
+                   interests.push(interest);
+                 }
+               }
+        } else {
+
+            console.log("Data hits missing");
         }
-      }
     }
 
-    return interests;
+    console.log("Found " + interests.length + " interests");
+    deferred.resolve(interests);
   });
 };
 
@@ -217,6 +239,12 @@ exports.getMatchingProfiles = function(req, res) {
   };
 
   client.search(query, function(error, data) {
+
+    if(error) {
+      console.error(error);
+    } else {
+      console.log("Matching profiles retrieved from ES");
+    }
 
     let profiles = [];
 
