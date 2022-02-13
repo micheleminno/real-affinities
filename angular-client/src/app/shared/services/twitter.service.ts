@@ -54,16 +54,18 @@ export class TwitterService {
       .map(data => data);
   }
 
-  searchTweets(query: string, language: string, amount: number) {
+  searchTweets(query: string, language: string, amount: number): Observable<string> {
 
     console.log("Searching tweets about an interest");
 
     const serviceUrl = '/twitter/search/tweets?q=' + query
-            + "&lang=" + language + "&amount="
-            + amount;
+            + "&lang=" + language + "&amount=" + amount;
 
     console.log("Calling service: " + serviceUrl);
 
-    return this.apiService.get(serviceUrl).map(data => data);
+    return this.apiService.get(serviceUrl)
+              .map(resultData => {
+                return resultData.value;
+              });
   }
 }

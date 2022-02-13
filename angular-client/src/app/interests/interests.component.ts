@@ -94,11 +94,10 @@ export class InterestsComponent implements OnInit {
 
     this.isSubmitting = true;
 
-    this.twitterService.searchTweets(query, languageLabel,
+    this.twitterService.searchTweets(encodeURI(query), languageLabel,
       amount)
-      .map(data => {
+      .map(interestText => {
 
-        var interestText = data.value;
         this.interestsService.update(this.interest.name, interestText);
       })
   }
