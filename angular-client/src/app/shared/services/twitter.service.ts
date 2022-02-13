@@ -56,8 +56,14 @@ export class TwitterService {
 
   searchTweets(query: string, language: string, amount: number) {
 
-    return this.apiService.get('/twitter/search/tweets?q=' + query
+    console.log("Searching tweets about an interest");
+
+    const serviceUrl = '/twitter/search/tweets?q=' + query
             + "&lang=" + language + "&amount="
-            + amount).map(data => data);
+            + amount;
+
+    console.log("Calling service: " + serviceUrl);
+
+    return this.apiService.get(serviceUrl).map(data => data);
   }
 }

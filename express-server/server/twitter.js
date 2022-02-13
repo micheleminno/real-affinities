@@ -128,7 +128,7 @@ function updateEntities(tweet, resultBox) {
     }
   }
 
-  const resultText = tweet.text;
+  let resultText = tweet.text;
   let entitiesIndices = {};
 
   // Hashtags
@@ -267,7 +267,7 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 
       } else {
 
-        const minId = bigInt(tweets[0].id_str);
+        let minId = bigInt(tweets[0].id_str);
 
         const firstTweetDate = tweets[0].created_at.substring(4, 19);
 

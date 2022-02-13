@@ -13,8 +13,6 @@ export class InterestsComponent implements OnInit {
 
   interestList: Interest[] = [];
   interest: Interest = new Interest('', '');
-  languages: Language[] = [];
-  tweetAmounts: TweetAmount[] = [];
   newInterestForm: FormGroup;
   errors: Object = {};
   isSubmitting = false;
@@ -46,17 +44,6 @@ export class InterestsComponent implements OnInit {
 
     this.insertedInterestName = 'interest name';
     this.insertedInterestQuery = 'interest query';
-
-    var englishLanguage = new Language('en', 'english');
-    var italianLanguage = new Language('it', 'italian');
-    this.languages = [englishLanguage, italianLanguage];
-
-    var firstAmount = new TweetAmount(1000, '1K tweets');
-    var secondAmount = new TweetAmount(10000, '10K tweets');
-    var thirdAmount = new TweetAmount(100000, '100K tweets');
-    var fourthAmount = new TweetAmount(1000000, '1M tweets');
-
-    this.tweetAmounts = [firstAmount, secondAmount, thirdAmount, fourthAmount];
 
     this.showInterests();
   }
