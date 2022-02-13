@@ -13,8 +13,8 @@ export class InterestsComponent implements OnInit {
 
   interestList: Interest[] = [];
   interest: Interest = new Interest('', '');
-  languages: Language[];
-  tweetAmounts: TweetAmount[];
+  languages: Language[] = [];
+  tweetAmounts: TweetAmount[] = [];
   newInterestForm: FormGroup;
   errors: Object = {};
   isSubmitting = false;
