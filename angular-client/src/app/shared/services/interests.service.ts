@@ -25,6 +25,20 @@ export class InterestsService {
     return this.apiService.get(serviceUrl);
   }
 
+  loadInterests(): Observable<Interest[]>  {
+
+    console.log("Loading all interests");
+
+    const serviceUrl = '/interests';
+
+    console.log("Calling service: " + serviceUrl);
+
+    return this.apiService.get(serviceUrl)
+      .map(resultData => {
+        return resultData.interests;
+      });
+  }
+
   add(interest: Interest): Observable<boolean> {
 
     console.log("Interest to add:" + JSON.stringify(interest));

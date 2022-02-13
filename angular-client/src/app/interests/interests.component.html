@@ -63,20 +63,20 @@
         <div class="spacer"></div>
 
         <span style="margin-right: 5px">Tweets in </span>
-        <select class="btn-danger dropdown-toggle" [(ngModel)]="interest.language">
+        <select class="btn-danger dropdown-toggle" [(ngModel)]="language">
           <option *ngFor="let language of languages" [value]="language.id">{{language.label}}</option>
         </select>
 
         <div class="spacer"></div>
 
         <span style="margin-right: 5px">Collect up to</span>
-        <select class="btn-danger dropdown-toggle" [(ngModel)]="interest.tweetAmount">
+        <select class="btn-danger dropdown-toggle" [(ngModel)]="tweetAmount">
           <option *ngFor="let tweetAmount of tweetAmounts" [ngValue]="tweetAmount.value">{{tweetAmount.label}}</option>
         </select>
 
         <div class="spacer"></div>
 
-        <button class="btn btn-danger" id="btn_searchInterest" type="button" (click)="collectInterest(interest, interestLanguage, tweetAmount)">
+        <button class="btn btn-danger" id="btn_searchInterest" type="button" (click)="collectInterest(interest, language, tweetAmount)">
           <img src="assets/images/search.png" width="25" class="img-responsive"
             alt="Responsive image">
         </button>

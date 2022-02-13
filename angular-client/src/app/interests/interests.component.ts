@@ -11,12 +11,14 @@ import { InterestsService, TwitterService } from '../shared/services';
 })
 export class InterestsComponent implements OnInit {
 
+  interestList: Interest[] = [];
   interest: Interest = new Interest('', '');
   languages: Language[];
   tweetAmounts: TweetAmount[];
   newInterestForm: FormGroup;
   errors: Object = {};
   isSubmitting = false;
+
 
   constructor(
     private router: Router,
@@ -55,12 +57,28 @@ export class InterestsComponent implements OnInit {
     var fourthAmount = new TweetAmount(1000000, '1M tweets');
 
     this.tweetAmounts = [firstAmount, secondAmount, thirdAmount, fourthAmount];
+
+    this.showInterests();
+  }
+
+  showInterests() {
+
+    this.interestsService
+      .loadInterests()
+      .subscribe(
+      interests => {
+
+        console.log("Retrieved " + interests.length + " interests");
+        console.log(interests);
+
+        this.interestList = [... this.interestList.concat(interests)];
+
+      });
   }
 
   addInterest() {
 
     //TODO: this.interestActive = true
-
     this.isSubmitting = true;
 
     this.createNewInterest(this.newInterestForm.value);
@@ -68,7 +86,11 @@ export class InterestsComponent implements OnInit {
     this.interestsService
       .add(this.interest)
       .subscribe(
-      updatedInterest => this.router.navigateByUrl('/interests/'),
+      updatedInterest => {
+        if(updatedInterest) {
+            this.interestList.push(this.interest);
+        }
+      },
       err => {
         this.errors = err;
         this.isSubmitting = false;
@@ -90,7 +112,7 @@ export class InterestsComponent implements OnInit {
       .map(data => {
 
         var interestText = data.value;
-        //TODO this.interestsService.update(this.interest.name, interestText);
+        this.interestsService.update(this.interest.name, interestText);
       })
   }
 
