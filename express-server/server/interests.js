@@ -170,7 +170,9 @@ exports.list = function(req, res) {
 
   client.search(query, function(error, data) {
 
-    data = data.body;
+    //data = data.body;
+    console.log(data);
+    
     let interests = [];
 
     if(error) {
