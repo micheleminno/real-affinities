@@ -142,8 +142,12 @@ export class ProfilesComponent implements OnInit {
             .subscribe(
             inTarget => {
 
-              console.log("Profile " + profiles[profileIndex]["screen_name"] + " is in target");
-
+              if(inTarget) {
+                console.log("Profile " + profiles[profileIndex]["screen_name"] + " is in target");
+              } else {
+                console.log("Profile " + profiles[profileIndex]["screen_name"] + " isn't in target");
+              }
+              
               requests--;
               profiles[profileIndex]["origin"] = "keywordsSearchResult";
               profiles[profileIndex]["inTarget"] = inTarget;

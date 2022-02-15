@@ -46,7 +46,6 @@ exports.add = function(req, res) {
   const docToIndex = {
 
     index: 'real-affinities',
-    type: 'profile',
     id: nameWithoutInnerSpaces,
     body: {
       name: name,
@@ -74,7 +73,6 @@ exports.remove = function(req, res) {
         bool: {
           must: {
             ids: {
-              type: 'profile',
               values: [nameWithoutInnerSpaces]
             }
           },
@@ -132,7 +130,6 @@ exports.update = function(req, res) {
   const params = {
 
     index: 'real-affinities',
-    type: 'profile',
     id: nameWithoutInnerSpaces,
     body: {
 
@@ -226,7 +223,6 @@ exports.getMatchingProfiles = function(req, res) {
         more_like_this: {
           like: [
             {
-              _type: 'profile',
               _id: nameWithoutInnerSpaces
             }
           ],

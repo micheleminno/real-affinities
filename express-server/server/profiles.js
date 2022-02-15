@@ -22,7 +22,6 @@ exports.index = function(req, res) {
   const docToIndex = {
 
     index : 'real-affinities',
-    type : 'profile',
     id : profile.id,
     body : {
       screen_name : profile.screen_name,
@@ -56,7 +55,6 @@ exports.load = function(req, res) {
 			body : {
 				query : {
 					ids : {
-						type : "profile",
 						values : userIds
 					}
 				}
@@ -110,7 +108,6 @@ this.matching = function(interest) {
         more_like_this : {
           like : [
           {
-            _type : 'profile',
             _id : interest
           }],
           fields : ['content'],
