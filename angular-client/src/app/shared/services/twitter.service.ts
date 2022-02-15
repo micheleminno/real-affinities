@@ -15,11 +15,16 @@ export class TwitterService {
 
   getProfileLatestTweets(screenName: string, index: string) {
 
-    return this.apiService.get('/twitter/tweets?user=' + screenName)
-      .map(data => [data, index]);
+    console.log("Getting latest tweets of a user");
+
+    const serviceUrl = '/twitter/tweets?user=' + screenName;
+
+    return this.apiService.get(serviceUrl).map(data => [data, index]);
   }
 
   getProfilesWithLatestTweets(users: Profile[]): Observable<Profile[]> {
+
+    console.log("Getting latest tweets of some profiles");
 
     var filledUsers = [];
     for (var profileIndex in users) {
@@ -41,17 +46,21 @@ export class TwitterService {
 
   lookupUsers(ids: string[]) {
 
-    var idsParam = ids.join();
+    console.log("Looking up some users");
 
-    return this.apiService.get('/twitter/users?ids=' + idsParam)
-      .map(data => data);
+    var idsParam = ids.join();
+    const serviceUrl = '/twitter/users?ids=' + idsParam;
+    
+    return this.apiService.get(serviceUrl).map(data => data);
   }
 
   searchUsers(userQuery: string, page: number) {
 
-    return this.apiService.get('/twitter/search/users?q=' + userQuery + "&page="
-      + page)
-      .map(data => data);
+    console.log("Searching users by some keywords");
+
+    const serviceUrl = '/twitter/search/users?q=' + userQuery + "&page=" + page;
+
+    return this.apiService.get(serviceUrl).map(data => data);
   }
 
   searchTweets(query: string, language: string, amount: number): Observable<string> {
