@@ -13,9 +13,12 @@ export class TargetService {
 
   isInTarget(profileId: string): Observable<boolean> {
 
-    return this.apiService.get('/target/contains?id=' + profileId)
-      .map(data => {
+    console.log("Asking if profile with id " + profileId + " is in target");
 
+    const serviceUrl = '/target/contains?id=' + profileId;
+
+    return this.apiService.get(serviceUrl)
+      .map(data => {
         var isPresent = data > 0 ? true : false;
         return isPresent;
       });
@@ -23,16 +26,23 @@ export class TargetService {
 
   addToTarget(profileId: string) {
 
-    return this.apiService.get('/target/add?id=' + profileId)
-      .map(data => {
+    console.log("Adding profile with id " + profileId + " to target");
 
+    const serviceUrl = '/target/add?id=' + profileId;
+
+    return this.apiService.get(serviceUrl)
+      .map(data => {
         return data ? true : false;
       });
   }
 
   removeFromTarget(profileId: string) {
 
-    return this.apiService.get('/target/remove?id=' + profileId)
+    console.log("Removing profile with id " + profileId + " from target");
+
+    const serviceUrl = '/target/remove?id=' + profileId;
+
+    return this.apiService.get(serviceUrl)
       .map(data => {
 
         return data ? true : false;
@@ -41,20 +51,32 @@ export class TargetService {
 
   getTarget() {
 
-    return this.apiService.get('/target')
+    console.log("Getting all profile ids in target");
+
+    const serviceUrl = '/target';
+
+    return this.apiService.get(serviceUrl)
       .map(data => data.targetIds);
   }
 
 
   getInterestingUsers(offset: number, amount: number) {
 
-    return this.apiService.get('/affinities/interesting?offset=' + offset + '&amount=' + amount)
+    console.log("Getting interesting profiles");
+
+    const serviceUrl = '/affinities/interesting?offset=' + offset + '&amount=' + amount;
+
+    return this.apiService.get(serviceUrl)
       .map(data => data.interestingIds);
   }
 
   deleteTarget() {
 
-    return this.apiService.get('/target/delete')
+    console.log("Deleting target");
+
+    const serviceUrl = '/target/delete';
+
+    return this.apiService.get(serviceUrl)
       .map(data => data);
   }
 }

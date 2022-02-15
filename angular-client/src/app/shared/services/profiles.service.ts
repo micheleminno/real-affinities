@@ -90,7 +90,7 @@ export class ProfilesService {
       }
     }
 
-    this.profileList = this.profileList.concat(profilesToAdd);
+    this.profileList = [... this.profileList.concat(profilesToAdd)];
     this.rowsAmount += Math
       .ceil(profilesToAdd.length / 4);
 

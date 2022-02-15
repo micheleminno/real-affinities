@@ -50,7 +50,7 @@ export class TwitterService {
 
     var idsParam = ids.join();
     const serviceUrl = '/twitter/users?ids=' + idsParam;
-    
+
     return this.apiService.get(serviceUrl).map(data => data);
   }
 
@@ -59,6 +59,8 @@ export class TwitterService {
     console.log("Searching users by some keywords");
 
     const serviceUrl = '/twitter/search/users?q=' + userQuery + "&page=" + page;
+
+    console.log("Calling service: " + serviceUrl);
 
     return this.apiService.get(serviceUrl).map(data => data);
   }

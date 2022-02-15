@@ -50,12 +50,16 @@ export class InterestsService {
 
   remove(interestName: string): Observable<boolean> {
 
+    console.log("Removing interest " + interestName);
+
     const serviceUrl = '/interest/remove?name=' + interestName;
 
     return this.callService(serviceUrl);
   }
 
   update(name: string, text: string): Observable<boolean> {
+
+    console.log("Updating interest " + name + " with text: " + text);
 
     const serviceUrl = '/interest/update?name=' + name + '&text=' + text;
 
