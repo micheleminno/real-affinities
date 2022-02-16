@@ -36,9 +36,11 @@
 
         <div style="display: inline-block; margin-left: 30px;" id="getByInterest">
           <label for="selectedInterest" class="input-label">Search by interest</label>
-          <select class="btn-default dropdown-toggle empty-dropdown" [ngModel]="selectedInterest" ng-options="interest.name for interest in interests"></select>
+          <select class="btn-default dropdown-toggle empty-dropdown" [ngModel]="selectedInterest">
+            <option *ngFor="let interest of interests" [ngValue]="interest">{{interest.name}}</option>
+          </select>
 
-          <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatching()">
+          <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatching(selectedInterest)">
   						<img src="assets/images/filter.png" width="25" class="img-responsive"
   							alt="Responsive image">
   					</button>
