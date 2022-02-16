@@ -41,11 +41,11 @@
         <button class="btn btn-primary" type="button" (click)="goToProfilesPage()">Manage profiles</button>
       </div>
 
-      <!-- Loading image
 
-		 <div style="margin-left: 174px; margin-top: 55px" ng-style="loading && {'visibility': 'visible'} || !loading && {'visibility': 'hidden'}">
+
+		 <div style="margin-left: 174px; margin-top: 55px" [ngStyle]="loading && {'visibility': 'visible'} || !loading && {'visibility': 'hidden'}">
         <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
-      </div>-->
+      </div>
 
     </div>
   </div>

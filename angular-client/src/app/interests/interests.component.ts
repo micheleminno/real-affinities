@@ -15,7 +15,7 @@ export class InterestsComponent implements OnInit {
   interest: Interest = new Interest('', '');
   newInterestForm: FormGroup;
   errors: Object = {};
-  isSubmitting = false;
+  loading = false;
 
 
   constructor(
@@ -67,8 +67,7 @@ export class InterestsComponent implements OnInit {
 
   addInterest() {
 
-    //TODO: this.interestActive = true
-    this.isSubmitting = true;
+    this.loading = true;
 
     this.createNewInterest(this.newInterestForm.value);
 
@@ -82,16 +81,14 @@ export class InterestsComponent implements OnInit {
       },
       err => {
         this.errors = err;
-        this.isSubmitting = false;
+        this.loading = false;
       }
       );
   }
 
   deleteInterest(interest: Interest) {
 
-    //TODO: this.interestActive = true
-    console.log('deleteInterest() called');
-    this.isSubmitting = true;
+    this.loading = true;
 
     this.interestsService
       .remove(interest.name)
@@ -103,16 +100,14 @@ export class InterestsComponent implements OnInit {
       },
       err => {
         this.errors = err;
-        this.isSubmitting = false;
+        this.loading = false;
       }
       );
   }
 
   editInterest(name: string, content: string) {
 
-    //TODO: this.interestActive = true
-
-    this.isSubmitting = true;
+    this.loading = true;
 
     this.interestsService
       .update(name, encodeURI(content))
@@ -124,7 +119,7 @@ export class InterestsComponent implements OnInit {
       },
       err => {
         this.errors = err;
-        this.isSubmitting = false;
+        this.loading = false;
       }
       );
   }
@@ -136,12 +131,13 @@ export class InterestsComponent implements OnInit {
 
   collectInterest(query, languageLabel, amount) {
 
-    this.isSubmitting = true;
+    this.loading = true;
 
     this.twitterService.searchTweets(encodeURI(query), languageLabel,
       amount)
       .map(interestText => {
 
+        this.loading = false;
         this.interestsService.update(this.interest.name, interestText);
       })
   }
