@@ -12,14 +12,6 @@ import { ProfilesService, InterestsService, TwitterService, TargetService } from
 })
 export class ProfilesComponent implements OnInit {
 
-  constructor(
-    private router: Router,
-    private profilesService: ProfilesService,
-    private interestsService: InterestsService,
-    private targetService: TargetService,
-    private twitterService: TwitterService
-  ) { }
-
   profileList: Profile[] = [];
   profile: Profile = new Profile('0', []);
   interests: Interest[] = [];
@@ -35,6 +27,14 @@ export class ProfilesComponent implements OnInit {
 
   insertedFilterKeywords: string;
   filterKeywords: string;
+
+  constructor(
+    private router: Router,
+    private profilesService: ProfilesService,
+    private interestsService: InterestsService,
+    private targetService: TargetService,
+    private twitterService: TwitterService
+  ) { }
 
   ngOnInit() {
 
