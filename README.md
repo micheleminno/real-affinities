@@ -41,24 +41,22 @@ Or, if you already know, entering the username of an existing Twitter user.
 - Wait for Elastic Search and Kibana to be up and running and create the index. Go to http://localhost:5601 -> Dev Tools and run the following query:
   
   ```
-  PUT real-affinities
+  PUT /real-affinities
   {
     "settings": {
     "number_of_shards": 2,
     "number_of_replicas": 1
     },
     "mappings": {
-      "profile": {
-        "properties": {
-          "name": {
-            "type": "text"
-          },
-          "query": {
-            "type": "text"
-          },
-          "is_interest": {
-            "type": "boolean"
-          }
+      "properties": {
+        "name": {
+          "type": "text"
+        },
+        "query": {
+          "type": "text"
+        },
+        "is_interest": {
+          "type": "boolean"
         }
       }
     }
