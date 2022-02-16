@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Profile, Interest } from '../shared/models';
-import { ProfilesService, TwitterService, TargetService } from '../shared/services';
+import { ProfilesService, InterestsService, TwitterService, TargetService } from '../shared/services';
 
 
 @Component({
@@ -15,6 +15,7 @@ export class ProfilesComponent implements OnInit {
   constructor(
     private router: Router,
     private profilesService: ProfilesService,
+    private interestsService: InterestsService,
     private targetService: TargetService,
     private twitterService: TwitterService
   ) { }
@@ -41,6 +42,16 @@ export class ProfilesComponent implements OnInit {
 
     this.insertedPotentialAccount = 'i.e. pitchfork';
     this.insertedFilterKeywords = 'i.e. music*';
+    this.interestsService.loadInterests()
+        .subscribe(
+        interests => {
+
+          console.log("Retrieved " + interests.length + " interests");
+          console.log(interests);
+
+          this.interests = [... this.interests.concat(interests)];
+    });
+
     this.showTarget();
   }
 
@@ -159,11 +170,11 @@ export class ProfilesComponent implements OnInit {
                   .getProfilesWithLatestTweets(profiles).subscribe(
                   filledProfiles => {
 
-                    console.log("Loaded " + profiles.length + " profiles with latest tweets");
+                    console.log("Loaded " + filledProfiles.length + " profiles with latest tweets");
+                    console.log(filledProfiles);
 
                     this.updateProfileList(filledProfiles);
-
-                    });
+                  });
                 }
               }
             )
@@ -232,8 +243,10 @@ export class ProfilesComponent implements OnInit {
     }
 
     this.profileList = [... this.profileList.concat(profilesToAdd)];
-    this.rowsAmount += Math
-      .ceil(profilesToAdd.length / 4);
+    console.log("New profile list:");
+    console.log(this.profileList);
+
+    this.rowsAmount += Math.ceil(profilesToAdd.length / 4);
 
     this.loading = false;
   }
