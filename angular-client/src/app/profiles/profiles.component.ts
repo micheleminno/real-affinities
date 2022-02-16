@@ -15,6 +15,7 @@ export class ProfilesComponent implements OnInit {
   profileList: Profile[] = [];
   profile: Profile = new Profile('0', []);
   interests: Interest[] = [];
+  selectedInterest: Interest = new Interest('', '');
   status: Status = new Status();
   rowsAmount: number;
   loading: boolean;
@@ -50,6 +51,10 @@ export class ProfilesComponent implements OnInit {
           console.log(interests);
 
           this.interests = [... this.interests.concat(interests)];
+
+          if(this.interests.length > 0) {
+            this.selectedInterest = this.interests[0];
+          }
     });
 
     this.showTarget();
@@ -381,14 +386,13 @@ export class ProfilesComponent implements OnInit {
     }
   };
 
-  getProfilesMatching(interest) {
+  getProfilesMatching() {
 
     this.loading = true;
 
     this.profilesService
-        .getProfilesMatching(
-            interest.name)
-        .subscribe(
+        .getProfilesMatching(this.selectedInterest)
+          .subscribe(
             profiles => {
 
               if (profiles.length == 0) {
@@ -400,27 +404,25 @@ export class ProfilesComponent implements OnInit {
                 this.twitterService
                     .getProfilesWithLatestTweets(
                         profiles).subscribe(
-                        users => {
-
-                          for (let profile of profiles) {
-
-                            profile["origin"] = "interestMatching";
-                            profile["interests"] = [ interest.name ];
-                          }
-
-                          this.updateProfileList(users);
+                        profilesWithTweets => {
 
                           this.loading = false;
 
-                          users
-                              .forEach(
-                                  user => {
+                          for (let profile of profilesWithTweets) {
 
-                                this.profilesService
-                                    .index(user);
+                            profile["origin"] = "interestMatching";
+                            profile["interests"] = [ this.selectedInterest ];
+                          }
+
+                          this.updateProfileList(profilesWithTweets);
+
+                          profilesWithTweets
+                              .forEach(
+                                  profile => {
+
+                                this.profilesService.index(profile);
                               });
                         });
-
               }
             });
   };

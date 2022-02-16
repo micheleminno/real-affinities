@@ -96,10 +96,12 @@ exports.load = function(req, res) {
 		});
 };
 
-this.matching = function(interest) {
+exports.matching = function(req, res) {
 
-  interest = interest.replace(" ", "-");
-  console.log("Searching for profiles matching with interest: " + interest);
+  const interestName = req.query.name.replace(" ", "-");
+  const interestQuery = req.query.query;
+
+  console.log("Searching for profiles matching with interest: " + interestName);
 
   var query = {
     index : 'real-affinities',
@@ -108,7 +110,7 @@ this.matching = function(interest) {
         more_like_this : {
           like : [
           {
-            _id : interest
+            _id : interestName
           }],
           fields : ['content'],
           min_term_freq : 1,
