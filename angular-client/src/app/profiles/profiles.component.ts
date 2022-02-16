@@ -82,8 +82,7 @@ export class ProfilesComponent implements OnInit {
 
                   console.log("Loaded latests tweets of " + users.length + " profiles");
 
-                  this.profilesService
-                    .updateProfileList(users);
+                  this.updateProfileList(users);
 
                   this.loading = false;
 
@@ -113,7 +112,8 @@ export class ProfilesComponent implements OnInit {
 
   search(searchKeywords: string) {
 
-    //this.isSubmitting = true;
+    this.loading = true;
+
     console.log("Search profiles by keywords '" + searchKeywords + "'");
 
     this.status.active = ModeLabels.KEYWORDS_SEARCH;
@@ -126,7 +126,6 @@ export class ProfilesComponent implements OnInit {
       .searchUsers(searchKeywords, nextPage).subscribe(
       profiles => {
 
-        //this.isSubmitting = false;
         //this.onToggle.emit(false);
 
         console.log("Found " + profiles.length + " profiles");
@@ -162,18 +161,8 @@ export class ProfilesComponent implements OnInit {
 
                     console.log("Loaded " + profiles.length + " profiles with latest tweets");
 
-                    this.profilesService
-                      .updateProfileList(filledProfiles)
-                      .subscribe(
+                    this.updateProfileList(filledProfiles);
 
-                        data => {
-
-                          console.log("Profile list updated");
-                          //this.isSubmitting = false;
-                          //this.onToggle.emit(true);
-                        },
-                        err => err //this.isSubmitting = false
-                        );
                     });
                 }
               }
@@ -181,8 +170,72 @@ export class ProfilesComponent implements OnInit {
         }
       },
 
-      err => err //this.isSubmitting = false
-      );
+      err => {
+        this.loading = false;
+      }
+    );
+  }
+
+  updateProfileList(profiles: Profile[]) {
+
+    var profilesToAdd = [];
+
+    for (var profilesIndex in this.profileList) {
+
+      this.profileList[profilesIndex]["status"] = "old";
+    }
+
+    for (var newProfilesIndex in profiles) {
+
+      var found = false;
+
+      for (var profilesIndex in this.profileList) {
+
+        if (this.profileList[profilesIndex]["id"] == profiles[newProfilesIndex]["id"]) {
+
+          found = true;
+          var newInterests = profiles[newProfilesIndex]["interests"];
+          if (newInterests) {
+
+            for (var interestIndex in newInterests) {
+
+              if (this.profileList[profilesIndex]["interests"]
+                .indexOf(newInterests[interestIndex]) == -1) {
+
+                this.profileList[profilesIndex]["interests"]
+                  .push(newInterests[interestIndex]);
+
+                console.log("Interest " + newInterests[interestIndex]["name"] + " added to profile " +
+                                this.profileList[profilesIndex]["screen_name"]);
+              }
+            }
+          }
+
+          break;
+        }
+      }
+      if (!found) {
+
+        profiles[newProfilesIndex]["status"] = "new";
+
+        var actualImageUrl = profiles[newProfilesIndex]["profile_image_url"];
+        var profileId = profiles[newProfilesIndex]["id"];
+
+        if(actualImageUrl) {
+
+          this.profilesService.updateProfileImg(profileId, actualImageUrl);
+        }
+
+        profilesToAdd.push(profiles[newProfilesIndex]);
+        console.log("New profile " + profiles[newProfilesIndex]["screen_name"])
+      }
+    }
+
+    this.profileList = [... this.profileList.concat(profilesToAdd)];
+    this.rowsAmount += Math
+      .ceil(profilesToAdd.length / 4);
+
+    this.loading = false;
   }
 
   canShowProfile(index, parentIndex) {
@@ -221,7 +274,7 @@ export class ProfilesComponent implements OnInit {
 
             profile["inTarget"] = true;
 
-            //loading = false;
+            this.loading = false;
 
             return this.profilesService.index(profile);
           }
@@ -342,8 +395,7 @@ export class ProfilesComponent implements OnInit {
                             profile["interests"] = [ interest.name ];
                           }
 
-                          this.profilesService
-                              .updateProfileList(users);
+                          this.updateProfileList(users);
 
                           this.loading = false;
 
@@ -382,7 +434,7 @@ export class ProfilesComponent implements OnInit {
               profiles => {
 
 
-                this.profilesService.updateProfileList(profiles);
+                this.updateProfileList(profiles);
                 this.status.algorithmSearchResult.items = actualItems
                   + profiles.length;
 
@@ -414,7 +466,7 @@ export class ProfilesComponent implements OnInit {
 
     this.status.active = ModeLabels.SCREENNAME_SEARCH;
 
-    // this.loading = true;
+    this.loading = true;
 
     this.twitterService
       .getProfileLatestTweets(potentialAccount, '0')
@@ -443,8 +495,7 @@ export class ProfilesComponent implements OnInit {
               userProfile["inTarget"] = inTargetResult[0];
               userProfile["tweets"] = tweetsInfo[0];
 
-              this.profilesService
-                .updateProfileList([userProfile]);
+              this.updateProfileList([userProfile]);
 
               this.loading = false;
 

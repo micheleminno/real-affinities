@@ -18,8 +18,6 @@ export class ProfilesService {
     private http: HttpClient
   ) { }
 
-  profileList: Profile[] = [];
-  rowsAmount: number = 0;
   profileImages: string[] = [];
 
   update(profile): Observable<Profile> {
@@ -29,72 +27,6 @@ export class ProfilesService {
       .map(data => {
         return data.profile;
       });
-  }
-
-  updateProfileList(profiles: Profile[]): Observable<boolean> {
-
-    var profilesToAdd = [];
-
-    for (var profilesIndex in this.profileList) {
-
-      this.profileList[profilesIndex]["status"] = "old";
-    }
-
-    if (profiles.length == 0) {
-
-      return Observable.of(false);
-    }
-
-    for (var newProfilesIndex in profiles) {
-
-      var found = false;
-
-      for (var profilesIndex in this.profileList) {
-
-        if (this.profileList[profilesIndex]["id"] == profiles[newProfilesIndex]["id"]) {
-
-          found = true;
-          var newInterests = profiles[newProfilesIndex]["interests"];
-          if (newInterests) {
-
-            for (var interestIndex in newInterests) {
-
-              if (this.profileList[profilesIndex]["interests"]
-                .indexOf(newInterests[interestIndex]) == -1) {
-
-                this.profileList[profilesIndex]["interests"]
-                  .push(newInterests[interestIndex]);
-
-                console.log("Interest " + newInterests[interestIndex]["name"] + " added to profile " +
-                                this.profileList[profilesIndex]["screen_name"]);
-              }
-            }
-          }
-
-          break;
-        }
-      }
-      if (!found) {
-
-        profiles[newProfilesIndex]["status"] = "new";
-
-        var actualImageUrl = profiles[newProfilesIndex]["profile_image_url"];
-        var profileId = profiles[newProfilesIndex]["id"];
-
-        if(actualImageUrl) {
-          this.updateProfileImg(profileId, actualImageUrl);
-        }
-
-        profilesToAdd.push(profiles[newProfilesIndex]);
-        console.log("New profile " + profiles[newProfilesIndex]["screen_name"])
-      }
-    }
-
-    this.profileList = [... this.profileList.concat(profilesToAdd)];
-    this.rowsAmount += Math
-      .ceil(profilesToAdd.length / 4);
-
-    return Observable.of(true);
   }
 
   index(profile: Profile) {
