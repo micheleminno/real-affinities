@@ -37,6 +37,8 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('Profiles component initialised');
+
     this.insertedPotentialAccount = 'i.e. pitchfork';
     this.insertedFilterKeywords = 'i.e. music*';
     this.showTarget();
@@ -147,7 +149,7 @@ export class ProfilesComponent implements OnInit {
               } else {
                 console.log("Profile " + profiles[profileIndex]["screen_name"] + " isn't in target");
               }
-              
+
               requests--;
               profiles[profileIndex]["origin"] = "keywordsSearchResult";
               profiles[profileIndex]["inTarget"] = inTarget;

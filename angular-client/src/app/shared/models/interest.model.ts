@@ -9,5 +9,6 @@ export class Interest {
 
   name: string;
   query: string;
+  content: string;
   language: Language;
 }

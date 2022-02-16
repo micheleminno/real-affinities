@@ -121,7 +121,6 @@ exports.removeAll = function(req, res) {
 exports.update = function(req, res) {
 
   const text = req.query.text;
-
   const name = req.query.name;
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
@@ -132,7 +131,6 @@ exports.update = function(req, res) {
     index: 'real-affinities',
     id: nameWithoutInnerSpaces,
     body: {
-
       doc: {
         content: text
       }
@@ -171,7 +169,7 @@ exports.list = function(req, res) {
   client.search(query, function(error, data) {
 
     data = data.body;
-  
+
     let interests = [];
 
     if(error) {

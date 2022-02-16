@@ -89,15 +89,15 @@
 
       <div class="col-lg-8 col-md-8 col-sm-8 interest-content-box" style="margin-top: 20px; margin-bottom: 20px">
 
-        <textarea class="interest-content" rows="12" cols="112" (keyup.enter)="editInterest(interest)" [ngModel]="interest.content">
+        <textarea #interestContent class="interest-content" rows="12" cols="112" (keyup.enter)="interestContent.blur(); editInterest(interest.name, interestContent.value);" [ngModel]="interest.content">
 				</textarea>
 
-        <button class="edit-interest-label">Click on text to edit</button>
+        <button class="edit-interest-label" disabled>Click on text to edit</button>
         <button class="save-interest-label">Type 'Enter' to save</button>
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1" style="margin-top: 5px; margin-bottom: 20px">
 
-        <button type="button" class="close" aria-label="Close" ng-click="deleteInterest(interest)">
+        <button type="button" class="close" aria-label="Close" (click)="deleteInterest(interest)">
 					<span aria-hidden="true">&times;</span>
 				</button>
       </div>

@@ -39,6 +39,8 @@ export class InterestsComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('Interests component initialised');
+
     var exampleInterest = new Interest('live music', 'i.e. playing live OR concert OR street music');
     this.newInterestForm.patchValue(exampleInterest);
 
@@ -76,6 +78,48 @@ export class InterestsComponent implements OnInit {
       updatedInterest => {
         if(updatedInterest) {
             this.interestList.push(this.interest);
+        }
+      },
+      err => {
+        this.errors = err;
+        this.isSubmitting = false;
+      }
+      );
+  }
+
+  deleteInterest(interest: Interest) {
+
+    //TODO: this.interestActive = true
+    console.log('deleteInterest() called');
+    this.isSubmitting = true;
+
+    this.interestsService
+      .remove(interest.name)
+      .subscribe(
+      removedInterest => {
+        if(removedInterest) {
+            this.interestList = this.interestList.filter(i => i !== interest);
+        }
+      },
+      err => {
+        this.errors = err;
+        this.isSubmitting = false;
+      }
+      );
+  }
+
+  editInterest(name: string, content: string) {
+
+    //TODO: this.interestActive = true
+
+    this.isSubmitting = true;
+
+    this.interestsService
+      .update(name, encodeURI(content))
+      .subscribe(
+      updatedInterest => {
+        if(updatedInterest) {
+            // TODO
         }
       },
       err => {

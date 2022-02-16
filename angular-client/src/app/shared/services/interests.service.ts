@@ -52,7 +52,7 @@ export class InterestsService {
 
     console.log("Removing interest " + interestName);
 
-    const serviceUrl = '/interest/remove?name=' + interestName;
+    const serviceUrl = '/interests/remove?name=' + interestName;
 
     return this.callService(serviceUrl);
   }
@@ -61,7 +61,7 @@ export class InterestsService {
 
     console.log("Updating interest " + name + " with text: " + text);
 
-    const serviceUrl = '/interest/update?name=' + name + '&text=' + text;
+    const serviceUrl = '/interests/update?name=' + name + '&text=' + text;
 
     return this.callService(serviceUrl);
   }
