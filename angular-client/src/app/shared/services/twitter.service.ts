@@ -15,7 +15,7 @@ export class TwitterService {
 
   getProfileLatestTweets(screenName: string, index: string) {
 
-    console.log("Getting latest tweets of a user");
+    console.log("Getting latest tweets of user " + screenName);
 
     const serviceUrl = '/twitter/tweets?user=' + screenName;
 

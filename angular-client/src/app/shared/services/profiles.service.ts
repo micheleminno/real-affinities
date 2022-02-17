@@ -41,7 +41,10 @@ export class ProfilesService {
 
     console.log("Loading " + ids.length + " profiles from ids");
 
-    return this.apiService.get('/profiles/load?ids=' + ids);
+    return this.apiService.get('/profiles/load?ids=' + ids)
+            .map(data => {
+              return data.profiles;
+            });
   }
 
   updateProfileImg(profileId: string, normalImageUrl: string) {

@@ -86,33 +86,34 @@ export class ProfilesComponent implements OnInit {
           this.profilesService
             .loadProfiles(targetUserIds)
             .subscribe(
-            targetUsers => {
+            targetProfiles => {
 
-              console.log("Loaded " + targetUsers.length + " profiles");
+              console.log("Loaded " + targetProfiles.length + " profiles");
+              console.log(targetProfiles);
 
-              for (var targetIndex in targetUsers) {
+              for (var targetIndex in targetProfiles) {
 
-                targetUsers[targetIndex]["inTarget"] = true;
+                targetProfiles[targetIndex]["inTarget"] = true;
               }
 
               this.twitterService
-                .getProfilesWithLatestTweets(targetUsers)
+                .getProfilesWithLatestTweets(targetProfiles)
                 .subscribe(
-                users => {
+                filledProfiles => {
 
-                  console.log("Loaded latests tweets of " + users.length + " profiles");
+                  console.log("Loaded latests tweets of " + filledProfiles.length + " profiles");
 
-                  this.updateProfileList(users);
+                  this.updateProfileList(filledProfiles);
 
                   this.loading = false;
 
                   var requests = 0;
 
-                  users.forEach((user, index) => {
+                  filledProfiles.forEach((profile, index) => {
 
                     requests++;
                     this.profilesService
-                      .index(user)
+                      .index(profile)
                       .subscribe(
                       users => {
 
@@ -200,6 +201,9 @@ export class ProfilesComponent implements OnInit {
 
     var profilesToAdd = [];
 
+    console.log("Updating profile list. New profiles:");
+    console.log(profiles);
+    
     for (var profilesIndex in this.profileList) {
 
       this.profileList[profilesIndex]["status"] = "old";
