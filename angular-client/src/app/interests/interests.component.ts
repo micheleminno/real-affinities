@@ -109,6 +109,10 @@ export class InterestsComponent implements OnInit {
 
     this.loading = true;
 
+    content = this.polishString(content);
+
+    console.log("Edited content: " + content);
+
     this.interestsService
       .update(name, encodeURI(content))
       .subscribe(
@@ -122,6 +126,16 @@ export class InterestsComponent implements OnInit {
         this.loading = false;
       }
       );
+  }
+
+  polishString = function(rawString: string) {
+
+    /*
+    * - clear carriage return => space
+    * - replace multiple spaces by a single one
+    * - clear leading and trailing spaces (same as jQuery trim())
+    */
+    return rawString.replace(/[\n\r]+/g, ' ').replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/,'')
   }
 
   createNewInterest(values: Object) {
