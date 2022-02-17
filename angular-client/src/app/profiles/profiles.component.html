@@ -34,9 +34,10 @@
 						</button>
         </div>
 
-        <div style="display: inline-block; margin-left: 30px;" id="getByInterest">
+        <div [formGroup]="searchByInterestForm" (ngSubmit)="getProfilesMatching()" style="display: inline-block; margin-left: 30px;" id="getByInterest">
           <label for="selectedInterest" class="input-label">Search by interest</label>
-          <select class="btn-default dropdown-toggle empty-dropdown" [ngModel]="selectedInterest">
+          <select class="form-control" formControlName="selectedInterest">
+            <option [ngValue]="null" disabled>Choose an interest</option>
             <option *ngFor="let interest of interests" [ngValue]="interest">{{interest.name}}</option>
           </select>
 

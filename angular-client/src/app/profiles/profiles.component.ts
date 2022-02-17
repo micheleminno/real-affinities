@@ -15,7 +15,8 @@ export class ProfilesComponent implements OnInit {
   profileList: Profile[] = [];
   profile: Profile = new Profile('0', []);
   interests: Interest[] = [];
-  selectedInterest: Interest = new Interest('', '');
+  interest: Interest = new Interest('0', '');
+
   status: Status = new Status();
   rowsAmount: number;
   loading: boolean;
@@ -29,13 +30,21 @@ export class ProfilesComponent implements OnInit {
   insertedFilterKeywords: string;
   filterKeywords: string;
 
+  searchByInterestForm: FormGroup;
+
   constructor(
     private router: Router,
     private profilesService: ProfilesService,
     private interestsService: InterestsService,
     private targetService: TargetService,
-    private twitterService: TwitterService
-  ) { }
+    private twitterService: TwitterService,
+    private fb: FormBuilder
+  ) {
+
+    this.searchByInterestForm = this.fb.group({
+      selectedInterest: ''
+    });
+  }
 
   ngOnInit() {
 
@@ -46,15 +55,10 @@ export class ProfilesComponent implements OnInit {
     this.interestsService.loadInterests()
         .subscribe(
         interests => {
-
           console.log("Retrieved " + interests.length + " interests");
           console.log(interests);
 
           this.interests = [... this.interests.concat(interests)];
-
-          if(this.interests.length > 0) {
-            this.selectedInterest = this.interests[0];
-          }
     });
 
     this.showTarget();
@@ -390,8 +394,12 @@ export class ProfilesComponent implements OnInit {
 
     this.loading = true;
 
+    let selectedInterest: Interest = this.searchByInterestForm.value;
+    console.log("Form value: " + JSON.stringify(this.searchByInterestForm.value));
+    console.log("Selected interest: " + JSON.stringify(selectedInterest));
+
     this.profilesService
-        .getProfilesMatching(this.selectedInterest)
+        .getProfilesMatching(selectedInterest)
           .subscribe(
             profiles => {
 
@@ -411,7 +419,7 @@ export class ProfilesComponent implements OnInit {
                           for (let profile of profilesWithTweets) {
 
                             profile["origin"] = "interestMatching";
-                            profile["interests"] = [ this.selectedInterest ];
+                            profile["interests"] = [ selectedInterest ];
                           }
 
                           this.updateProfileList(profilesWithTweets);
