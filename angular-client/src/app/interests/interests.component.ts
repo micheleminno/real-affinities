@@ -78,6 +78,8 @@ export class InterestsComponent implements OnInit {
         if(updatedInterest) {
             this.interestList.push(this.interest);
         }
+        
+        this.loading = false;
       },
       err => {
         this.errors = err;

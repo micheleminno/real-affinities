@@ -54,7 +54,7 @@
 <div class="interests" style="margin-bottom: 200px">
 
   <h3 style="margin-left: 10px">Interests</h3>
-  <div class="row" id="interest{{$index}}" *ngFor="let interest of interestList" style="margin-left: 10px; margin-right: 40px">
+  <div class="row" *ngFor="let interest of interestList; let i = index;" id="interest{{i}}" style="margin-left: 10px; margin-right: 40px">
 
     <div class="boxed">
       <div class="col-lg-3 col-md-3 col-sm-3" style="margin-top: 10px">

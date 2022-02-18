@@ -158,6 +158,9 @@ export class ProfilesComponent implements OnInit {
 
         for (var profileIndex in profiles) {
 
+          console.log("Asking if " + profileIndex + " profile is in target");
+          console.log(profiles[profileIndex]);
+
           requests++;
           this.targetService
             .isInTarget(profiles[profileIndex]["id"])
@@ -201,7 +204,7 @@ export class ProfilesComponent implements OnInit {
 
     var profilesToAdd = [];
 
-    console.log("Updating profile list. New profiles:");
+    console.log("Updating profile list with " + profiles.length + " profiles:");
     console.log(profiles);
 
     for (var profilesIndex in this.profileList) {
