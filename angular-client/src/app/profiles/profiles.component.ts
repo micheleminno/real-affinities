@@ -203,7 +203,7 @@ export class ProfilesComponent implements OnInit {
 
     console.log("Updating profile list. New profiles:");
     console.log(profiles);
-    
+
     for (var profilesIndex in this.profileList) {
 
       this.profileList[profilesIndex]["status"] = "old";
@@ -263,14 +263,6 @@ export class ProfilesComponent implements OnInit {
 
     this.loading = false;
   }
-
-  canShowProfile(index, parentIndex) {
-
-    var inCurrentRow = (index) / 4 < parentIndex + 1
-      && (index) / 4 >= parentIndex;
-
-    return inCurrentRow;
-  };
 
   updateTarget(profile: Profile) {
 
