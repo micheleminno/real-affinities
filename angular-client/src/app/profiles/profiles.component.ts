@@ -13,6 +13,7 @@ import { ProfilesService, InterestsService, TwitterService, TargetService } from
 export class ProfilesComponent implements OnInit {
 
   profileList: Profile[] = [];
+  profileImages: string[] = [];
   profile: Profile = new Profile('0', []);
   interests: Interest[] = [];
   interest: Interest = new Interest('0', '');
@@ -250,7 +251,7 @@ export class ProfilesComponent implements OnInit {
 
         if(actualImageUrl) {
 
-          this.profilesService.updateProfileImg(profileId, actualImageUrl);
+          this.updateProfileImg(profileId, actualImageUrl);
         }
 
         profilesToAdd.push(profiles[newProfilesIndex]);
@@ -266,6 +267,44 @@ export class ProfilesComponent implements OnInit {
 
     this.loading = false;
   }
+
+  updateProfileImg(profileId: string, normalImageUrl: string) {
+
+    var biggerImageUrl = normalImageUrl.substring(0, normalImageUrl.lastIndexOf("normal"));
+    biggerImageUrl = biggerImageUrl + "400x400";
+    var resultUrl = biggerImageUrl + ".jpg";
+
+    this.profilesService.urlExists(resultUrl)
+      .subscribe(
+      (jpgFound: boolean) => {
+
+        if (!jpgFound) {
+
+          resultUrl = biggerImageUrl
+            + ".jpeg";
+
+          this.profilesService.urlExists(resultUrl)
+            .subscribe(
+            (jpegFound: boolean) => {
+
+              if (!jpegFound) {
+
+                resultUrl = biggerImageUrl
+                  + ".png";
+              }
+
+              this.profileImages[profileId] = resultUrl;
+
+              console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
+            });
+        } else {
+
+          this.profileImages[profileId] = resultUrl;
+
+          console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
+        }
+      });
+  };
 
   updateTarget(profile: Profile) {
 

@@ -18,8 +18,6 @@ export class ProfilesService {
     private http: HttpClient
   ) { }
 
-  profileImages: string[] = [];
-
   update(profile): Observable<Profile> {
 
     return this.apiService
@@ -46,44 +44,6 @@ export class ProfilesService {
               return data.profiles;
             });
   }
-
-  updateProfileImg(profileId: string, normalImageUrl: string) {
-
-    var biggerImageUrl = normalImageUrl.substring(0, normalImageUrl.lastIndexOf("normal"));
-    biggerImageUrl = biggerImageUrl + "400x400";
-    var resultUrl = biggerImageUrl + ".jpg";
-
-    this.urlExists(resultUrl)
-      .subscribe(
-      (jpgFound: boolean) => {
-
-        if (!jpgFound) {
-
-          resultUrl = biggerImageUrl
-            + ".jpeg";
-
-          this.urlExists(resultUrl)
-            .subscribe(
-            (jpegFound: boolean) => {
-
-              if (!jpegFound) {
-
-                resultUrl = biggerImageUrl
-                  + ".png";
-              }
-
-              this.profileImages[profileId] = resultUrl;
-
-              console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
-            });
-        } else {
-
-          this.profileImages[profileId] = resultUrl;
-
-          console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
-        }
-      });
-  };
 
   urlExists(url: string) {
 

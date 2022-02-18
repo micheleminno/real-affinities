@@ -109,21 +109,24 @@
 
     <h3 style="margin-left: 10px">Profiles</h3>
 
-    <div *ngFor="let profile of profileList; let i = index;" id="profile{{i}}" class="col-sm-12 col-md-3 col-lg-3" [ngStyle]='style(profile)'>
+    <div class="col-sm-12 col-md-3 col-lg-3"  *ngFor="let profile of profileList; let i = index;" id="profile{{i}}" [ngStyle]="style(profile)">
 
       <div class="boxed boxed-profile">
         <div class="col-lg-6 col-md-6 col-sm-6">
 
-          <input id="in_target_button" [ngClass]="{'btn btn-primary btn-not-in-target': !profile.inTarget, 'btn btn-danger btn-in-target': profile.inTarget}"
-                  type="submit" value="{{ profile.inTarget ? 'Remove from target' : 'Add to target'}}" (click)="updateTarget(profile)">
+          <input id="in_target_button" [ngClass]="profile.inTarget?'btn btn-danger btn-in-target':'btn btn-primary btn-not-in-target'"
+                  type="submit" value="{{ profile.inTarget ? 'Remove from target' : 'Add to target'}}" (click)="updateTarget(profile)" />
+
           <a href="https://twitter.com/{{profile.screen_name}}">
-          <img class="img-responsive" src="{{profileImages[profile.id]}}"
-          height="150" width="150"></a>
+            <img class="img-responsive" src="{{ profileImages[profile.id] }}" height="150" width="150">
+          </a>
+
           <div align="left">
             <a class="username little-text" href="https://twitter.com/{{profile.screen_name}}">
               {{ profile.name }}
             </a>
           </div>
+
           <div align="left">
             <a class="screename little-text" href="https://twitter.com/{{profile.screen_name}}">
               @{{ profile.screen_name }}
@@ -140,12 +143,16 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6">
 
-          <span class="label label-danger" style="margin-right: 5px" *ngFor="let interest of profile.interests"> {{ interest }} </span>
+          <span class="label label-danger" style="margin-right: 5px" *ngFor="let interest of profile.interests">
+            {{ interest }}
+          </span>
 
           <div class="big-spacer"></div>
 
           <div>{{ profile.description }}</div>
+
           <div class="spacer"></div>
+
           <div>
             {{ profile.location }} <a [hidden]="profile.url == null" id="website" href="{{ profile.url }}"> (website) </a>
           </div>
@@ -157,12 +164,17 @@
         <div id="tweets" class="col-lg-12 col-md-12 col-sm-12">
 
           <div *ngFor="let tweet of profile.tweets" class="tweet-box">
-            <small class="tweet-date">{{tweet.created_at}}</small><br />
+
+            <small class="tweet-date">{{tweet.created_at}}</small>
+            <br />
             <div style="margin-top: 5px">{{tweet.text}}</div>
+
           </div>
         </div>
       </div>
+
     </div>
+
   </div>
 
   <div class="big-spacer"></div>
