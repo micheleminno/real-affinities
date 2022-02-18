@@ -1,4 +1,21 @@
 
+.profiles {
+  margin: 10px;
+}
+
+.boxed {
+  border: 2px solid black;
+  height: 300px;
+  border-radius: 7px;
+  padding-top: 5px;
+  border-color: black;
+}
+
+.boxed-profile {
+  overflow-y: scroll;
+}
+
+
 .input-label {
   display: block;
 }
@@ -55,18 +72,6 @@
 
 .little-text {
   font-size: 10pt;
-}
-
-.boxed {
-  border: 2px solid black;
-  height: 300px;
-  border-radius: 7px;
-  padding-top: 5px;
-  border-color: black;
-}
-
-.boxed-profile {
-  overflow-y: scroll;
 }
 
 .btn-in-target {
