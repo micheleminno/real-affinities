@@ -7,7 +7,7 @@ const NOK = 404;
 exports.list = function(req, res) {
 
   console.log("Getting all profile ids in target");
-  
+
   db.select('id')
 		.from('target')
 		.then(function(rows) {
@@ -51,7 +51,10 @@ exports.add = function(req, res) {
 
               db.raw(query).then(function(response) {
 
-                if (response.affectedRows > 0) {
+                console.log("Response from db when inserting a profile in target:");
+                console.log(response);
+
+                if (response[0].affectedRows > 0) {
 
                     resultJson = {"User added": true, "User id": userId};
                 }
@@ -86,6 +89,9 @@ exports.remove = function(req, res) {
         .where('id', userId)
         .del()
         .then(function(response) {
+
+          console.log("Response from db when deleting a profile from target:");
+          console.log(response);
 
           if (response === 1) {
 

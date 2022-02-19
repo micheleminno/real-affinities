@@ -316,10 +316,15 @@ export class ProfilesComponent implements OnInit {
 
     if (profile["inTarget"]) {
 
+      console.log("Removing profile from target:");
+      console.log(profile);
+
       this.targetService.removeFromTarget(profile.id)
         .subscribe(removed => {
 
           if (removed) {
+            console.log("Profile with id " + profile.id + " removed from target");
+
             profile["inTarget"] = false;
           }
 
@@ -327,11 +332,15 @@ export class ProfilesComponent implements OnInit {
         });
     } else {
 
+      console.log("Adding profile to target:");
+      console.log(profile);
+
       this.targetService.addToTarget(profile.id)
         .subscribe(added => {
 
           if (added) {
 
+            console.log("Profile with id " + profile.id + " added to target");
             profile["inTarget"] = true;
 
             this.loading = false;

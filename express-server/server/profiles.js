@@ -7,10 +7,10 @@ const NOK = 404;
 exports.index = function(req, res) {
 
   const profileParam = req.body;
-  console.log("Indexing profile: " + profileParam);
-
   const profile = JSON.parse(profileParam);
 
+  console.log("Indexing profile:" + profile);
+  
   var content = "";
   var contentDates = [];
   for ( var tweetIndex in profile.tweets) {
