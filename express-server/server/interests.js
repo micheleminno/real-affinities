@@ -1,27 +1,12 @@
 const utilities = require('./utilities');
 
 const { Client } = require('@elastic/elasticsearch');
-const client = new Client({ node: process.env.ELASTICSEARCH_URL });
+const ES = process.env.ELASTICSEARCH_URL? process.env.ELASTICSEARCH_URL : 'http://localhost:9200';
+const client = new Client({ node: ES });
 
 const OK = 200;
 const NOK = 404;
 
-
-function refreshIndexes(res, msg) {
-
-  client.indices.refresh(function(error, data) {
-
-    if (error) {
-
-      console.error(error);
-      res.status(NOK).json({"error refreshing": error})
-
-    } else {
-
-      res.status(OK).json({msg: true});
-    }
-  });
-}
 
 exports.add = function(req, res) {
 
@@ -44,7 +29,7 @@ exports.add = function(req, res) {
   };
 
   client.index(docToIndex, function(error, data) {
-    utilities.handleClientResponse(error, data, "interest added", "error adding new interest", res);
+    utilities.handleClientResponse(error, data, "interest added", "error adding new interest", res, client);
   });
 };
 
@@ -76,7 +61,8 @@ exports.remove = function(req, res) {
   };
 
   client.deleteByQuery(query, function(error, data) {
-    utilities.handleClientResponse(error, data, "interest " + name + " deleted", "error deleting interest " + name, res);
+    utilities.handleClientResponse(error, data,
+      "interest " + name + " deleted", "error deleting interest " + name, res, client);
   });
 };
 
@@ -103,7 +89,8 @@ exports.removeAll = function(req, res) {
   };
 
   client.deleteByQuery(query, function(error, data) {
-    utilities.handleClientResponse(error, data, "all interests deleted", "error deleting all interests", res);
+    utilities.handleClientResponse(error, data,
+      "all interests deleted", "error deleting all interests", res, client);
   });
 };
 
@@ -127,7 +114,8 @@ exports.update = function(req, res) {
   };
 
   client.update(params, function(error, data) {
-    utilities.handleClientResponse(error, data, "interest " + name + " updated", "error updating interest " + name, res);
+    utilities.handleClientResponse(error, data, "interest " + name + " updated",
+    "error updating interest " + name, res, client);
   });
 };
 
@@ -166,8 +154,6 @@ exports.list = function(req, res) {
       console.error(error);
 
     } else {
-
-        console.log(data);
 
         if ( typeof data.hits !== 'undefined' && data.hits &&
              typeof data.hits.hits !== 'undefined' && data.hits.hits) {

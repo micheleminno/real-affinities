@@ -32,7 +32,7 @@ export class TargetService {
 
     return this.apiService.get(serviceUrl)
       .map(data => {
-        return data ? true : false;
+        return data["User added"] ? true : false;
       });
   }
 

@@ -52,12 +52,12 @@ exports.add = function(req, res) {
 
               if (response[0]["affectedRows"] > 0) {
 
-                  console.log("Profile " + userId + " added in target");
+                  console.log("Profile " + userId + " added to target");
                   resultJson = {"User added": true, "User id": userId};
               }
               else {
 
-                console.log("Profile " + userId + " not added in target");
+                console.log("Profile " + userId + " not added to target");
                 resultJson = {"User added": false, "User id": userId};
               }
 

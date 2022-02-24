@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const target = require('./target');
 const profiles = require('./profiles');
@@ -10,8 +11,9 @@ const utilities = require('./utilities');
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
+
 app.use(cors());
-app.use(express.json())
 
 app.get('/', function(req, res) {
 

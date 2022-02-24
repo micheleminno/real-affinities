@@ -336,9 +336,9 @@ export class ProfilesComponent implements OnInit {
       console.log(profile);
 
       this.targetService.addToTarget(profile.id)
-        .subscribe(response => {
+        .subscribe(added => {
 
-          if (response["User added"]) {
+          if (added) {
 
             console.log("Profile with id " + profile.id + " added to target");
             profile["inTarget"] = true;

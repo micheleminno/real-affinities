@@ -22,7 +22,23 @@ exports.checkUrl = function(req, res) {
 	});
 };
 
-exports.handleClientResponse = function(error, data, okMsg, nokMsg, res) {
+function refreshIndexes(res, msg, client) {
+
+  client.indices.refresh(function(error, data) {
+
+    if (error) {
+
+      console.error(error);
+      res.status(NOK).json({"error refreshing": error})
+
+    } else {
+
+      res.status(OK).json({msg: true});
+    }
+  });
+}
+
+exports.handleClientResponse = function(error, data, okMsg, nokMsg, res, client) {
 
   if (error) {
 
@@ -32,7 +48,7 @@ exports.handleClientResponse = function(error, data, okMsg, nokMsg, res) {
 
     console.log(data);
 
-    refreshIndexes(res, okMsg);
+    refreshIndexes(res, okMsg, client);
   }
 }
 

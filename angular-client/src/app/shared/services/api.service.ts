@@ -45,13 +45,14 @@ export class ApiService {
 
   post(path: string, body: Object = {}): Observable<any> {
 
-    return this.http.post(
-      `${environment.api_url}${path}`,
-      JSON.stringify(body),
-      { headers: this.setHeaders() }
-    )
-      .catch(this.formatErrors)
-      .map((res: HttpResponse<any>) => res);
+    const url = `${environment.api_url}${path}`;
+    const bodyString = JSON.stringify(body);
+
+    console.log("POST: calling url " + url);
+  
+    return this.http.post(url, bodyString, { headers: this.setHeaders() })
+            .catch(this.formatErrors)
+            .map((res: HttpResponse<any>) => res);
   }
 
   delete(path): Observable<any> {

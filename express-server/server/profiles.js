@@ -1,7 +1,8 @@
 const utilities = require('./utilities');
 
 const { Client } = require('@elastic/elasticsearch');
-const client = new Client({ node: process.env.ELASTICSEARCH_URL });
+const ES = process.env.ELASTICSEARCH_URL? process.env.ELASTICSEARCH_URL : 'http://localhost:9200';
+const client = new Client({ node: ES });
 
 const OK = 200;
 const NOK = 404;
@@ -9,9 +10,9 @@ const NOK = 404;
 exports.index = function(req, res) {
 
   const profile = req.body;
-  console.log(profile);
 
-  console.log("Indexing profile:" + profile);
+  console.log("Indexing profile");
+  console.log(profile);
 
   var content = "";
   var contentDates = [];
@@ -42,7 +43,7 @@ exports.index = function(req, res) {
   };
 
   client.index(docToIndex, function(error, data) {
-    utilities.handleClientResponse(error, data, "profile indexed", "error indexing new profile", res);
+    utilities.handleClientResponse(error, data, "profile indexed", "error indexing new profile", res, client);
   });
 };
 
@@ -71,7 +72,6 @@ exports.load = function(req, res) {
       if(error) {
         console.error(error);
       } else {
-        console.log(data);
 
         if ( typeof data.hits !== 'undefined' && data.hits &&
              typeof data.hits.hits !== 'undefined' && data.hits.hits) {
