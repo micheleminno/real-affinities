@@ -39,38 +39,35 @@ exports.add = function(req, res) {
                 resultStatus = NOK;
                 resultJson = {error: "User " + userId + " doesn't exist"};
             }
-            else {
 
-            	console.log("Affinities added for user " + userId);
+          	console.log("Affinities added for user " + userId);
 
-            	const query = "INSERT IGNORE INTO target VALUES (" + userId + ", "
-        					+ data["followers"]["page"] + ", "
-        					+ data["friends"]["page"] + ", "
-        					+ data["followers"]["cursor"] + ", "
-        					+ data["friends"]["cursor"] + ")";
+          	const query = "INSERT IGNORE INTO target VALUES (" + userId + ", "
+      					+ data["followers"]["page"] + ", "
+      					+ data["friends"]["page"] + ", "
+      					+ data["followers"]["cursor"] + ", "
+      					+ data["friends"]["cursor"] + ")";
 
-              db.raw(query).then(function(response) {
+            db.raw(query).then(function(response) {
 
-                console.log("Response from db when inserting a profile in target:");
-                console.log(response);
+              if (response[0]["affectedRows"] > 0) {
 
-                if (response[0].affectedRows > 0) {
+                  console.log("Profile " + userId + " added in target");
+                  resultJson = {"User added": true, "User id": userId};
+              }
+              else {
 
-                    resultJson = {"User added": true, "User id": userId};
-                }
-                else {
+                console.log("Profile " + userId + " not added in target");
+                resultJson = {"User added": false, "User id": userId};
+              }
 
-                  resultJson = {"User added": false, "User id": userId};
-                }
-              })
-              .catch(function(error) {
+              res.status(resultStatus).json(resultJson);
+            })
+            .catch(function(error) {
 
-                console.error(error);
-                res.status(NOK).json({"error": error})
-              });
-    		    }
-
-            res.status(resultStatus).json(resultJson);
+              console.error(error);
+              res.status(NOK).json({"error": error})
+            });
 		});
 };
 

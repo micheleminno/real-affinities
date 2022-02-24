@@ -336,15 +336,16 @@ export class ProfilesComponent implements OnInit {
       console.log(profile);
 
       this.targetService.addToTarget(profile.id)
-        .subscribe(added => {
+        .subscribe(response => {
 
-          if (added) {
+          if (response["User added"]) {
 
             console.log("Profile with id " + profile.id + " added to target");
             profile["inTarget"] = true;
 
             this.loading = false;
 
+            console.log("Indexing profile " + profile.id);
             return this.profilesService.index(profile);
           }
         });
