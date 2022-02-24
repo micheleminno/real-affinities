@@ -8,3 +8,5 @@ artifacts/
 .settings/
 package-lock.json
 
+# dependencies
+/node_modules
