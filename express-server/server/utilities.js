@@ -1,6 +1,7 @@
 const urlExists = require('url-exists');
 
 const OK = 200;
+const NOK = 404;
 
 exports.checkUrl = function(req, res) {
 
@@ -20,6 +21,21 @@ exports.checkUrl = function(req, res) {
 		}
 	});
 };
+
+exports.handleClientResponse = function(error, data, okMsg, nokMsg, res) {
+
+  if (error) {
+
+    console.error(error);
+    res.status(NOK).json({nokMsg: error})
+  } else {
+
+    console.log(data);
+
+    refreshIndexes(res, okMsg);
+  }
+}
+
 
 String.prototype.deleteSubstring = function(indices) {
 

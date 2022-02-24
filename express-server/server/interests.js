@@ -1,22 +1,11 @@
+const utilities = require('./utilities');
+
 const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: process.env.ELASTICSEARCH_URL });
 
 const OK = 200;
 const NOK = 404;
 
-function handleClientResponse(error, data, okMsg, nokMsg, res) {
-
-  if (error) {
-
-    console.error(error);
-    res.status(NOK).json({nokMsg: error})
-  } else {
-
-    console.log(data);
-
-    refreshIndexes(res, okMsg);
-  }
-}
 
 function refreshIndexes(res, msg) {
 
@@ -55,7 +44,7 @@ exports.add = function(req, res) {
   };
 
   client.index(docToIndex, function(error, data) {
-    handleClientResponse(error, data, "interest added", "error adding new interest", res);
+    utilities.handleClientResponse(error, data, "interest added", "error adding new interest", res);
   });
 };
 
@@ -87,7 +76,7 @@ exports.remove = function(req, res) {
   };
 
   client.deleteByQuery(query, function(error, data) {
-    handleClientResponse(error, data, "interest " + name + " deleted", "error deleting interest " + name, res);
+    utilities.handleClientResponse(error, data, "interest " + name + " deleted", "error deleting interest " + name, res);
   });
 };
 
@@ -114,7 +103,7 @@ exports.removeAll = function(req, res) {
   };
 
   client.deleteByQuery(query, function(error, data) {
-    handleClientResponse(error, data, "all interests deleted", "error deleting all interests", res);
+    utilities.handleClientResponse(error, data, "all interests deleted", "error deleting all interests", res);
   });
 };
 
@@ -138,7 +127,7 @@ exports.update = function(req, res) {
   };
 
   client.update(params, function(error, data) {
-    handleClientResponse(error, data, "interest " + name + " updated", "error updating interest " + name, res);
+    utilities.handleClientResponse(error, data, "interest " + name + " updated", "error updating interest " + name, res);
   });
 };
 
