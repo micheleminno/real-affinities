@@ -9,4 +9,6 @@ artifacts/
 package-lock.json
 elastic-data/**
 elastic-test-data/**
-node_modules
+
+# dependencies
+/node_modules
