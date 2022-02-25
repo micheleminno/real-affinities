@@ -99,7 +99,7 @@ export class InterestsComponent implements OnInit {
         if(removedInterest) {
             this.interestList = this.interestList.filter(i => i !== interest);
         }
-        
+
         this.loading = false;
       },
       err => {
@@ -122,7 +122,7 @@ export class InterestsComponent implements OnInit {
       .subscribe(
       updatedInterest => {
         if(updatedInterest) {
-            // TODO
+            this.loading = false;
         }
       },
       err => {
