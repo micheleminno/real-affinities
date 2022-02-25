@@ -116,13 +116,13 @@ export class ProfilesComponent implements OnInit {
                     this.profilesService
                       .index(profile)
                       .subscribe(
-                      users => {
+                      res => {
 
                         requests--;
                         if (requests == 0) {
 
                           console.log("All profiles indexed");
-                          this.assignInterests(users);
+                          this.assignInterests(filledProfiles);
                         }
                       });
                   });
@@ -343,10 +343,16 @@ export class ProfilesComponent implements OnInit {
             console.log("Profile with id " + profile.id + " added to target");
             profile["inTarget"] = true;
 
-            this.loading = false;
-
             console.log("Indexing profile " + profile.id);
-            return this.profilesService.index(profile);
+            this.profilesService.index(profile)
+              .subscribe(res => {
+
+                if (res.msg) {
+
+                  console.log("Profile with id " + profile.id + " indexed in ES");
+                  this.loading = false;
+                }
+              });
           }
         });
     }

@@ -7,13 +7,21 @@ const client = new Client({ node: ES });
 const OK = 200;
 const NOK = 404;
 
+exports.test = function(req, res) {
+
+  const data = req.body;
+  console.log("Test API");
+  console.log(data);
+
+  res.status(OK).json({ data : data });
+};
+
 exports.index = function(req, res) {
 
   const profile = req.body;
 
   console.log("Indexing profile");
-  console.log(profile);
-
+  
   var content = "";
   var contentDates = [];
   for ( var tweetIndex in profile.tweets) {

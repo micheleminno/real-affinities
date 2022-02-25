@@ -11,7 +11,7 @@ const utilities = require('./utilities');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
+app.use(bodyParser.json({ extended: false, limit: '5mb' }));
 
 app.use(cors());
 
@@ -20,6 +20,8 @@ app.get('/', function(req, res) {
   console.log("Server is working!");
   res.send('Welcome');
 });
+
+app.post('/test', profiles.test);
 
 app.get('/target', target.list);
 app.get('/target/add', target.add);
