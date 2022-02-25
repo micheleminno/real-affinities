@@ -574,13 +574,16 @@ export class ProfilesComponent implements OnInit {
 
               this.updateProfileList([userProfile]);
 
-              this.loading = false;
-
               this.profilesService
                 .index(userProfile)
                 .subscribe(
-                data => {
+                res => {
 
+                  if(res.msg) {
+                    console.log("Profile " + userProfile.id + " indexed in ES");
+                  }
+                  
+                  this.loading = false;
                   this.assignInterests([userProfile]);
                 });
             });
