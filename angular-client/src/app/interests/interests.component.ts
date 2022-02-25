@@ -78,7 +78,7 @@ export class InterestsComponent implements OnInit {
         if(updatedInterest) {
             this.interestList.push(this.interest);
         }
-        
+
         this.loading = false;
       },
       err => {
@@ -149,12 +149,25 @@ export class InterestsComponent implements OnInit {
 
     this.loading = true;
 
+    console.log("Searching for recent tweets");
+
     this.twitterService.searchTweets(encodeURI(query), languageLabel,
       amount)
       .map(interestText => {
 
-        this.loading = false;
-        this.interestsService.update(this.interest.name, interestText);
+        console.log("Updating interest");
+
+        this.interestsService.update(this.interest.name, interestText)
+          .subscribe(
+          updated => {
+
+            if(updated) {
+              console.log("Interest " + query + " updated in ES");
+            }
+
+            this.loading = false;
+          }
+        );
       })
   }
 
