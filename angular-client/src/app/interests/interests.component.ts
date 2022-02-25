@@ -99,6 +99,8 @@ export class InterestsComponent implements OnInit {
         if(removedInterest) {
             this.interestList = this.interestList.filter(i => i !== interest);
         }
+        
+        this.loading = false;
       },
       err => {
         this.errors = err;
