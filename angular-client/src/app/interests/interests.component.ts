@@ -145,7 +145,7 @@ export class InterestsComponent implements OnInit {
     (<any>Object).assign(this.interest, values);
   }
 
-  collectInterest(query, languageLabel, amount) {
+  collectInterest(name, query, languageLabel, amount) {
 
     this.loading = true;
 
@@ -153,17 +153,21 @@ export class InterestsComponent implements OnInit {
 
     this.twitterService.searchTweets(encodeURI(query), languageLabel,
       amount)
-      .map(interestText => {
+      .subscribe(interestText => {
 
-        console.log("Updating interest");
+        console.log("Updating interest " + name);
+        console.log("New text: \n" + interestText);
 
-        this.interestsService.update(this.interest.name, interestText)
+        this.interestsService.update(name, interestText)
           .subscribe(
           updated => {
 
             if(updated) {
               console.log("Interest " + query + " updated in ES");
             }
+
+            const updatedInterestIndex = this.interestList.findIndex((i => i.name ===  name));
+            this.interestList[updatedInterestIndex].content = interestText;
 
             this.loading = false;
           }

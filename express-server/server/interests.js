@@ -98,9 +98,12 @@ exports.update = function(req, res) {
 
   const text = req.query.text;
   const name = req.query.name;
+
+  console.log("Updating interest with name " + name + " with text " + text);
+
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
-  console.log("Updating interest: " + nameWithoutInnerSpaces);
+  console.log("Name interest without inner spaces: " + nameWithoutInnerSpaces);
 
   const params = {
 

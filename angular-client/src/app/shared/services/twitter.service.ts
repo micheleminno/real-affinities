@@ -65,7 +65,7 @@ export class TwitterService {
     return this.apiService.get(serviceUrl).map(data => data);
   }
 
-  searchTweets(query: string, language: string, amount: number): Observable<string> {
+  searchTweets(query: string, language: string, amount: number) {
 
     console.log("Searching tweets about an interest");
 
@@ -77,6 +77,7 @@ export class TwitterService {
     return this.apiService.get(serviceUrl)
               .map(resultData => {
                 return resultData.value;
-              });
+              }
+            );
   }
 }
