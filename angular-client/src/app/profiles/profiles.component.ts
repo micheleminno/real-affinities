@@ -582,7 +582,7 @@ export class ProfilesComponent implements OnInit {
                   if(res.msg) {
                     console.log("Profile " + userProfile.id + " indexed in ES");
                   }
-                  
+
                   this.loading = false;
                   this.assignInterests([userProfile]);
                 });

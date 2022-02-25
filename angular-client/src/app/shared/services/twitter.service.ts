@@ -19,7 +19,23 @@ export class TwitterService {
 
     const serviceUrl = '/twitter/tweets?user=' + screenName;
 
-    return this.apiService.get(serviceUrl).map(data => [data, index]);
+    return this.apiService.get(serviceUrl).map(tweets => {
+
+      tweets = tweets.map(tweet => {
+
+        const allowedFields = ["text", "created_at", "user"];
+
+        const filteredTweet = allowedFields.reduce((obj, key) => {
+
+                                obj[key] = tweet[key];
+                                return obj;
+                              }, {});
+
+        return filteredTweet;
+      });
+
+      return [tweets, index];
+    });
   }
 
   getProfilesWithLatestTweets(users: Profile[]): Observable<Profile[]> {
