@@ -21,7 +21,7 @@ exports.index = function(req, res) {
   const profile = req.body;
 
   console.log("Indexing profile");
-  
+
   var content = "";
   var contentDates = [];
   for ( var tweetIndex in profile.tweets) {
@@ -57,7 +57,10 @@ exports.index = function(req, res) {
 
 exports.load = function(req, res) {
 
-    const userIds = req.query.ids;
+    var userIds = req.query.ids;
+
+    //make an array of numbers from id list
+    userIds = Array.from(userIds.split(','), Number);
 
     console.log("Loading profiles with ids: " + userIds);
 
