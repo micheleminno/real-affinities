@@ -570,7 +570,23 @@ export class ProfilesComponent implements OnInit {
             inTargetResult => {
 
               userProfile["inTarget"] = inTargetResult[0];
-              userProfile["tweets"] = tweetsInfo[0];
+              var tweets = tweetsInfo[0];
+
+              // Remove user from each tweet
+              tweets = tweets.map(tweet => {
+
+                const requiredFields = ["text", "created_at"];
+
+                const minimalTweet = requiredFields.reduce((obj, key) => {
+
+                                        obj[key] = tweet[key];
+                                        return obj;
+                                      }, {});
+
+                return minimalTweet;
+              });
+
+              userProfile["tweets"] = tweets;
 
               this.updateProfileList([userProfile]);
 

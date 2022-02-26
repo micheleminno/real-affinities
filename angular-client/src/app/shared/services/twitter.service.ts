@@ -23,15 +23,15 @@ export class TwitterService {
 
       tweets = tweets.map(tweet => {
 
-        const allowedFields = ["text", "created_at", "user"];
+        const requiredFields = ["text", "created_at", "user"];
 
-        const filteredTweet = allowedFields.reduce((obj, key) => {
+        const minimalTweet = requiredFields.reduce((obj, key) => {
 
                                 obj[key] = tweet[key];
                                 return obj;
                               }, {});
 
-        return filteredTweet;
+        return minimalTweet;
       });
 
       return [tweets, index];
