@@ -28,6 +28,7 @@ exports.list = function(req, res) {
 exports.add = function(req, res) {
 
 		const userId = req.query.id;
+    console.log("Adding user " + userId + " to target");
 
     affinities.add(userId, function(data) {
 

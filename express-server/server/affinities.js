@@ -157,7 +157,9 @@ function updateAffinities(userId, nextPage, lastPageToFetch, cursor,
 
   console.log("updateAffinities(" + userId + ", " + nextPage + ", " + lastPageToFetch + ", " + cursor
 											+ ", " + credentialsIndex + ", " + relationType + ", " + add + ", callback)");
-
+	console.log("Next page to fetch: " + nextPage);
+	console.log("Last page to fetch: " + lastPageToFetch);
+	
 	if (nextPage <= lastPageToFetch && cursor !== 0) {
 
 		var twitter = getTwitter(credentialsIndex);
@@ -176,6 +178,8 @@ function updateAffinities(userId, nextPage, lastPageToFetch, cursor,
 
 							if (remainingCalls > 0) {
 
+								console.log("Calling Twitter APIs to get " + relationType + " ids of " + userId
+															+ " with cursor " + cursor);
 								twitter
 										.get(
 												relationType + '/ids',
