@@ -112,11 +112,15 @@ exports.load = function(req, res) {
 
 exports.matching = function(req, res) {
 
-  const interestName = req.query.name.replace(" ", "-");
+  var interestName = req.query.name;
   const interestQuery = req.query.query;
 
-  console.log("Searching for profiles matching with interest: " + interestName);
+  console.log("Searching for profiles matching with interest: " + interestName + " and query: " + interestQuery);
 
+  interestName = interestName.replace(" ", "-");
+
+  console.log("Name without innner spaces: " + interestName);
+  
   var query = {
     index : 'real-affinities',
     body : {
