@@ -448,9 +448,7 @@ export class ProfilesComponent implements OnInit {
 
     this.loading = true;
 
-    let selectedInterest: Interest = this.searchByInterestForm.value;
-    console.log("Form value: " + JSON.stringify(this.searchByInterestForm.value));
-    console.log("Selected interest: " + JSON.stringify(selectedInterest));
+    let selectedInterest: Interest = this.searchByInterestForm.value.selectedInterest;
 
     this.profilesService
         .getProfilesMatching(selectedInterest)

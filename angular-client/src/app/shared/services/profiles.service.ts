@@ -56,6 +56,9 @@ export class ProfilesService {
     console.log("Getting profiles matching with interest " + interest.name);
 
     return this.apiService
-      .get('/profiles/matching?name=' + interest.name + '&query=' + interest.query);
+      .get('/profiles/matching?name=' + interest.name + '&query=' + interest.query)
+            .map(data => {
+              return data.profiles;
+            });
   }
 }

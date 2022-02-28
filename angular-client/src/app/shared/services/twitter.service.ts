@@ -40,7 +40,7 @@ export class TwitterService {
 
   getProfilesWithLatestTweets(users: Profile[]): Observable<Profile[]> {
 
-    console.log("Getting latest tweets of some profiles");
+    console.log("Getting latest tweets of " + users.length + " profiles");
 
     var filledUsers = [];
     for (var profileIndex in users) {
@@ -62,7 +62,7 @@ export class TwitterService {
 
   lookupUsers(ids: string[]) {
 
-    console.log("Looking up some users");
+    console.log("Looking up " + ids.length + " users");
 
     var idsParam = ids.join();
     const serviceUrl = '/twitter/users?ids=' + idsParam;
@@ -72,7 +72,7 @@ export class TwitterService {
 
   searchUsers(userQuery: string, page: number) {
 
-    console.log("Searching users by some keywords");
+    console.log("Searching users by keyword: " + userQuery);
 
     const serviceUrl = '/twitter/search/users?q=' + userQuery + "&page=" + page;
 
@@ -83,7 +83,7 @@ export class TwitterService {
 
   searchTweets(query: string, language: string, amount: number) {
 
-    console.log("Searching tweets about an interest");
+    console.log("Searching tweets about interest: " + query);
 
     const serviceUrl = '/twitter/search/tweets?q=' + query
             + "&lang=" + language + "&amount=" + amount;

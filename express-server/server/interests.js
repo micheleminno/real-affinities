@@ -233,7 +233,8 @@ exports.getMatchingProfiles = function(req, res) {
            for (let hitIndex in data.hits.hits) {
 
              const profile = data.hits.hits[hitIndex]["_source"];
-
+             profile.id = data.hits.hits[hitIndex]["_id"];
+             
              profiles.push(profile);
            }
         } else {
