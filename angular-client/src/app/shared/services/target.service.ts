@@ -11,7 +11,7 @@ export class TargetService {
   ) { }
 
 
-  isInTarget(profileId: string): Observable<boolean> {
+  isInTarget(profileId: string) {
 
     console.log("Asking if profile with id " + profileId + " is in target");
 
@@ -20,7 +20,9 @@ export class TargetService {
     return this.apiService.get(serviceUrl)
       .map(data => {
         var isPresent = data > 0 ? true : false;
-        return isPresent;
+        const response = {"profileId": profileId, "isPresent": isPresent};
+
+        return response;
       });
   }
 

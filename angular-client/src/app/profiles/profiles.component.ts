@@ -166,17 +166,26 @@ export class ProfilesComponent implements OnInit {
           this.targetService
             .isInTarget(profiles[profileIndex]["id"])
             .subscribe(
-            inTarget => {
+            res => {
 
-              if(inTarget) {
-                console.log("Profile " + profiles[profileIndex]["screen_name"] + " is in target");
+              if(res.isPresent) {
+                console.log("Profile " + res.profileId + " is in target");
               } else {
-                console.log("Profile " + profiles[profileIndex]["screen_name"] + " isn't in target");
+                console.log("Profile " + res.profileId + " isn't in target");
               }
 
               requests--;
-              profiles[profileIndex]["origin"] = "keywordsSearchResult";
-              profiles[profileIndex]["inTarget"] = inTarget;
+
+              // get profile with id = res.profile.profileId
+              const profile = profiles.find(p => p.id === res.profileId);
+
+              if(profile !== undefined) {
+
+                console.log("Adding origin 'keywords search' to profile " + profile.id);
+                profile["origin"] = "keywordsSearchResult";
+                profile["inTarget"] = res.isPresent;
+              }
+
 
               if (requests == 0) {
 
@@ -361,17 +370,23 @@ export class ProfilesComponent implements OnInit {
 
   style(profile: Profile): Object {
 
+    console.log("Assigning style to profile " + profile.id + " in target: " + profile.inTarget
+                + " with origin: " + profile.origin + " and status: " + profile.status);
+
     var style = { border: '' };
 
-    if (this.profile.inTarget) {
+    if (profile.inTarget) {
 
       style["background-color"] = "#F0DADA";
+
     } else if (profile.origin == "keywordsSearchResult") {
 
       style["background-color"] = "#BFF2D5";
+
     } else if (profile.origin == "interestMatching") {
 
       style["background-color"] = "#81DAF5";
+
     } else if (profile.origin == "screenNameSearchResult") {
 
       style["background-color"] = "#ADC1F7";
@@ -380,6 +395,7 @@ export class ProfilesComponent implements OnInit {
     if (profile.status == "new") {
 
       style.border = "4px solid rgb(56,117,196)";
+
     } else {
 
       style.border = "2px solid black";
@@ -567,7 +583,7 @@ export class ProfilesComponent implements OnInit {
 
             inTargetResult => {
 
-              userProfile["inTarget"] = inTargetResult[0];
+              userProfile["inTarget"] = inTargetResult.isPresent;
               var tweets = tweetsInfo[0];
 
               // Remove user from each tweet
