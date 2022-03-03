@@ -81,9 +81,9 @@
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
-        <div>
+        <div id="filter" [formGroup]="filterForm">
           <label for="selectedFilter" class="dropdown-label">Filter by keywords</label>
-          <input class="search-field" [ngStyle]="mySearchStyle" type="text" [ngModel]="insertedFilterKeywords"
+          <input class="search-field" [ngStyle]="mySearchStyle" type="text" formControlName="insertedFilterKeywords"
                   (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
 
           <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
@@ -111,7 +111,7 @@
 
     <h3 style="margin-left: 10px">Profiles</h3>
 
-    <div class="col-sm-12 col-md-3 col-lg-3"  *ngFor="let profile of profileList; let i = index;" id="profile{{i}}" [ngStyle]="style(profile)">
+    <div class="col-sm-12 col-md-3 col-lg-3"  *ngFor="let profile of profileList | filter: filterKeywords; let i = index;" id="profile{{i}}" [ngStyle]="style(profile)">
 
       <div class="boxed boxed-profile">
         <div class="col-lg-6 col-md-6 col-sm-6">

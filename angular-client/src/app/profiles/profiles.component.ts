@@ -33,7 +33,9 @@ export class ProfilesComponent implements OnInit {
 
   searchByInterestForm: FormGroup;
 
+  filterForm: FormGroup;
   sortForm: FormGroup;
+
 
   sortingPredicates = [
                         { label : 'Target first', field : 'inTarget' },
@@ -57,6 +59,10 @@ export class ProfilesComponent implements OnInit {
 
     this.sortForm = this.fb.group({
       selectedSort: ''
+    });
+
+    this.filterForm = this.fb.group({
+      insertedFilterKeywords: ''
     });
   }
 
@@ -649,6 +655,15 @@ export class ProfilesComponent implements OnInit {
     }
    );
   };
+
+  filter() {
+
+    const keywords = this.filterForm.value.insertedFilterKeywords;
+
+    console.log("Inserted keywords: " + keywords);
+
+    this.filterKeywords = keywords;
+  }
 
   goToInterestsPage() {
 

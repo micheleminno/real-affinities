@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FilterPipe } from './shared/pipes';
 
 @Component({
   selector: 'app-root',
