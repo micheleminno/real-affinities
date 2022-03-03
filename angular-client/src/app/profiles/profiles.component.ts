@@ -337,6 +337,8 @@ export class ProfilesComponent implements OnInit {
             profile["inTarget"] = false;
           }
 
+          this.profileList = this.profileList.filter(p => p.id !== profile.id);
+          
           this.loading = false;
         });
     } else {
