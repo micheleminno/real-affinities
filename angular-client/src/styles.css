@@ -40,6 +40,16 @@
   font-style: italic;
 }
 
+.select-field {
+  display: inline !important;
+  padding: 6px 6px 6px 6px;
+  margin-top: 2px;
+  width: 60% !important;
+  height: auto!important;
+  color: #C0C0C0;
+  font-style: italic;
+}
+
 .empty-dropdown {
   width: 135px;
 }

@@ -37,8 +37,8 @@
 
           <div class="col-lg-4 col-md-4 col-sm-4" [formGroup]="searchByInterestForm" (ngSubmit)="getProfilesMatching()" id="getByInterest">
             <label for="selectedInterest" class="input-label">Search by interest</label>
-            <select class="big-search-field form-control" formControlName="selectedInterest">
-              <option [ngValue]="null" disabled>Choose an interest</option>
+            <select class="select-field form-control btn-danger" formControlName="selectedInterest">
+              <option [ngValue]="null" disabled selected>No interest selected</option>
               <option *ngFor="let interest of interests" [ngValue]="interest">{{interest.name}}</option>
             </select>
 
@@ -94,10 +94,11 @@
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2">
         <div>
-          <div id="sort" style="display: inline-block;">
-            <label for="selectedSorting" class="dropdown-label">Sort by</label>
-            <select class="btn-danger dropdown-toggle empty-dropdown" [ngModel]="sortingPredicate"
-                      ng-options="sort.field as sort.label for sort in sortingPredicates">
+          <div id="sort" [formGroup]="sortForm">
+            <label for="selectedSort" class="dropdown-label">Sort by</label>
+            <select class="select-field btn-danger dropdown-toggle empty-dropdown form-control"
+                    formControlName="selectedSort" (change)='sort()'>
+              <option *ngFor="let sort of sortingPredicates" [ngValue]="sort">{{sort.label}}</option>
             </select>
           </div>
         </div>
@@ -204,11 +205,10 @@
     <div class="col-lg-4 col-md-4 col-sm-4"></div>
     <div class="col-lg-2 col-md-2 col-sm-2">
 
-      <div id="sort">
-        <label for="selectedSorting" class="dropdown-label">Sort by</label>
-        <select class="btn-danger dropdown-toggle empty-dropdown" [ngModel]="sortingPredicate"
-                  ng-options="sort.field as sort.label for sort in sortingPredicates">
-      </select>
+      <div>
+        <div id="sort-log">
+          <span *ngIf="sortForm.value.selectedSort.label !== undefined">Sorted by: {{sortForm.value.selectedSort?.label}}</span>
+        </div>
       </div>
     </div>
   </div>

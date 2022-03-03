@@ -33,6 +33,15 @@ export class ProfilesComponent implements OnInit {
 
   searchByInterestForm: FormGroup;
 
+  sortForm: FormGroup;
+
+  sortingPredicates = [
+                        { label : 'Target first', field : 'inTarget' },
+                        { label : 'Followers', field : 'followers_count' },
+                        { label : 'Following', field : 'friends_count' },
+                        { label : 'Tweets', field : 'statuses_count' }
+                      ];
+
   constructor(
     private router: Router,
     private profilesService: ProfilesService,
@@ -44,6 +53,10 @@ export class ProfilesComponent implements OnInit {
 
     this.searchByInterestForm = this.fb.group({
       selectedInterest: ''
+    });
+
+    this.sortForm = this.fb.group({
+      selectedSort: ''
     });
   }
 
@@ -338,7 +351,7 @@ export class ProfilesComponent implements OnInit {
           }
 
           this.profileList = this.profileList.filter(p => p.id !== profile.id);
-          
+
           this.loading = false;
         });
     } else {
@@ -623,10 +636,24 @@ export class ProfilesComponent implements OnInit {
       });
   };
 
+  sort() {
+
+    const label = this.sortForm.value.selectedSort.label;
+    const field = this.sortForm.value.selectedSort.field;
+
+    console.log("Sorting profiles by " + label + "(field: " + field + ")");
+
+    this.profileList.sort(function(a, b) {
+
+      return b[field] - a[field];
+    }
+   );
+  };
+
   goToInterestsPage() {
 
     this.router.navigateByUrl('/interests');
-  }
+  };
 }
 
 const enum ModeLabels {
