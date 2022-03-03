@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-2">
         <a href="http://www.realaffinities.com">
-          <img id="logo" class="img-responsive" src="assets/images/logo.png"></a>
+          <img id="logo" class="img-responsive" width="150" src="assets/images/logo.png"></a>
 
 
         <div style="margin-left: 49px; margin-top: 36px" [ngStyle]="loading && {'visibility': 'visible'} || !loading && {'visibility': 'hidden'}">
@@ -12,39 +12,41 @@
 
       </div>
       <div class="col-lg-7 col-md-7 col-sm-7">
-        <div style="display: inline-block;">
-          <label for="searchKeywords" class="input-label">Search by keywords</label>
-          <input class="big-search-field form-control" id="searchKeywords" [(ngModel)]="searchKeywords" type="text" placeholder="i.e. funk rock" (keyup.enter)="search(searchKeywords)">
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <label for="searchKeywords" class="input-label">Search by keywords</label>
+            <input class="big-search-field form-control" id="searchKeywords" [(ngModel)]="searchKeywords" type="text" placeholder="i.e. funk rock" (keyup.enter)="search(searchKeywords)">
 
-          <button class="btn btn-danger" id="btn_search" type="submit" (click)="search(searchKeywords)">
-              <img src="assets/images/search.png" width="25" class="img-responsive"
-                alt="Responsive image">
-            </button>
-        </div>
+            <button class="btn btn-danger" id="btn_search" type="submit" (click)="search(searchKeywords)">
+                <img src="assets/images/search.png" width="25" class="img-responsive"
+                  alt="Responsive image">
+              </button>
+          </div>
 
-        <div style="display: inline-block;">
-          <label for="potentialAccount" class="input-label" style="margin-left: 30px;">Search by username</label>
-          <img style="display: inline;" src="assets/images/account.png" width="25" class="img-responsive" alt="Responsive image">
-          <input class="big-search-field form-control" type="text" placeholder="i.e. RollingStone"
-                  [(ngModel)]="potentialAccount" (keyup.enter)="addPotentialAccount(potentialAccount)">
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <label for="potentialAccount" class="input-label" style="margin-left: 30px;">Search by username</label>
+            <img style="display: inline;" src="assets/images/account.png" width="25" class="img-responsive" alt="Responsive image">
+            <input class="big-search-field form-control" type="text" placeholder="i.e. RollingStone"
+                    [(ngModel)]="potentialAccount" (keyup.enter)="addPotentialAccount(potentialAccount)">
 
-          <button class="btn btn-danger" id="btn_add_account" type="button" (click)="addPotentialAccount()">
-							<img src="assets/images/like.png" width="25" class="img-responsive"
-								alt="Responsive image">
-						</button>
-        </div>
+            <button class="btn btn-danger" id="btn_add_account" type="button" (click)="addPotentialAccount()">
+  							<img src="assets/images/like.png" width="25" class="img-responsive"
+  								alt="Responsive image">
+  						</button>
+          </div>
 
-        <div [formGroup]="searchByInterestForm" (ngSubmit)="getProfilesMatching()" style="display: inline-block; margin-left: 30px;" id="getByInterest">
-          <label for="selectedInterest" class="input-label">Search by interest</label>
-          <select class="form-control" formControlName="selectedInterest">
-            <option [ngValue]="null" disabled>Choose an interest</option>
-            <option *ngFor="let interest of interests" [ngValue]="interest">{{interest.name}}</option>
-          </select>
+          <div class="col-lg-4 col-md-4 col-sm-4" [formGroup]="searchByInterestForm" (ngSubmit)="getProfilesMatching()" id="getByInterest">
+            <label for="selectedInterest" class="input-label">Search by interest</label>
+            <select class="big-search-field form-control" formControlName="selectedInterest">
+              <option [ngValue]="null" disabled>Choose an interest</option>
+              <option *ngFor="let interest of interests" [ngValue]="interest">{{interest.name}}</option>
+            </select>
 
-          <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatching()">
-  						<img src="assets/images/filter.png" width="25" class="img-responsive"
-  							alt="Responsive image">
-  					</button>
+            <button class="btn btn-danger" id="btn_get_matching_interests" type="button" (click)="getProfilesMatching()">
+    						<img src="assets/images/filter.png" width="25" class="img-responsive"
+    							alt="Responsive image">
+    				</button>
+          </div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-3">
@@ -59,7 +61,6 @@
         </div>
       </div>
     </div>
-    <div class="row" style="padding: 12px"></div>
     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-2"></div>
       <div class="col-lg-4 col-md-4 col-sm-4">
