@@ -4,30 +4,16 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform(profile: any, input: string) {
+  transform(profiles: any[], keywords: string) {
 
-    console.log("Inside pipe:");
-    console.log(profile);
-    console.log("input: " + input);
-
-    /*
-
-    transform(items: any[], filter: string): any {
-
-    if (!items || !filter) {
-        return items;
+    if (!profiles || !keywords) {
+        return profiles;
     }
 
-    return items.filter(item => item.description.includes(filter));
-    */
+    keywords = keywords.toLowerCase();
 
-      if (input) {
-          input = input.toLowerCase();
-          return profile.filter(function (el: any) {
-              return el.toLowerCase().indexOf(input) > -1;
-          })
-      }
-      
-      return profile;
+    return profiles.filter(function (p: any) {
+        return p.tweets.find(t => t.toLowerCase().indexOf(keywords) > -1);
+    });
   }
 }
