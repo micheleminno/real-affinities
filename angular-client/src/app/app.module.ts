@@ -11,7 +11,6 @@ import { InterestsModule } from './interests/interests.module';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { InterestsComponent } from './interests/interests.component';
 
-import {FilterPipe} from './shared/pipes'
 
 import {
   ApiService,
@@ -34,8 +33,7 @@ const rootRouting = RouterModule.forRoot(
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent,
-    FilterPipe
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

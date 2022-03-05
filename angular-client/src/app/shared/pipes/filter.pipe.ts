@@ -4,12 +4,16 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform(value: any, input: string) {
+  transform(profile: any, input: string) {
+
+    console.log("Inside pipe:");
+    console.log(profile);
+    console.log("input: " + input);
 
     /*
 
     transform(items: any[], filter: string): any {
-    
+
     if (!items || !filter) {
         return items;
     }
@@ -19,10 +23,11 @@ export class FilterPipe implements PipeTransform {
 
       if (input) {
           input = input.toLowerCase();
-          return value.filter(function (el: any) {
+          return profile.filter(function (el: any) {
               return el.toLowerCase().indexOf(input) > -1;
           })
       }
-      return value;
+      
+      return profile;
   }
 }

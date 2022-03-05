@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { FilterPipe } from './pipes';
+
 
 @NgModule({
   imports: [
@@ -14,7 +16,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   declarations: [
-
+    FilterPipe
   ],
   exports: [
 
@@ -22,7 +24,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    FilterPipe
   ]
 })
 export class SharedModule { }

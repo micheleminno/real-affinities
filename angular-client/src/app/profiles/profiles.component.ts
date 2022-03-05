@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Profile, Interest } from '../shared/models';
 import { ProfilesService, InterestsService, TwitterService, TargetService } from '../shared/services';
 
+import { FilterPipe } from '../shared/pipes';
+
 
 @Component({
   selector: 'profiles-page',
