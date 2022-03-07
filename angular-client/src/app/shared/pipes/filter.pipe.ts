@@ -12,8 +12,6 @@ export class FilterPipe implements PipeTransform {
 
     keywords = keywords.toLowerCase();
 
-    return profiles.filter(function (p: any) {
-        return p.tweets.find(t => t.toLowerCase().indexOf(keywords) > -1);
-    });
+    return profiles.filter(p => p.tweets.some(t => t.text.toLowerCase().indexOf(keywords) > -1));
   }
 }

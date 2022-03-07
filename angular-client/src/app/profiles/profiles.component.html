@@ -84,12 +84,7 @@
         <div id="filter" [formGroup]="filterForm">
           <label for="selectedFilter" class="dropdown-label">Filter by keywords</label>
           <input class="search-field" [ngStyle]="mySearchStyle" type="text" formControlName="insertedFilterKeywords"
-                  (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (keyup.enter)="filter()">
-
-          <button class="btn btn-danger" id="btn_filter" type="button" (click)="filter()">
-          <img src="assets/images/filter.png" width="25" class="img-responsive"
-            alt="Responsive image">
-        </button>
+                  (click)="insertedFilterKeywords = ''; mySearchStyle = {color:'black'}" (input)="filter()">
         </div>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2">
