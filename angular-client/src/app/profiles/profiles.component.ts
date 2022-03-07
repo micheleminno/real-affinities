@@ -302,36 +302,31 @@ export class ProfilesComponent implements OnInit {
 
     var biggerImageUrl = normalImageUrl.substring(0, normalImageUrl.lastIndexOf("normal"));
     biggerImageUrl = biggerImageUrl + "400x400";
-    var resultUrl = biggerImageUrl + ".jpg";
 
-    this.profilesService.urlExists(resultUrl)
+    this.profilesService.urlExists(biggerImageUrl + ".jpg")
       .subscribe(
       (jpgFound: boolean) => {
 
-        if (!jpgFound) {
+        if (jpgFound) {
 
-          resultUrl = biggerImageUrl
-            + ".jpeg";
+          this.profileImages[profileId] = biggerImageUrl + ".jpg";
 
-          this.profilesService.urlExists(resultUrl)
+        } else {
+
+          this.profilesService.urlExists(biggerImageUrl
+            + ".jpeg")
             .subscribe(
             (jpegFound: boolean) => {
 
-              if (!jpegFound) {
+              if (jpegFound) {
 
-                resultUrl = biggerImageUrl
-                  + ".png";
+                this.profileImages[profileId] = biggerImageUrl + ".jpeg";
+
+              } else {
+
+                this.profileImages[profileId] = biggerImageUrl + ".png";
               }
-
-              this.profileImages[profileId] = resultUrl;
-
-              console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
-            });
-        } else {
-
-          this.profileImages[profileId] = resultUrl;
-
-          console.log("Image at " + resultUrl + " added as profile image of profile id " + profileId);
+          });
         }
       });
   };

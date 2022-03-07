@@ -48,7 +48,7 @@ export class ProfilesService {
   urlExists(url: string) {
 
 		return this.apiService.get('/utilities/url-exists?url=' + url)
-					 .map(data => data);
+					 .map(data => data.exists);
 	}
 
   getProfilesMatching(interest: Interest): Observable<Profile[]> {
