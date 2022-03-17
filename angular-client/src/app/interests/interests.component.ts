@@ -109,6 +109,27 @@ export class InterestsComponent implements OnInit {
       );
   }
 
+  deleteInterests() {
+
+    this.loading = true;
+
+    this.interestsService
+      .removeAllInterests()
+      .subscribe(
+      removed => {
+        if(removed) {
+            this.interestList = [];
+        }
+
+        this.loading = false;
+      },
+      err => {
+        this.errors = err;
+        this.loading = false;
+      }
+      );
+  }
+
   editInterest(name: string, content: string) {
 
     this.loading = true;

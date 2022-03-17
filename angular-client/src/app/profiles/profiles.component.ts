@@ -153,6 +153,26 @@ export class ProfilesComponent implements OnInit {
       });
   };
 
+  deleteTarget() {
+
+    this.loading = true;
+
+
+    console.log("Removing all profiles from target:");
+
+    this.targetService.deleteTarget()
+      .subscribe(removed => {
+
+        if (removed) {
+          console.log("All profiles removed from target");
+      }
+
+        this.profileList = [];
+
+        this.loading = false;
+      });
+  };
+
   search(searchKeywords: string) {
 
     this.loading = true;

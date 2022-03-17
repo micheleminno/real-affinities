@@ -65,4 +65,13 @@ export class InterestsService {
 
     return this.callService(serviceUrl);
   }
+
+  removeAllInterests() {
+
+    console.log("Removing all interests");
+
+    const serviceUrl = '/interests/delete';
+
+    return this.callService(serviceUrl);
+  }
 }
