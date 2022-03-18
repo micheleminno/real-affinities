@@ -7,9 +7,11 @@ import { AppComponent } from './app.component';
 import { FooterComponent, HeaderComponent } from './shared/layout';
 import { ProfilesModule } from './profiles/profiles.module';
 import { InterestsModule } from './interests/interests.module';
+import { TrendsModule } from './trends/trends.module';
 
 import { ProfilesComponent } from './profiles/profiles.component';
 import { InterestsComponent } from './interests/interests.component';
+import { TrendsComponent } from './trends/trends.component';
 
 
 import {
@@ -17,12 +19,14 @@ import {
   ProfilesService,
   InterestsService,
   TargetService,
-  TwitterService
+  TwitterService,
+  TrendsService
 } from './shared/services';
 
 const appRoutes: Routes = [
   { path: '', component: ProfilesComponent, pathMatch: 'full' },
-  { path: 'interests', component: InterestsComponent }
+  { path: 'interests', component: InterestsComponent },
+  { path: 'trends', component: TrendsComponent }
 ];
 const rootRouting = RouterModule.forRoot(
   appRoutes,
@@ -39,14 +43,16 @@ const rootRouting = RouterModule.forRoot(
     BrowserModule,
     rootRouting,
     ProfilesModule,
-    InterestsModule
+    InterestsModule,
+    TrendsModule
   ],
   providers: [
     ApiService,
     ProfilesService,
     InterestsService,
     TargetService,
-    TwitterService
+    TwitterService,
+    TrendsService
   ],
   bootstrap: [
     AppComponent

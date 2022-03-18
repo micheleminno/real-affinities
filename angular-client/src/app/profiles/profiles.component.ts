@@ -686,6 +686,11 @@ export class ProfilesComponent implements OnInit {
 
     this.router.navigateByUrl('/interests');
   };
+
+  goToTrendsPage() {
+
+    this.router.navigateByUrl('/trends');
+  };
 }
 
 const enum ModeLabels {

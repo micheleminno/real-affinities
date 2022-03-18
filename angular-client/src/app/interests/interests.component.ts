@@ -202,4 +202,9 @@ export class InterestsComponent implements OnInit {
 
     this.router.navigateByUrl('');
   }
+
+  goToTrendsPage() {
+
+    this.router.navigateByUrl('/trends');
+  };
 }
