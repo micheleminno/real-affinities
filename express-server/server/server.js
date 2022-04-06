@@ -48,12 +48,13 @@ app.get('/twitter/search/tweets', twitter.searchTweets);
 app.get('/twitter/tweets', twitter.userTweets);
 app.get('/twitter/users', twitter.users);
 
+/*
 app.get('/trends', trends.list);
 app.get('/trends/add', trends.add);
 app.get('/trends/remove', trends.remove);
 app.get('/trends/delete', trends.removeAll);
 app.get('/trends/update', trends.update);
-
+*/
 app.get('/utilities/url-exists', utilities.checkUrl);
 
 const server = app.listen(3000, function() {
