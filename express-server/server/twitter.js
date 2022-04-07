@@ -237,7 +237,7 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
   const twitter = getTwitter(credentialIndex);
   twitter.get(method, options, function(err, data, twitterResponse) {
 
-    const credentialsUser = userAccounts[credentialIndex]["screenName"];
+    var credentialsUser = userAccounts[credentialIndex]["screenName"];
     if (err) {
 
       if (err.code == 88) {

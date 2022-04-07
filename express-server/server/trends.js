@@ -9,10 +9,14 @@ exports.add = function(req, res) {
   const name = req.query.name;
   const nameWithoutInnerSpaces = label.replace(/ /g, "-");
 
-  const timestamp = req.query.timestamp;
-  const value = req.query.value;
+  //const query = req.query.query;
+  const fromDate = req.query.fromDate;
+  const toDate = req.query.toDate;
 
-  console.log("Adding new trend: " + nameWithoutInnerSpaces);
+  console.log("Adding new trend: " + nameWithoutInnerSpaces + " from date " + fromDate +
+              " to date " + toDate);
+
+  // Calling trend service and getting data points
 
   const query = "INSERT IGNORE INTO trends VALUES (" + nameWithoutInnerSpaces + ", "
                  + timestamp + ", " + value + ")";
