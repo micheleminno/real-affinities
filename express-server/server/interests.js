@@ -99,11 +99,11 @@ exports.update = function(req, res) {
   const text = req.query.text;
   const name = req.query.name;
 
-  console.log("Updating interest with name " + name + " with text " + text);
+  console.log("Updating interest with name " + name + " with text: " + text);
 
   const nameWithoutInnerSpaces = name.replace(/ /g, "-");
 
-  console.log("Name interest without inner spaces: " + nameWithoutInnerSpaces);
+  console.log("Interest name without inner spaces: " + nameWithoutInnerSpaces);
 
   const params = {
 
@@ -234,7 +234,7 @@ exports.getMatchingProfiles = function(req, res) {
 
              const profile = data.hits.hits[hitIndex]["_source"];
              profile.id = data.hits.hits[hitIndex]["_id"];
-             
+
              profiles.push(profile);
            }
         } else {

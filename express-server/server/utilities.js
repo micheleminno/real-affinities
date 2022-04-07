@@ -33,6 +33,7 @@ function refreshIndexes(res, msg, client) {
 
     } else {
 
+			console.log("ES indices refreshed");
       res.status(OK).json({msg: true});
     }
   });
@@ -46,7 +47,8 @@ exports.handleClientResponse = function(error, data, okMsg, nokMsg, res, client)
     res.status(NOK).json({nokMsg: error})
   } else {
 
-    console.log(data);
+    //console.log(data);
+		console.log("ES data update ok");
 
     refreshIndexes(res, okMsg, client);
   }

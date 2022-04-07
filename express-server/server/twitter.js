@@ -56,19 +56,22 @@ function getSortedKeys(obj) {
 
 function sendResponse(resultBox, response) {
 
-  console.log("\n\n*******" + HASHTAGS + "*******\n");
+  const preTitle = "\n\n******* ";
+  const postTitle = " *******\n";
+
+  console.log(preTitle + HASHTAGS + postTitle);
   const hashtagsText = getText(resultBox[HASHTAGS], HASHTAGS_AMOUNT);
 
-  console.log("\n\n*******" + USER_MENTIONS + "*******\n");
+  console.log(preTitle + USER_MENTIONS + postTitle);
   const mentionsText = getText(resultBox[USER_MENTIONS], MENTIONS_AMOUNT);
 
-  console.log("\n\n*******" + RETWEETS + "*******\n");
+  console.log(preTitle + RETWEETS + postTitle);
   const retweetsText = getText(resultBox[RETWEETS], RETWEETS_AMOUNT);
 
-  console.log("\n\n*******" + URLS + "*******\n");
+  console.log(preTitle + URLS + postTitle);
   const urlsText = getText(resultBox[URLS], URLS_AMOUNT);
 
-  console.log("\n\n*******" + UNIGRAMS + "*******\n");
+  console.log(preTitle + UNIGRAMS + postTitle);
   const unigramsText = getText(resultBox[UNIGRAMS], UNIGRAMS_AMOUNT);
 
   const text = hashtagsText + " " + mentionsText + " " + retweetsText + " " + urlsText + " " + unigramsText;
@@ -271,7 +274,7 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 
         const firstTweetDate = tweets[0].created_at.substring(4, 19);
 
-        console.log("\nReached tweets written on date: " + firstTweetDate);
+        console.log("\nBack to date: " + firstTweetDate);
 
         for (let tweetIndex in tweets) {
 
@@ -307,6 +310,9 @@ function callTweetSearch(method, options, credentialIndex, response, docIndex, r
 }
 
 exports.searchTweets = function(req, res) {
+
+  // To avoid connection drop after 120 seconds
+  res.connection.setTimeout(0);
 
   const q = req.query.q;
   const lang = req.query.lang;
