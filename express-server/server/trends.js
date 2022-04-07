@@ -4,21 +4,18 @@ const OK = 200;
 const NOK = 404;
 
 
-/*
 exports.add = function(req, res) {
 
-  const label = req.query.label;
-  const labelWithoutInnerSpaces = label.replace(/ /g, "-");
+  const name = req.query.name;
+  const nameWithoutInnerSpaces = label.replace(/ /g, "-");
 
-  console.log("Adding new trend: " + labelWithoutInnerSpaces);
+  const timestamp = req.query.timestamp;
+  const value = req.query.value;
 
-  const queryParam = req.query.query;
+  console.log("Adding new trend: " + nameWithoutInnerSpaces);
 
-  const query = "INSERT IGNORE INTO trends VALUES (" + userId + ", "
-      + data["followers"]["page"] + ", "
-      + data["friends"]["page"] + ", "
-      + data["followers"]["cursor"] + ", "
-      + data["friends"]["cursor"] + ")";
+  const query = "INSERT IGNORE INTO trends VALUES (" + nameWithoutInnerSpaces + ", "
+                 + timestamp + ", " + value + ")";
 
   db.raw(query).then(function(response) {
 
@@ -59,20 +56,6 @@ exports.removeAll = function(req, res) {
   // TODO
 };
 
-exports.update = function(req, res) {
-
-  const text = req.query.text;
-  const name = req.query.name;
-
-  console.log("Updating trend with name " + name + " with text " + text);
-
-  const nameWithoutInnerSpaces = name.replace(/ /g, "-");
-
-  console.log("Name trend without inner spaces: " + nameWithoutInnerSpaces);
-
-  // TODO
-};
-
 exports.list = function(req, res) {
 
   console.log("Getting all trends");
@@ -93,4 +76,3 @@ exports.list = function(req, res) {
 		})
 	  .catch(function(error) { console.error(error); });
 };
-*/

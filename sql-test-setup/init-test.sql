@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS affinity (
     followed_by INT
 )  ENGINE=INNODB;
 
+CREATE TABLE IF NOT EXISTS trends (
+  id VARCHAR(255) PRIMARY KEY,
+  timestamp INT,
+  value INT
+)  ENGINE=INNODB;
+
 INSERT INTO target (id, last_followers_page, last_friends_page, followers_next_cursor, friends_next_cursor)
 VALUES ('1', 15, 4, '123', '456');
 
